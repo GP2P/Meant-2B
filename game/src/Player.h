@@ -15,7 +15,9 @@ private:
 
 	float jumpspeed;
 
+    int shoot_countdown;
 
+    int shoot_slowdown;
 public:
 
 	Player();
@@ -28,6 +30,7 @@ public:
 
 	int jump();
 
+    void shoot(df::Vector target);
 
 };
 

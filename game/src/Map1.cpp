@@ -7,6 +7,8 @@
 #include <iostream>
 #include "PressurePlate.h"
 #include "Gate.h"
+#include "Inventory.h"
+
 
 Map1::Map1() {
 	setType("Map1");
@@ -59,6 +61,8 @@ void Map1::start() {
 
 
 	auto *player1 = new Player;
+
+    new Inventory;
 	player1->setPosition(df::Vector(15, 10));
 
 	WM.markForDelete(this);
