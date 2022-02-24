@@ -14,17 +14,37 @@ Block::Block(df::Vector position) {
 	setPosition(position);
 }
 
-int Block::draw() {
-	DM.drawCh(getPosition(), '#', df::GREEN);
-//	DM.drawCh(getPosition() - df::Vector(0, 0.5), '#', df::GREEN);
+Block::Block(df::Vector position, char character) {
+	setType("Block");
+	setAltitude(1);
+	setPosition(position);
+	setCharacter(character);
+}
 
-	//drawing box for object(debug)
-//	float height = getWorldBox(this).getHorizontal();
-//	float width = getWorldBox(this).getVertical();
-//	df::Vector corner = getWorldBox(this).getCorner();
-//	sf::RectangleShape rectangle(sf::Vector2f(width * df::charWidth(), height * df::charHeight()));
-//	rectangle.setPosition(df::spacesToPixels(corner).getX(), df::spacesToPixels(corner).getY());
-//	rectangle.setFillColor(sf::Color::Red);
-//	DM.getWindow()->draw(rectangle);
-	return 0;
+Block::Block(df::Vector position, char character, df::Color color) {
+	setType("Block");
+	setAltitude(1);
+	setPosition(position);
+	setCharacter(character);
+	setColor(color);
+}
+
+int Block::draw() {
+	return DM.drawCh(getPosition(), character, color);
+}
+
+char Block::getCharacter() const {
+	return character;
+}
+
+void Block::setCharacter(char character) {
+	Block::character = character;
+}
+
+df::Color Block::getColor() const {
+	return color;
+}
+
+void Block::setColor(df::Color color) {
+	Block::color = color;
 }
