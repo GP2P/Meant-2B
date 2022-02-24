@@ -1,0 +1,20 @@
+# ninja log v5
+1	332	1645665988065898465	CMakeFiles/Meant_2B_df.dir/game/src/Map1.cpp.o	e81dfe8854c71103
+2	382	1645659617419466257	CMakeFiles/SaucerShoot.dir/SaucerShoot/Reticle.cpp.o	aa0f621bbd712e2
+2	384	1645659617421747795	CMakeFiles/SaucerShoot.dir/SaucerShoot/Star.cpp.o	7253ebeac808595c
+2	313	1645665988047254063	CMakeFiles/Meant_2B_df.dir/game/src/Player.cpp.o	1a2ea5bc987098b6
+2	520	1645657895457129580	CMakeFiles/SaucerShoot.dir/SaucerShoot/Explosion.cpp.o	f1a263da79808dfc
+1	37	1645666210319978024	Meant_2B_df	c309a5d3b3176763
+2	422	1645659617458432730	CMakeFiles/SaucerShoot.dir/SaucerShoot/Hero.cpp.o	93d186035687bb9c
+2	386	1645657895322594371	CMakeFiles/SaucerShoot.dir/SaucerShoot/EventNuke.cpp.o	328c405c8e49d2af
+1	304	1645665988038144859	CMakeFiles/Meant_2B_df.dir/game/src/Block.cpp.o	bc710993c9482e1e
+4	520	1645657895458050927	CMakeFiles/SaucerShoot.dir/SaucerShoot/Saucer.cpp.o	f3fee3c7c8be69b8
+2	535	1645657895472176836	CMakeFiles/SaucerShoot.dir/SaucerShoot/GameStart.cpp.o	a0693bef63efb1f1
+1	325	1645665988058789108	CMakeFiles/Meant_2B_df.dir/game/src/game.cpp.o	aea4512567f064ed
+4	436	1645657895372841504	CMakeFiles/SaucerShoot.dir/SaucerShoot/Points.cpp.o	bc8d0fd12477a902
+2	511	1645657895448201203	CMakeFiles/SaucerShoot.dir/SaucerShoot/GameOver.cpp.o	261babc0d58ee354
+0	83	1645666210829820067	build.ninja	ebd222538622f4fe
+0	4	0	clean	3c8e6cc385ee00ba
+2	503	1645657895440329507	CMakeFiles/SaucerShoot.dir/SaucerShoot/Bullet.cpp.o	7777b3f659f757d6
+1	359	1645659617396525589	CMakeFiles/SaucerShoot.dir/SaucerShoot/game.cpp.o	1508a0e1ceb3cfbf
+0	48	1645659658063270312	SaucerShoot	edbceb49c2171770

@@ -1,0 +1,8 @@
+20:30:11    0 ****************************************************
+20:30:11    0 ** Dragonfly version 4.16 **
+20:30:11    0 ** Game engine started **
+20:30:11    0 ****************************************************
+20:30:11    0 RM::loadSprite(): Loading sprite '../game/sprites/Map1BG.txt'.
+20:30:11    0 RM::loadSprite(): Sprite 'Map1BG' loaded.
+20:30:11    0 RM::loadSprite(): Loading sprite '../game/sprites/Player.txt'.
+20:30:11    0 RM::loadSprite(): Sprite 'Player' loaded.

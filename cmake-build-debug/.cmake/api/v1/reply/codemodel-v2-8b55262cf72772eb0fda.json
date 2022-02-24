@@ -1,0 +1,69 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.21"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Meant_2B_df",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Meant_2B_df::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Meant_2B_df-Debug-b1ab0428e5dc9215fd13.json",
+					"name" : "Meant_2B_df",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SaucerShoot::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SaucerShoot-Debug-ee0b41a16b24a6519c93.json",
+					"name" : "SaucerShoot",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/g3p/Library/Mobile Documents/com~apple~CloudDocs/WPI/2122C/IMGD 3000/Meant 2B/Meant 2B df/cmake-build-debug",
+		"source" : "/Users/g3p/Library/Mobile Documents/com~apple~CloudDocs/WPI/2122C/IMGD 3000/Meant 2B/Meant 2B df"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}
