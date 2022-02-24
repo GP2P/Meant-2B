@@ -2,8 +2,6 @@
 #include "WorldManager.h"
 #include "EventStep.h"
 #include "EventKeyboard.h"
-#include "DisplayManager.h"
-#include "utility.h"
 
 Player::Player() {
 	setType("Player");
@@ -19,25 +17,13 @@ Player::Player() {
 }
 
 bool Player::onGround() {
-	bool willHaveSupport = !WM.getCollisions(this, getPosition() + getVelocity()).isEmpty();
-//	DM.drawString(getPosition(), "onGrodawdawdawadwawund: " + std::to_string(willHaveSupport), df::CENTER_JUSTIFIED,
-//	              df::Color::RED);
-	return willHaveSupport;
+	return !WM.getCollisions(this, getPosition() + getVelocity()).isEmpty();
 }
 
 int Player::eventHandler(const df::Event *p_e) {
 	if (p_e->getType() == df::STEP_EVENT) {
 		if (!onGround()) setVelocity(getVelocity() + acceleration);
 		else setVelocity(df::Vector(0, 0));
-
-		//drawing box for object(debug)
-//		float height = getWorldBox(this).getHorizontal();
-//		float width = getWorldBox(this).getVertical();
-//		df::Vector corner = getWorldBox(this).getCorner();
-//		sf::RectangleShape rectangle(sf::Vector2f(width * df::charWidth(), height * df::charHeight()));
-//		rectangle.setPosition(df::spacesToPixels(corner).getX(), df::spacesToPixels(corner).getY());
-//		rectangle.setFillColor(sf::Color::Red);
-//		DM.getWindow()->draw(rectangle);
 		return 1;
 	} else if (p_e->getType() == df::KEYBOARD_EVENT) {
 		const df::EventKeyboard *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);

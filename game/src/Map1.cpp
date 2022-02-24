@@ -18,12 +18,12 @@ void Map1::start() {
 	p_music->play();
 
 	for (int i = 0; i <= 80; i++) {
-		new Block(df::Vector(i, 0));
-		new Block(df::Vector(i, 23));
+//		new Block(df::Vector(i, 0), '#');
+		new Block(df::Vector(i, 31), '-');
 	}
-	for (int i = 24; i >= 0; i--) {
-		new Block(df::Vector(0, i));
-		new Block(df::Vector(79, i));
+	for (int i = 32; i >= 0; i--) {
+		new Block(df::Vector(0, i), '|');
+		new Block(df::Vector(79, i), '|');
 	}
 
 	new Block(df::Vector(50, 20));
