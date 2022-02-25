@@ -11,19 +11,20 @@
 #include "Vector.h"
 
 
-class Stone: public df::Object {
+class Stone : public df::Object {
 private:
-    bool nearPlayer;
-    Player *player;
-    int nearcountdown;
-    df::Vector acceleration;
+	bool nearPlayer;
+	Player *player;
+	int nearcountdown;
+	df::Vector acceleration;
 public:
-    Stone(df::Vector location);
+	Stone(df::Vector location);
 
-    int eventHandler(const df::Event *p_e) override;
+	int eventHandler(const df::Event *p_e) override;
 
-    int draw();
+	int draw();
 
-    bool onGround();
+	bool onGround();
 };
+
 #endif //MEANT_2B_DF_STONE_H

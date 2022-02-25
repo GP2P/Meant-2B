@@ -7,14 +7,14 @@ class Player : public df::Object {
 
 private:
 
-	int ID{};
+	int ID;
 	df::Vector acceleration;
-	float jumpspeed{};
-	int shoot_countdown{};
-	int shoot_slowdown{};
-	int walkingcountdown{};
+	float jumpSpeed;
+	int shootCountdown;
+	int shootSlowdown;
+	int walkingCountdown;
 
-    bool havestone;
+	bool havestone;
 
 public:
 
@@ -34,13 +34,13 @@ public:
 
 	void setID(int id);
 
-    bool isHavestone() const {
-        return havestone;
-    }
+	bool isHavestone() const {
+		return havestone;
+	}
 
-    void setHavestone(bool havestone) {
-        Player::havestone = havestone;
-    }
+	void setHavestone(bool havestone) {
+		Player::havestone = havestone;
+	}
 
 
 };
