@@ -23,7 +23,18 @@ Player::Player() {
 }
 
 bool Player::onGround() {
-	return !WM.getCollisions(this, getPosition() + getVelocity()).isEmpty();
+	df::ObjectList collisions = WM.getCollisions(this, getPosition() + getVelocity());
+
+	// soft collisions don't count as on ground
+	if (!collisions.isEmpty()) {
+		auto oli = df::ObjectListIterator(&collisions);
+		while (!oli.isDone()) {
+			if (oli.currentObject()->getSolidness() == df::HARD)
+				return true;
+			oli.next();
+		}
+		return false;
+	} else return false;
 }
 
 int Player::eventHandler(const df::Event *p_e) {
