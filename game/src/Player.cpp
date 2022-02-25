@@ -13,14 +13,13 @@ Player::Player() {
 	setVelocity(df::Vector(1, 0));
 	registerInterest(df::STEP_EVENT);
 	registerInterest(df::KEYBOARD_EVENT);
-    registerInterest(df::MSE_EVENT);
-    acceleration = df::Vector(0, 0.01);
+	registerInterest(df::MSE_EVENT);
+	acceleration = df::Vector(0, 0.01);
 	jumpspeed = 0.3;
 	allowdoublejump = true;
 	jumpCount = 0;
-
-    shoot_slowdown = 30;
-    shoot_countdown = shoot_slowdown;
+	shoot_slowdown = 30;
+	shoot_countdown = shoot_slowdown;
 }
 
 bool Player::onGround() {
@@ -29,17 +28,18 @@ bool Player::onGround() {
 
 int Player::eventHandler(const df::Event *p_e) {
 
-    if (p_e->getType() == df::STEP_EVENT) {
+	if (p_e->getType() == df::STEP_EVENT) {
 		if (!onGround()) setVelocity(getVelocity() + acceleration);
 		else setVelocity(df::Vector(0, 0));
 
-        shoot_countdown--;
-        if (shoot_countdown < 0)
-            shoot_countdown = 0;
+		shoot_countdown--;
+		if (shoot_countdown < 0)
+			shoot_countdown = 0;
 
 		return 1;
 
-	} if (p_e->getType() == df::KEYBOARD_EVENT) {
+	}
+	if (p_e->getType() == df::KEYBOARD_EVENT) {
 		const df::EventKeyboard *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
 		switch (p_keyboard_event->getKey()) {
 			case df::Keyboard::A:    // left
@@ -59,15 +59,16 @@ int Player::eventHandler(const df::Event *p_e) {
 				break;
 		};
 		return 1;
-	} if (p_e->getType() == df::MSE_EVENT) {
-        LM.writeLog("received mouse event");
-        const df::EventMouse *p_mouse_event = dynamic_cast <const df::EventMouse *> (p_e);
-        if ((p_mouse_event->getMouseAction() == df::CLICKED) &&
-            (p_mouse_event->getMouseButton() == df::Mouse::LEFT))
-            LM.writeLog("mouse!");
-            shoot(p_mouse_event->getMousePosition());
-        return 1;
-    }
+	}
+	if (p_e->getType() == df::MSE_EVENT) {
+		LM.writeLog("received mouse event");
+		const df::EventMouse *p_mouse_event = dynamic_cast <const df::EventMouse *> (p_e);
+		if ((p_mouse_event->getMouseAction() == df::CLICKED) &&
+		    (p_mouse_event->getMouseButton() == df::Mouse::LEFT))
+			LM.writeLog("mouse!");
+		shoot(p_mouse_event->getMousePosition());
+		return 1;
+	}
 	return 0;
 }
 
@@ -97,15 +98,15 @@ int Player::jump() {
 
 void Player::shoot(df::Vector target) {
 
-    // See if time to shoot.
-    if (shoot_countdown > 0)
-        return;
-    shoot_countdown = shoot_slowdown;
+	// See if time to shoot.
+	if (shoot_countdown > 0)
+		return;
+	shoot_countdown = shoot_slowdown;
 
-    // Shoot Arrow towards target.
-    df::Vector v = target - getPosition();
-    v.normalize();
-    v.scale(1);
-    Arrow *p = new Arrow(getPosition());
-    p->setVelocity(v);
+	// Shoot Arrow towards target.
+	df::Vector v = target - getPosition();
+	v.normalize();
+	v.scale(1);
+	Arrow *p = new Arrow(getPosition());
+	p->setVelocity(v);
 }

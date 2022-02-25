@@ -1,7 +1,6 @@
 #include "Block.h"
 #include "DisplayManager.h"
 #include "Vector.h"
-#include "utility.h"
 
 Block::Block() {
 	setType("Block");

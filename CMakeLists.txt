@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 23)
 
 file(GLOB_RECURSE MEANT2B_SRC game/src/*.cpp)
 
-add_executable(Meant_2B_df game/src/game.cpp ${MEANT2B_SRC} game/src/PressurePlate.cpp game/src/PressurePlate.h game/src/EventOpenGate.cpp game/src/EventOpenGate.h game/src/Gate.cpp game/src/Gate.h)
+add_executable(Meant_2B_df game/src/game.cpp ${MEANT2B_SRC})
 
 find_package(SFML REQUIRED COMPONENTS graphics audio)
 

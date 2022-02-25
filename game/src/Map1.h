@@ -7,9 +7,11 @@
 class Map1 : public df::ViewObject {
 
 private:
+
 	df::Music *p_music;
 
 public:
+
 	Map1();
 
 	void start();

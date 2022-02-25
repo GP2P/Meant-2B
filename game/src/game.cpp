@@ -19,8 +19,8 @@ int main() {
 	// load resources
 	RM.loadSprite("../game/sprites/Map1BG.txt", "Map1BG");
 	RM.loadSprite("../game/sprites/Player.txt", "Player");
-    RM.loadSprite("../game/sprites/Arrow.txt", "Arrow");
-    RM.loadMusic("../game/music/Map1BGM.wav", "Map1BGM");
+	RM.loadSprite("../game/sprites/Arrow.txt", "Arrow");
+	RM.loadMusic("../game/music/Map1BGM.wav", "Map1BGM");
 
 	// adjust view
 	WM.setBoundary(df::Box(df::Vector(), 80, DM.getVertical()));
