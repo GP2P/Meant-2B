@@ -7,33 +7,30 @@ class Player : public df::Object {
 
 private:
 
+	int ID{};
 	df::Vector acceleration;
-
-	bool allowdoublejump;
-
-	int jumpCount;
-
-	float jumpspeed;
-
-	int shoot_countdown;
-
-	int shoot_slowdown;
-
-    int walkingcountdown;
+	float jumpspeed{};
+	int shoot_countdown{};
+	int shoot_slowdown{};
+	int walkingcountdown{};
 
 public:
 
 	Player();
 
-	int eventHandler(const df::Event *p_e);
+	Player(int ID);
+
+	int eventHandler(const df::Event *p_e) override;
 
 	bool onGround();
-
-	int move(int dy);
 
 	int jump();
 
 	void shoot(df::Vector target);
+
+	int getID() const;
+
+	void setID(int id);
 };
 
 #endif //DF_PLAYER_H

@@ -15,7 +15,7 @@ PressurePlate::PressurePlate() {
 	maxopencountdown = 10;
 	opencountdown = 0;
 	registerInterest(df::STEP_EVENT);
-    setBox(df::Box(df::Vector(-0.5,-0.5),2,1));
+	setBox(df::Box(df::Vector(-0.5, -0.5), 2, 1));
 }
 
 PressurePlate::PressurePlate(df::Vector position, df::Color new_color, int opcountdown) {
@@ -32,11 +32,11 @@ PressurePlate::PressurePlate(df::Vector position, df::Color new_color, int opcou
 int PressurePlate::draw() {
 	if (opencountdown <= 0) {
 		DM.drawCh(getPosition() + df::Vector(0, 0.15), '_', color);
-        DM.drawCh(getPosition() + df::Vector(1, 0.15), '_', color);
-    } else {
+		DM.drawCh(getPosition() + df::Vector(1, 0.15), '_', color);
+	} else {
 		DM.drawCh(getPosition() + df::Vector(0, 0.3), '_', color);
-        DM.drawCh(getPosition() + df::Vector(1, 0.3), '_', color);
-    }
+		DM.drawCh(getPosition() + df::Vector(1, 0.3), '_', color);
+	}
 
 	return 0;
 }

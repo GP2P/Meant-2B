@@ -19,11 +19,13 @@ int main() {
 	// load resources
 	RM.loadSprite("../game/sprites/Click2Start.txt", "Click2Start");
 	RM.loadSprite("../game/sprites/Map1BG.txt", "Map1BG");
-	RM.loadSprite("../game/sprites/Player-walking.txt", "PlayerWalking");
-    RM.loadSprite("../game/sprites/Player-standing.txt", "PlayerStanding");
-
-    RM.loadSprite("../game/sprites/Arrow.txt", "Arrow");
 	RM.loadMusic("../game/music/Map1BGM.wav", "Map1BGM");
+
+	RM.loadSprite("../game/sprites/Player1-walking.txt", "Player1Walking");
+	RM.loadSprite("../game/sprites/Player1-standing.txt", "Player1Standing");
+	RM.loadSprite("../game/sprites/Player2-walking.txt", "Player2Walking");
+	RM.loadSprite("../game/sprites/Player2-standing.txt", "Player2Standing");
+	RM.loadSprite("../game/sprites/Arrow.txt", "Arrow");
 
 	// adjust view
 	WM.setBoundary(df::Box(df::Vector(), 80, DM.getVertical()));

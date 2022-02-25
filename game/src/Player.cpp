@@ -4,23 +4,26 @@
 #include "EventKeyboard.h"
 #include "Arrow.h"
 #include "EventMouse.h"
-#include "LogManager.h"
 
-Player::Player() {
+Player::Player() = default;
+
+Player::Player(int ID) {
+	setID(ID);
 	setType("Player");
 	setSolidness(df::HARD);
-	setSprite("PlayerStanding");
+	if (ID == 1)
+		setSprite("Player1Standing");
+	else
+		setSprite("Player2Standing");
 	setVelocity(df::Vector());
 	registerInterest(df::STEP_EVENT);
 	registerInterest(df::KEYBOARD_EVENT);
 	registerInterest(df::MSE_EVENT);
-	acceleration = df::Vector(0, 0.02);
-	jumpspeed = 0.44;
-	allowdoublejump = true;
-	jumpCount = 0;
+	acceleration = df::Vector(0, 0.1);
+	jumpspeed = 0.95;
 	shoot_slowdown = 30;
 	shoot_countdown = shoot_slowdown;
-    walkingcountdown = 0;
+	walkingcountdown = 0;
 }
 
 bool Player::onGround() {
@@ -48,12 +51,15 @@ int Player::eventHandler(const df::Event *p_e) {
 		if (shoot_countdown < 0)
 			shoot_countdown = 0;
 
-        if(walkingcountdown == 0){
-            setSprite("PlayerStanding");
-            walkingcountdown = -1;
-        } else{
-            walkingcountdown --;
-        }
+		if (walkingcountdown == 0) {
+			if (ID == 1)
+				setSprite("Player1Standing");
+			else
+				setSprite("Player2Standing");
+			walkingcountdown = -1;
+		} else {
+			walkingcountdown--;
+		}
 
 		return 1;
 
@@ -62,27 +68,68 @@ int Player::eventHandler(const df::Event *p_e) {
 		const df::EventKeyboard *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
 		switch (p_keyboard_event->getKey()) {
 			case df::Keyboard::A:    // left
-				if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
-                    if(walkingcountdown<1 && onGround()){
-                        setSprite("PlayerWalking");
-                        walkingcountdown = 5;
-                    }
-
-                move(-1);
+				if (ID == 1) {
+					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
+						if (walkingcountdown < 1 && onGround()) {
+							setSprite("Player1Walking");
+							walkingcountdown = 5;
+						}
+					WM.moveObject(this, df::Vector(getPosition().getX() - 1.0, getPosition().getY()));
+				}
+				break;
+			case df::Keyboard::LEFTARROW:    // left
+				if (ID == 2) {
+					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
+						if (walkingcountdown < 1 && onGround()) {
+							setSprite("Player2Walking");
+							walkingcountdown = 5;
+						}
+					WM.moveObject(this, df::Vector(getPosition().getX() - 1.0, getPosition().getY()));
+				}
 				break;
 			case df::Keyboard::D:    // right
-				if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
-                    if(walkingcountdown<1 && onGround()){
-                        setSprite("PlayerWalking");
-                        walkingcountdown = 5;
-                    }
-
-                move(+1);
+				if (ID == 1) {
+					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
+						if (walkingcountdown < 1 && onGround()) {
+							if (ID == 1)
+								setSprite("Player1Walking");
+							else
+								setSprite("Player2Walking");
+							walkingcountdown = 5;
+						}
+					WM.moveObject(this, df::Vector(getPosition().getX() + 1.0, getPosition().getY()));
+				}
+				break;
+			case df::Keyboard::RIGHTARROW:    // right
+				if (ID == 2) {
+					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
+						if (walkingcountdown < 1 && onGround()) {
+							if (ID == 2)
+								setSprite("Player1Walking");
+							else
+								setSprite("Player2Walking");
+							walkingcountdown = 5;
+						}
+					WM.moveObject(this, df::Vector(getPosition().getX() + 1.0, getPosition().getY()));
+				}
 				break;
 			case df::Keyboard::W:    // jump
-				jump();
+				if (ID == 1)
+					jump();
+				break;
+			case df::Keyboard::UPARROW:    // jump
+				if (ID == 2)
+					jump();
 				break;
 			case df::Keyboard::E:    // grab item
+				if (ID == 1) {
+					// TODO: grab item
+				}
+				break;
+			case df::Keyboard::RIGHTSHIFT:    // grab item
+				if (ID == 2) {
+					// TODO: grab item
+				}
 				break;
 			default:    // Key not included
 				break;
@@ -92,35 +139,20 @@ int Player::eventHandler(const df::Event *p_e) {
 	if (p_e->getType() == df::MSE_EVENT) {
 		const df::EventMouse *p_mouse_event = dynamic_cast <const df::EventMouse *> (p_e);
 		if ((p_mouse_event->getMouseAction() == df::CLICKED) &&
-		    (p_mouse_event->getMouseButton() == df::Mouse::LEFT)){
-		    shoot(p_mouse_event->getMousePosition());
-        }
+		    (p_mouse_event->getMouseButton() == df::Mouse::LEFT)) {
+			shoot(p_mouse_event->getMousePosition());
+		}
 		return 1;
 	}
 	return 0;
 }
 
-int Player::move(int distance) {
-
-	//getting new position of movement
-	df::Vector new_pos(getPosition().getX() + distance, getPosition().getY());
-
-	//move object
-	return WM.moveObject(this, new_pos);
-}
-
 int Player::jump() {
 	if (onGround()) {
 		setVelocity(df::Vector(0, -jumpspeed));
-		jumpCount = 1;
 		return 1;
 	}
 
-	if (allowdoublejump && (jumpCount == 1)) {
-		setVelocity(df::Vector(0, -jumpspeed));
-		jumpCount = 0;
-		return 2;
-	}
 	return 0;
 }
 
@@ -137,4 +169,12 @@ void Player::shoot(df::Vector target) {
 	v.scale(1);
 	Arrow *p = new Arrow(getPosition());
 	p->setVelocity(v);
+}
+
+int Player::getID() const {
+	return ID;
+}
+
+void Player::setID(int id) {
+	ID = id;
 }
