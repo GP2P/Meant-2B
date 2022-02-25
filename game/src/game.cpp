@@ -4,7 +4,7 @@
 #include "WorldManager.h"
 #include "DisplayManager.h"
 #include "Box.h"
-#include "Map1.h"
+#include "Map0.h"
 
 int main() {
 	// start up game manager
@@ -17,6 +17,7 @@ int main() {
 	LM.setFlush(true);
 
 	// load resources
+	RM.loadSprite("../game/sprites/Click2Start.txt", "Click2Start");
 	RM.loadSprite("../game/sprites/Map1BG.txt", "Map1BG");
 	RM.loadSprite("../game/sprites/Player.txt", "Player");
 	RM.loadSprite("../game/sprites/Arrow.txt", "Arrow");
@@ -27,7 +28,7 @@ int main() {
 	WM.setView(df::Box(df::Vector(), 80, DM.getVertical()));
 
 	// Create GameStart object.
-	new Map1();
+	new Map0();
 
 	// Run game (this blocks until game loop is over).
 	GM.run();
