@@ -21,6 +21,8 @@ private:
 
     int walkingcountdown;
 
+    bool havestone;
+
 public:
 
 	Player();
@@ -34,6 +36,16 @@ public:
 	int jump();
 
 	void shoot(df::Vector target);
+
+    bool isHavestone() const {
+        return havestone;
+    }
+
+    void setHavestone(bool havestone) {
+        Player::havestone = havestone;
+    }
+
+
 };
 
 #endif //DF_PLAYER_H

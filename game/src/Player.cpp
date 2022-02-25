@@ -5,136 +5,147 @@
 #include "Arrow.h"
 #include "EventMouse.h"
 #include "LogManager.h"
+#include "Stone.h"
+#include "DisplayManager.h"
 
 Player::Player() {
-	setType("Player");
-	setSolidness(df::HARD);
-	setSprite("PlayerStanding");
-	setVelocity(df::Vector());
-	registerInterest(df::STEP_EVENT);
-	registerInterest(df::KEYBOARD_EVENT);
-	registerInterest(df::MSE_EVENT);
-	acceleration = df::Vector(0, 0.02);
-	jumpspeed = 0.44;
-	allowdoublejump = true;
-	jumpCount = 0;
-	shoot_slowdown = 30;
-	shoot_countdown = shoot_slowdown;
+    setType("Player");
+    setSolidness(df::HARD);
+    setSprite("PlayerStanding");
+    setVelocity(df::Vector());
+    registerInterest(df::STEP_EVENT);
+    registerInterest(df::KEYBOARD_EVENT);
+    registerInterest(df::MSE_EVENT);
+    acceleration = df::Vector(0, 0.02);
+    jumpspeed = 0.44;
+    allowdoublejump = true;
+    jumpCount = 0;
+    shoot_slowdown = 30;
+    shoot_countdown = shoot_slowdown;
     walkingcountdown = 0;
+    havestone = false;
+
 }
 
 bool Player::onGround() {
-	df::ObjectList collisions = WM.getCollisions(this, getPosition() + getVelocity());
+    df::ObjectList collisions = WM.getCollisions(this, getPosition() + getVelocity());
 
-	// soft collisions don't count as on ground
-	if (!collisions.isEmpty()) {
-		auto oli = df::ObjectListIterator(&collisions);
-		while (!oli.isDone()) {
-			if (oli.currentObject()->getSolidness() == df::HARD)
-				return true;
-			oli.next();
-		}
-		return false;
-	} else return false;
+    // soft collisions don't count as on ground
+    if (!collisions.isEmpty()) {
+        auto oli = df::ObjectListIterator(&collisions);
+        while (!oli.isDone()) {
+            if (oli.currentObject()->getSolidness() == df::HARD)
+                return true;
+            oli.next();
+        }
+        return false;
+    } else return false;
 }
 
 int Player::eventHandler(const df::Event *p_e) {
 
-	if (p_e->getType() == df::STEP_EVENT) {
-		if (!onGround()) setVelocity(getVelocity() + acceleration);
-		else setVelocity(df::Vector(0, 0));
+    if (p_e->getType() == df::STEP_EVENT) {
+        if (!onGround()) setVelocity(getVelocity() + acceleration);
+        else setVelocity(df::Vector(0, 0));
 
-		shoot_countdown--;
-		if (shoot_countdown < 0)
-			shoot_countdown = 0;
+        shoot_countdown--;
+        if (shoot_countdown < 0)
+            shoot_countdown = 0;
 
-        if(walkingcountdown == 0){
+        if (walkingcountdown == 0) {
             setSprite("PlayerStanding");
             walkingcountdown = -1;
-        } else{
-            walkingcountdown --;
+        } else {
+            walkingcountdown--;
+        }
+        if (havestone) {
+            DM.drawString(getPosition() - df::Vector(0, 3), "Press R to drop stone", df::CENTER_JUSTIFIED, df::WHITE);
         }
 
-		return 1;
+        return 1;
 
-	}
-	if (p_e->getType() == df::KEYBOARD_EVENT) {
-		const df::EventKeyboard *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
-		switch (p_keyboard_event->getKey()) {
-			case df::Keyboard::A:    // left
-				if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
-                    if(walkingcountdown<1 && onGround()){
+    }
+    if (p_e->getType() == df::KEYBOARD_EVENT) {
+        const df::EventKeyboard *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
+        switch (p_keyboard_event->getKey()) {
+            case df::Keyboard::A:    // left
+                if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
+                    if (walkingcountdown < 1 && onGround()) {
                         setSprite("PlayerWalking");
-                        walkingcountdown = 5;
+                        walkingcountdown = 10;
                     }
 
                 move(-1);
-				break;
-			case df::Keyboard::D:    // right
-				if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
-                    if(walkingcountdown<1 && onGround()){
+                break;
+            case df::Keyboard::D:    // right
+                if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
+                    if (walkingcountdown < 1 && onGround()) {
                         setSprite("PlayerWalking");
-                        walkingcountdown = 5;
+                        walkingcountdown = 10;
                     }
 
                 move(+1);
-				break;
-			case df::Keyboard::W:    // jump
-				jump();
-				break;
-			case df::Keyboard::E:    // grab item
-				break;
-			default:    // Key not included
-				break;
-		};
-		return 1;
-	}
-	if (p_e->getType() == df::MSE_EVENT) {
-		const df::EventMouse *p_mouse_event = dynamic_cast <const df::EventMouse *> (p_e);
-		if ((p_mouse_event->getMouseAction() == df::CLICKED) &&
-		    (p_mouse_event->getMouseButton() == df::Mouse::LEFT)){
-		    shoot(p_mouse_event->getMousePosition());
+                break;
+            case df::Keyboard::W:    // jump
+                jump();
+                break;
+            case df::Keyboard::R:    // place stone
+                if (havestone) {
+                    new Stone(getPosition());
+                    havestone = false;
+                }
+                break;
+            default:    // Key not included
+                break;
+        };
+        return 1;
+    }
+    if (p_e->getType() == df::MSE_EVENT) {
+        const df::EventMouse *p_mouse_event = dynamic_cast <const df::EventMouse *> (p_e);
+        if ((p_mouse_event->getMouseAction() == df::CLICKED) &&
+            (p_mouse_event->getMouseButton() == df::Mouse::LEFT)) {
+            shoot(p_mouse_event->getMousePosition());
         }
-		return 1;
-	}
-	return 0;
+        return 1;
+    }
+    return 0;
 }
 
 int Player::move(int distance) {
 
-	//getting new position of movement
-	df::Vector new_pos(getPosition().getX() + distance, getPosition().getY());
+    //getting new position of movement
+    df::Vector new_pos(getPosition().getX() + distance, getPosition().getY());
 
-	//move object
-	return WM.moveObject(this, new_pos);
+    //move object
+    return WM.moveObject(this, new_pos);
 }
 
 int Player::jump() {
-	if (onGround()) {
-		setVelocity(df::Vector(0, -jumpspeed));
-		jumpCount = 1;
-		return 1;
-	}
+    if (onGround()) {
+        setVelocity(df::Vector(0, -jumpspeed));
+        jumpCount = 1;
+        return 1;
+    }
 
-	if (allowdoublejump && (jumpCount == 1)) {
-		setVelocity(df::Vector(0, -jumpspeed));
-		jumpCount = 0;
-		return 2;
-	}
-	return 0;
+    if (allowdoublejump && (jumpCount == 1)) {
+        setVelocity(df::Vector(0, -jumpspeed));
+        jumpCount = 0;
+        return 2;
+    }
+    return 0;
 }
 
 void Player::shoot(df::Vector target) {
 
-	// See if time to shoot.
-	if (shoot_countdown > 0)
-		return;
-	shoot_countdown = shoot_slowdown;
+    // See if time to shoot.
+    if (shoot_countdown > 0)
+        return;
+    shoot_countdown = shoot_slowdown;
 
-	// Shoot Arrow towards target.
-	df::Vector v = target - getPosition();
-	v.normalize();
-	v.scale(1);
-	Arrow *p = new Arrow(getPosition());
-	p->setVelocity(v);
+    // Shoot Arrow towards target.
+    df::Vector v = target - getPosition();
+    v.normalize();
+    v.scale(1);
+    Arrow *p = new Arrow(getPosition());
+    p->setVelocity(v);
 }

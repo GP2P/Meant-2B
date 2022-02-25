@@ -15,6 +15,7 @@ PressurePlate::PressurePlate() {
 	maxopencountdown = 10;
 	opencountdown = 0;
 	registerInterest(df::STEP_EVENT);
+    registerInterest(df::COLLISION_EVENT);
     setBox(df::Box(df::Vector(-0.5,-0.5),2,1));
 }
 
@@ -42,8 +43,8 @@ int PressurePlate::draw() {
 }
 
 int PressurePlate::eventHandler(const df::Event *p_e) {
-	if (p_e->getType() == df::COLLISION_EVENT) {
-		const df::EventCollision *p_ce = dynamic_cast <const df::EventCollision *> (p_e);
+    if (p_e->getType() == df::COLLISION_EVENT) {
+        const df::EventCollision *p_ce = dynamic_cast <const df::EventCollision *> (p_e);
 		if ((p_ce->getObject1()->getType() == "Player") ||
 		    (p_ce->getObject2()->getType() == "Player")) {
 			EventGate *ev = new EventGate;
@@ -53,9 +54,17 @@ int PressurePlate::eventHandler(const df::Event *p_e) {
 			opencountdown = maxopencountdown;
 			return 1;
 		}
+        if ((p_ce->getObject1()->getType() == "Stone") ||
+            (p_ce->getObject2()->getType() == "Stone")) {
+            EventGate *ev = new EventGate;
+            ev->setColor(color);
+            ev->setOpen(true);
+            WM.onEvent(ev);
+            opencountdown = maxopencountdown;
+            return 1;
+        }
 	}
 	if (p_e->getType() == df::STEP_EVENT) {
-		LM.writeLog("%i", opencountdown);
 		if (opencountdown == 0) {
 			EventGate *eog = new EventGate;
 			eog->setColor(color);

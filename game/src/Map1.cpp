@@ -6,6 +6,7 @@
 #include "PressurePlate.h"
 #include "Gate.h"
 #include "Inventory.h"
+#include "Stone.h"
 
 Map1::Map1() {
 	setType("Map1");
@@ -39,7 +40,10 @@ void Map1::start() {
 	new Gate(df::Vector(15, 12), UP, df::WHITE);
 	new PressurePlate(df::Vector(15, 18), df::WHITE, 2);
 
-	// gate 2
+    new Stone(df::Vector(21, 9));
+
+
+    // gate 2
 	new PressurePlate(df::Vector(58, 18), df::YELLOW, 2);
 	new Gate(df::Vector(64, 18), UP, df::YELLOW);
 
