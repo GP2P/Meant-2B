@@ -19,6 +19,8 @@ private:
 
 	int shoot_slowdown;
 
+    int walkingcountdown;
+
 public:
 
 	Player();

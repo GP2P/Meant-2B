@@ -19,8 +19,10 @@ int main() {
 	// load resources
 	RM.loadSprite("../game/sprites/Click2Start.txt", "Click2Start");
 	RM.loadSprite("../game/sprites/Map1BG.txt", "Map1BG");
-	RM.loadSprite("../game/sprites/Player.txt", "Player");
-	RM.loadSprite("../game/sprites/Arrow.txt", "Arrow");
+	RM.loadSprite("../game/sprites/Player-walking.txt", "PlayerWalking");
+    RM.loadSprite("../game/sprites/Player-standing.txt", "PlayerStanding");
+
+    RM.loadSprite("../game/sprites/Arrow.txt", "Arrow");
 	RM.loadMusic("../game/music/Map1BGM.wav", "Map1BGM");
 
 	// adjust view

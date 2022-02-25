@@ -9,7 +9,7 @@
 Player::Player() {
 	setType("Player");
 	setSolidness(df::HARD);
-	setSprite("Player");
+	setSprite("PlayerStanding");
 	setVelocity(df::Vector());
 	registerInterest(df::STEP_EVENT);
 	registerInterest(df::KEYBOARD_EVENT);
@@ -20,6 +20,7 @@ Player::Player() {
 	jumpCount = 0;
 	shoot_slowdown = 30;
 	shoot_countdown = shoot_slowdown;
+    walkingcountdown = 0;
 }
 
 bool Player::onGround() {
@@ -47,6 +48,13 @@ int Player::eventHandler(const df::Event *p_e) {
 		if (shoot_countdown < 0)
 			shoot_countdown = 0;
 
+        if(walkingcountdown == 0){
+            setSprite("PlayerStanding");
+            walkingcountdown = -1;
+        } else{
+            walkingcountdown --;
+        }
+
 		return 1;
 
 	}
@@ -55,11 +63,21 @@ int Player::eventHandler(const df::Event *p_e) {
 		switch (p_keyboard_event->getKey()) {
 			case df::Keyboard::A:    // left
 				if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
-					move(-1);
+                    if(walkingcountdown<1 && onGround()){
+                        setSprite("PlayerWalking");
+                        walkingcountdown = 5;
+                    }
+
+                move(-1);
 				break;
 			case df::Keyboard::D:    // right
 				if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
-					move(+1);
+                    if(walkingcountdown<1 && onGround()){
+                        setSprite("PlayerWalking");
+                        walkingcountdown = 5;
+                    }
+
+                move(+1);
 				break;
 			case df::Keyboard::W:    // jump
 				jump();
@@ -72,12 +90,11 @@ int Player::eventHandler(const df::Event *p_e) {
 		return 1;
 	}
 	if (p_e->getType() == df::MSE_EVENT) {
-		LM.writeLog("received mouse event");
 		const df::EventMouse *p_mouse_event = dynamic_cast <const df::EventMouse *> (p_e);
 		if ((p_mouse_event->getMouseAction() == df::CLICKED) &&
-		    (p_mouse_event->getMouseButton() == df::Mouse::LEFT))
-			LM.writeLog("mouse!");
-		shoot(p_mouse_event->getMousePosition());
+		    (p_mouse_event->getMouseButton() == df::Mouse::LEFT)){
+		    shoot(p_mouse_event->getMousePosition());
+        }
 		return 1;
 	}
 	return 0;

@@ -18,6 +18,7 @@ private:
 
 	Direction direction;
 	df::Color color;
+    bool open;
 
 public:
 

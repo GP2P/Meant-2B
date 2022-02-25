@@ -1,21 +1,13 @@
 <HEADER>
-frames 3
+frames 1
 width 3
 height 3
 color green
 slowdown 4
 </HEADER>
 <BODY>
- i 
- | 
-/ \
-end
- i 
- | 
- | 
-end
- i 
- | 
+ o 
+/|\
 / \
 end
 </BODY>
