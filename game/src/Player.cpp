@@ -10,12 +10,12 @@ Player::Player() {
 	setType("Player");
 	setSolidness(df::HARD);
 	setSprite("Player");
-	setVelocity(df::Vector(1, 0));
+	setVelocity(df::Vector());
 	registerInterest(df::STEP_EVENT);
 	registerInterest(df::KEYBOARD_EVENT);
 	registerInterest(df::MSE_EVENT);
 	acceleration = df::Vector(0, 0.01);
-	jumpspeed = 0.3;
+	jumpspeed = 0.33;
 	allowdoublejump = true;
 	jumpCount = 0;
 	shoot_slowdown = 30;
