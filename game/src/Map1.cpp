@@ -47,8 +47,10 @@ void Map1::start() {
 	new PressurePlate(df::Vector(58, 18), df::YELLOW, 2);
 	new Gate(df::Vector(64, 18), UP, df::YELLOW);
 
-	auto *player1 = new Player;
+	auto *player1 = new Player(1);
+	auto *player2 = new Player(2);
 	player1->setPosition(df::Vector(10, 2));
+	player2->setPosition(df::Vector(69, 2));
 
 	WM.markForDelete(this);
 }
