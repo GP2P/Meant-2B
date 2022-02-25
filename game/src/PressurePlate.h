@@ -11,10 +11,13 @@
 class PressurePlate : public df::Object {
 private:
     df::Color color;
+    int opencountdown;
+    int maxopencountdown;
+
 public:
     PressurePlate();
 
-    PressurePlate(df::Vector position, df::Color new_color);
+    PressurePlate(df::Vector position, df::Color new_color,int opcountdown);
 
     int draw();
 

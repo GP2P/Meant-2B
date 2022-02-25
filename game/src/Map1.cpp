@@ -8,6 +8,7 @@
 #include "PressurePlate.h"
 #include "Gate.h"
 #include "Inventory.h"
+#include "Lever.h"
 
 
 Map1::Map1() {
@@ -37,7 +38,7 @@ void Map1::start() {
 	new Block(df::Vector(54, 20));
 	new Block(df::Vector(55, 20));
 	new Block(df::Vector(56, 20));
-    new PressurePlate(df::Vector(56, 19),df::BLUE);
+    new PressurePlate(df::Vector(56, 19),df::BLUE,10);
     new Gate(df::Vector(52, 16),RIGHT,df::BLUE);
     new Block(df::Vector(57, 20));
 	new Block(df::Vector(58, 20));

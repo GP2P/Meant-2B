@@ -15,3 +15,10 @@ void EventOpenGate::setColor(df::Color Color){
     color = Color;
 }
 
+bool EventOpenGate::getOpen() const{
+    return open;
+}
+void EventOpenGate::setOpen(bool new_open){
+    open = new_open;
+}
+

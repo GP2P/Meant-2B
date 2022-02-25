@@ -11,12 +11,16 @@
 
 class EventOpenGate : public df::Event{
 private:
-    df::Color color;
+    df::Color color; //only trigger with same color can open gate
+    bool open; // open(true) or close (false)
 
 public:
     EventOpenGate();
     df::Color getColor() const;
     void setColor(df::Color Color);
+    bool getOpen() const;
+    void setOpen(bool open);
+
 
 };
 

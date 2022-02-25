@@ -48,8 +48,13 @@ int Gate::eventHandler(const df::Event *p_e){
     if (p_e->getType() == "OpenGateEvent") {
         const EventOpenGate *p_oge = dynamic_cast <const EventOpenGate *> (p_e);
         if(p_oge->getColor() == color) {
-            setSolidness(df::SOFT);
-            color = df::CYAN;
+            if (p_oge->getOpen() == true) {
+                LM.writeLog("open gate");
+                setSolidness(df::SOFT);
+            } else if(p_oge->getOpen() == false) {
+                LM.writeLog("close gate");
+                setSolidness(df::HARD);
+            }
         }
      }
 }
