@@ -14,8 +14,8 @@ Player::Player() {
 	registerInterest(df::STEP_EVENT);
 	registerInterest(df::KEYBOARD_EVENT);
 	registerInterest(df::MSE_EVENT);
-	acceleration = df::Vector(0, 0.01);
-	jumpspeed = 0.33;
+	acceleration = df::Vector(0, 0.02);
+	jumpspeed = 0.44;
 	allowdoublejump = true;
 	jumpCount = 0;
 	shoot_slowdown = 30;
