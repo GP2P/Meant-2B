@@ -33,8 +33,14 @@ void Map1::start() {
 
 	buildBlocks(df::Vector(8, 24), df::Vector(78, 24), '#');
 
-	new PressurePlate(df::Vector(56, 19), df::BLUE, 10);
-	new Gate(df::Vector(52, 16), RIGHT, df::BLUE);
+	// gate 1
+	new PressurePlate(df::Vector(21, 12), df::BLUE, 1);
+	new Gate(df::Vector(15, 12), UP, df::BLUE);
+	new PressurePlate(df::Vector(15, 18), df::BLUE, 1);
+
+	// gate 2
+	new PressurePlate(df::Vector(58, 18), df::YELLOW, 1);
+	new Gate(df::Vector(64, 18), UP, df::YELLOW);
 
 	auto *player1 = new Player;
 	player1->setPosition(df::Vector(10, 2));
