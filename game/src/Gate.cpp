@@ -36,19 +36,22 @@ int Gate::draw() {
 		default:
 			return 0;
 	}
+	return -1;
 }
 
 int Gate::eventHandler(const df::Event *p_e) {
 	if (p_e->getType() == "GateEvent") {
-		const EventGate *p_oge = dynamic_cast <const EventGate *> (p_e);
+		const auto *p_oge = dynamic_cast <const EventGate *> (p_e);
 		if (p_oge->getColor() == color) {
-			if (p_oge->getOpen() == true) {
+			if (p_oge->getOpen()) {
 				LM.writeLog("open gate");
 				setSolidness(df::SOFT);
-			} else if (p_oge->getOpen() == false) {
+			} else if (!p_oge->getOpen()) {
 				LM.writeLog("close gate");
 				setSolidness(df::HARD);
 			}
 		}
+		return 1;
 	}
+	return 0;
 }

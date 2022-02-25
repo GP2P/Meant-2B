@@ -27,7 +27,7 @@ void Map1::start() {
 	buildBlocks(df::Vector(0, 5), df::Vector(35, 5), '#');
 	buildBlocks(df::Vector(44, 5), df::Vector(79, 5), '#');
 
-	new PressurePlate(df::Vector(56, 19), df::BLUE);
+	new PressurePlate(df::Vector(56, 19), df::BLUE, 10);
 	new Gate(df::Vector(52, 16), RIGHT, df::BLUE);
 
 	auto *player1 = new Player;
