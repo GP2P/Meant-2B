@@ -64,8 +64,12 @@ int Player::eventHandler(const df::Event *p_e) {
 			walkingcountdown--;
 		}
         if (havestone) {
-            DM.drawString(getPosition() - df::Vector(0, 3), "Press R to drop stone", df::CENTER_JUSTIFIED, df::WHITE);
-        }
+            if (getID() == 1) {
+                DM.drawString(getPosition() - df::Vector(0, 3), "Press R to drop stone", df::CENTER_JUSTIFIED, df::WHITE);
+            }
+            if (getID() == 2) {
+                DM.drawString(getPosition() - df::Vector(0, 3), "Press Right Shift to drop stone", df::CENTER_JUSTIFIED, df::WHITE);
+            }        }
 
         return 1;
 
@@ -97,11 +101,8 @@ int Player::eventHandler(const df::Event *p_e) {
 				if (ID == 1) {
 					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
 						if (walkingcountdown < 1 && onGround()) {
-							if (ID == 1)
-								setSprite("Player1Walking");
-							else
-								setSprite("Player2Walking");
-							walkingcountdown = 5;
+                            setSprite("Player1Walking");
+							walkingcountdown = 10;
 						}
 					WM.moveObject(this, df::Vector(getPosition().getX() + (float) 1.0, getPosition().getY()));
 				}
@@ -110,11 +111,8 @@ int Player::eventHandler(const df::Event *p_e) {
 				if (ID == 2) {
 					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
 						if (walkingcountdown < 1 && onGround()) {
-							if (ID == 2)
-								setSprite("Player1Walking");
-							else
-								setSprite("Player2Walking");
-							walkingcountdown = 5;
+							setSprite("Player2Walking");
+							walkingcountdown = 10;
 						}
 					WM.moveObject(this, df::Vector(getPosition().getX() + (float) 1.0, getPosition().getY()));
 				}

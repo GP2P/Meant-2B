@@ -21,7 +21,7 @@ Stone::Stone(df::Vector location) {
     registerInterest(df::STEP_EVENT);
     registerInterest(df::COLLISION_EVENT);
     registerInterest(df::KEYBOARD_EVENT);
-    setBox(df::Box(df::Vector(-1.5,-1.5),3,2));
+    setBox(df::Box(df::Vector(-1.5,-1.5),2.4,2));
 }
 
 int Stone::eventHandler(const df::Event *p_e) {
@@ -56,7 +56,13 @@ int Stone::eventHandler(const df::Event *p_e) {
         const df::EventKeyboard *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
         switch (p_keyboard_event->getKey()) {
             case df::Keyboard::E:
-                if (nearPlayer) {
+                if (nearPlayer && player->getID() == 1) {
+                    player->setHavestone(true);
+                    WM.markForDelete(this);
+                }
+                break;
+            case df::Keyboard::SLASH:
+                if (nearPlayer && player->getID() == 2) {
                     player->setHavestone(true);
                     WM.markForDelete(this);
                 }
@@ -71,7 +77,12 @@ int Stone::eventHandler(const df::Event *p_e) {
 int Stone::draw() {
     DM.drawCh(getPosition(), '@', df::CYAN);
     if (nearPlayer) {
-        DM.drawString(getPosition() - df::Vector(0, 4), "Press E to carry", df::CENTER_JUSTIFIED, df::WHITE);
+        if (player->getID() == 1) {
+            DM.drawString(getPosition() - df::Vector(0, 4), "Press E to carry", df::CENTER_JUSTIFIED, df::WHITE);
+        }
+        if (player->getID() == 2) {
+            DM.drawString(getPosition() - df::Vector(0, 4), "Press slash to carry", df::CENTER_JUSTIFIED, df::WHITE);
+        }
     }
     return 1;
 }
