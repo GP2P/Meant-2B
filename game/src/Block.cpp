@@ -47,3 +47,9 @@ df::Color Block::getColor() const {
 void Block::setColor(df::Color color) {
 	Block::color = color;
 }
+
+void buildBlocks(df::Vector start, df::Vector end, char character, df::Color color) {
+	for (int x = start.getX(); x <= end.getX(); x++)
+		for (int y = start.getY(); y <= end.getY(); y++)
+			new Block(df::Vector(x, y), character, color);;
+}
