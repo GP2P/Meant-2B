@@ -74,7 +74,7 @@ int Player::eventHandler(const df::Event *p_e) {
 							setSprite("Player1Walking");
 							walkingcountdown = 5;
 						}
-					WM.moveObject(this, df::Vector(getPosition().getX() - 1.0, getPosition().getY()));
+					WM.moveObject(this, df::Vector(getPosition().getX() - (float) 1.0, getPosition().getY()));
 				}
 				break;
 			case df::Keyboard::LEFTARROW:    // left
@@ -84,7 +84,7 @@ int Player::eventHandler(const df::Event *p_e) {
 							setSprite("Player2Walking");
 							walkingcountdown = 5;
 						}
-					WM.moveObject(this, df::Vector(getPosition().getX() - 1.0, getPosition().getY()));
+					WM.moveObject(this, df::Vector(getPosition().getX() - (float) 1.0, getPosition().getY()));
 				}
 				break;
 			case df::Keyboard::D:    // right
@@ -97,7 +97,7 @@ int Player::eventHandler(const df::Event *p_e) {
 								setSprite("Player2Walking");
 							walkingcountdown = 5;
 						}
-					WM.moveObject(this, df::Vector(getPosition().getX() + 1.0, getPosition().getY()));
+					WM.moveObject(this, df::Vector(getPosition().getX() + (float) 1.0, getPosition().getY()));
 				}
 				break;
 			case df::Keyboard::RIGHTARROW:    // right
@@ -110,7 +110,7 @@ int Player::eventHandler(const df::Event *p_e) {
 								setSprite("Player2Walking");
 							walkingcountdown = 5;
 						}
-					WM.moveObject(this, df::Vector(getPosition().getX() + 1.0, getPosition().getY()));
+					WM.moveObject(this, df::Vector(getPosition().getX() + (float) 1.0, getPosition().getY()));
 				}
 				break;
 			case df::Keyboard::W:    // jump
