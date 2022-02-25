@@ -5,6 +5,7 @@
 #include "DisplayManager.h"
 #include "Box.h"
 #include "Map0.h"
+#include "Boss.h"
 
 int main() {
 	// start up game manager
@@ -26,13 +27,14 @@ int main() {
 	RM.loadSprite("../game/sprites/Player2-walking.txt", "Player2Walking");
 	RM.loadSprite("../game/sprites/Player2-standing.txt", "Player2Standing");
 	RM.loadSprite("../game/sprites/Arrow.txt", "Arrow");
+    RM.loadSprite("../game/sprites/Boss.txt", "Boss");
 
 	// adjust view
 	WM.setBoundary(df::Box(df::Vector(), 80, DM.getVertical()));
 	WM.setView(df::Box(df::Vector(), 80, DM.getVertical()));
 
 	// Create GameStart object.
-	new Map0();
+	new Boss();
 
 	// Run game (this blocks until game loop is over).
 	GM.run();

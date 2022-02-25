@@ -1,0 +1,48 @@
+<HEADER>
+frames 6
+width 10
+height 5
+color red
+slowdown 4
+</HEADER>
+<BODY>
+    /\    
+   /LL\   
+  /LL@L\  
+ /@LLLLL\ 
+/LLLL@LLL\
+end
+    /\    
+   /LL\   
+  /oLLo\  
+ /LLLLLL\ 
+/LLLoLLLL\
+end
+    /\    
+   /LL\   
+  /LLLL\  
+ /LLLLLL\ 
+/LLLLLLLL\
+end
+    /\    
+   /LL\   
+  /L@LL\  
+ /LLLLL@\ 
+/LLL@LLLL\
+end
+    /\    
+   /LL\   
+  /LLLo\  
+ /LoLLLL\ 
+/LLLLLLoL\
+end
+    /\    
+   /LL\   
+  /LLLL\  
+ /LLLLLL\ 
+/LLLLLLLL\
+end
+</BODY>
+<FOOTER>
+version 1
+</FOOTER>
