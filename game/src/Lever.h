@@ -3,6 +3,7 @@
 
 #include "Object.h"
 #include "Color.h"
+#include "Player.h"
 
 class Lever : public df::Object {
 
@@ -12,15 +13,23 @@ private:
 
 	char character;
 
+    int nearCountdown;
+
+    bool nearPlayer;
+
+    Player* player;
+
 public:
 
 	Lever();
 
-	Lever(df::Vector position, df::Color new_color);
+	Lever(df::Vector position);
 
 	int draw();
 
 	int eventHandler(const df::Event *p_e);
+
+
 
 };
 
