@@ -207,3 +207,7 @@ int Player::getID() const {
 void Player::setID(int id) {
 	ID = id;
 }
+
+bool Player::haveItem() {
+    return (haveStone||haveBow||haveWand);
+}
