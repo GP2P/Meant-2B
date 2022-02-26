@@ -209,5 +209,5 @@ void Player::setID(int id) {
 }
 
 bool Player::haveItem() {
-    return (haveStone||haveBow||haveWand);
+	return (haveStone || haveBow || haveWand);
 }

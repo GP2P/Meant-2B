@@ -13,11 +13,11 @@ private:
 
 	char character;
 
-    int nearCountdown;
+	int nearCountdown;
 
-    bool nearPlayer;
+	bool nearPlayer;
 
-    Player* player;
+	Player *player;
 
 public:
 
@@ -28,7 +28,6 @@ public:
 	int draw();
 
 	int eventHandler(const df::Event *p_e);
-
 
 
 };
