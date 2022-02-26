@@ -108,4 +108,5 @@ int Lever::eventHandler(const df::Event *p_e) {
 		}
 		return 1;
 	}
+	return 0;
 }

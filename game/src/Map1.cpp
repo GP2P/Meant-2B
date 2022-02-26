@@ -58,6 +58,8 @@ void Map1::start() {
 	auto *player2 = new Player(2);
 	player1->setPosition(df::Vector(10, 2));
 	player2->setPosition(df::Vector(69, 2));
+	player1->setMapNum(1);
+	player2->setMapNum(1);
 }
 
 void Map1::stop() {
@@ -68,6 +70,8 @@ void Map1::stop() {
 			// prevent players from getting back and teleported to the void
 			if (oli.currentObject()->getPosition().getX() > 80)
 				oli.currentObject()->setPosition(oli.currentObject()->getPosition() + df::Vector(-80, 0));
+			auto *p_player = dynamic_cast<Player *>(oli.currentObject());
+			p_player->setMapNum(2);
 		} else
 			WM.markForDelete(oli.currentObject());
 		oli.next();

@@ -6,6 +6,7 @@
 #include "WorldManager.h"
 #include "Player.h"
 #include "Lever.h"
+#include "Bow.h"
 
 Map3::Map3() {
 	setType("Map3");
@@ -25,22 +26,19 @@ Map3::~Map3() {
 void Map3::start() {
 	p_music->play();
 
-	auto *player1 = new Player(1);
-	auto *player2 = new Player(2);
-	player1->setPosition(df::Vector(71, 8));
-	player1->setHaveBow(true);
-	player2->setPosition(df::Vector(39, 28));
-	player2->setHaveWand(true);
-
 	// get status of players
 	auto ol = WM.objectsOfType("Player");
 	auto oli = df::ObjectListIterator(&ol);
 	while (!oli.isDone()) {
 		auto *p_player = dynamic_cast<Player *>(oli.currentObject());
-		if (p_player->isHaveBow())
-			bowAlive = true;
-		if (p_player->isHaveWand())
+		if (p_player->isHaveWand()) {
+			p_player->setHaveWand(false);
 			wandAlive = true;
+		}
+		if (p_player->isHaveBow()) {
+			p_player->setHaveBow(true);
+			bowAlive = true;
+		}
 		oli.next();
 	}
 
@@ -61,17 +59,22 @@ void Map3::start() {
 
 		// lever
 		new Lever(df::Vector(78, 9));
+	} else {
+		// altar
+		new Block(df::Vector(22, 30), '\\', df::GREEN, 'a');
+		new Block(df::Vector(23, 30), '_', df::GREEN, 'a');
+		new Block(df::Vector(24, 30), '_', df::GREEN, 'a');
+		new Block(df::Vector(25, 30), '/', df::GREEN, 'a');
+
+		// bow
+		new Bow(df::Vector(24, 29));
 	}
 
 	// escape door
-	auto b1 = new Block(df::Vector(79, 7), '|');
-	auto b2 = new Block(df::Vector(79, 8), '|');
-	auto b3 = new Block(df::Vector(79, 9), '|');
-	auto b4 = new Block(df::Vector(79, 10), '|');
-	p_escapeDoor[0] = b1;
-	p_escapeDoor[1] = b2;
-	p_escapeDoor[2] = b3;
-	p_escapeDoor[3] = b4;
+	p_escapeDoor[0] = new Block(df::Vector(79, 7), '|');
+	p_escapeDoor[1] = new Block(df::Vector(79, 8), '|');
+	p_escapeDoor[2] = new Block(df::Vector(79, 9), '|');
+	p_escapeDoor[3] = new Block(df::Vector(79, 10), '|');
 
 	// boss
 	new Boss();
@@ -88,9 +91,18 @@ int Map3::draw() {
 		DM.drawString(df::Vector(78, 13), "Defeat the illuminati", df::RIGHT_JUSTIFIED, df::WHITE);
 		DM.drawString(df::Vector(78, 14), "with your bow!", df::RIGHT_JUSTIFIED, df::WHITE);
 	}
-	if (wandAlive)
-		DM.drawString(df::Vector(39, 27), "The wand was taken from you... Stay alive!", df::CENTER_JUSTIFIED,
+	if (wandAlive && bowAlive)
+		DM.drawString(df::Vector(39, 26), "The wand was taken from you... Stay alive!", df::CENTER_JUSTIFIED,
 		              df::MAGENTA);
+	if (wandAlive && !bowAlive) {
+
+		DM.drawString(df::Vector(39, 26), "The wand was taken from you...", df::CENTER_JUSTIFIED,
+		              df::MAGENTA);
+		DM.drawString(df::Vector(39, 27), "Defeat the illuminati with this completely normal bow!",
+		              df::CENTER_JUSTIFIED,
+		              df::WHITE);
+	}
+
 	return Object::draw();
 }
 

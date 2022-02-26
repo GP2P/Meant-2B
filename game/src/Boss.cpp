@@ -18,11 +18,17 @@ Boss::Boss() {
     hp  = 5;
     fireSlowdown = 60;
     fireCountdown = fireSlowdown;
+	hp = 5;
 }
 
 int Boss::eventHandler(const df::Event *p_e) {
 
 	if (p_e->getType() == df::STEP_EVENT) {
+		if (hp <= 0) {
+			WM.markForDelete(this);
+		}
+		if (moveCountdown > 0 && (getPosition().getX() < DM.getHorizontal() - 3) && (getPosition().getX() > 3)
+		    && (getPosition().getY() < DM.getVertical() - 7) && (getPosition().getY() > 2)) {
         if(hp<=0){
             WM.markForDelete(this);
         }
@@ -58,18 +64,18 @@ int Boss::eventHandler(const df::Event *p_e) {
 		    (p_ce->getObject2()->getType() == "Player")) {
 			WM.markForDelete(p_ce->getObject1());
 			WM.markForDelete(p_ce->getObject2());
-            return 1;
+			return 1;
 		}
 	}
-    return 0;
+	return 0;
 }
 
 int Boss::getHp() const {
-    return hp;
+	return hp;
 }
 
 void Boss::setHp(int Hp) {
-    hp = Hp;
+	hp = Hp;
 }
 
 void Boss::fire(){

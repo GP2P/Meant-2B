@@ -74,6 +74,7 @@ void Map2::stop() {
 				oli.currentObject()->setPosition(df::Vector(71, 8));
 			else
 				oli.currentObject()->setPosition(df::Vector(39, 28));
+			p_player->setMapNum(3);
 		} else
 			WM.markForDelete(oli.currentObject());
 		oli.next();
@@ -81,17 +82,39 @@ void Map2::stop() {
 }
 
 int Map2::draw() {
-	auto bowList = WM.objectsOfType("Bow");
-	if (bowList.isEmpty())
-		DM.drawString(df::Vector(24, 27), "Use < and > to shoot arrows", df::CENTER_JUSTIFIED, df::WHITE);
-	else
-		DM.drawString(df::Vector(24, 27), "Just a normal Bow", df::CENTER_JUSTIFIED, df::WHITE);
+	bool bowOut = false;
+	bool wandOut = false;
 
-	auto wandList = WM.objectsOfType("Wand");
-	if (wandList.isEmpty())
-		DM.drawString(df::Vector(55, 27), "Create blocks where you drag", df::CENTER_JUSTIFIED, df::MAGENTA);
-	else
-		DM.drawString(df::Vector(55, 27), "The Great Wand of Creation", df::CENTER_JUSTIFIED, df::MAGENTA);
+	auto ol = WM.objectsOfType("Player");
+	auto oli = df::ObjectListIterator(&ol);
+	while (!oli.isDone()) {
+		auto *p_player = dynamic_cast<Player *>(oli.currentObject());
+		if (p_player->isHaveBow()) {
+			bowOut = true;
+			DM.drawString(df::Vector(24, 27),
+			              p_player->getID() == 1 ? "Use Q and E to shoot arrows" : "Use < and > to shoot arrows",
+			              df::CENTER_JUSTIFIED, df::WHITE);
+		} else if (p_player->isHaveWand()) {
+			wandOut = true;
+			DM.drawString(df::Vector(55, 27), "Create blocks where you drag", df::CENTER_JUSTIFIED, df::MAGENTA);
+		}
+		oli.next();
+	}
+
+	if (!bowOut) {
+		auto bl = WM.objectsOfType("Bow");
+		auto bli = df::ObjectListIterator(&bl);
+		DM.drawString(
+				df::Vector(bli.currentObject()->getPosition().getX(), bli.currentObject()->getPosition().getY() - 2),
+				"Just a normal Bow", df::CENTER_JUSTIFIED, df::WHITE);
+	}
+	if (!wandOut) {
+		auto wl = WM.objectsOfType("Wand");
+		auto wli = df::ObjectListIterator(&wl);
+		DM.drawString(
+				df::Vector(wli.currentObject()->getPosition().getX(), wli.currentObject()->getPosition().getY() - 2),
+				"The Great Wand of Creation", df::CENTER_JUSTIFIED, df::MAGENTA);
+	}
 
 	DM.drawString(df::Vector(71, 5), "Pull to leave", df::CENTER_JUSTIFIED, df::YELLOW);
 
