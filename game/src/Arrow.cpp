@@ -12,7 +12,7 @@ Arrow::Arrow(df::Vector player_pos) {
 
     setSprite("ArrowLeft");
 	// Set starting location, based on hero's position passed in.
-	df::Vector p(player_pos.getX() + 3, player_pos.getY());
+	df::Vector p(player_pos.getX()+3, player_pos.getY());
 	setPosition(p);
 
 	// Bullets move 1 space each game loop.
@@ -44,9 +44,15 @@ int Arrow::eventHandler(const df::Event *p_e) {
             return 1;
         }
         if ((p_ce->getObject1()->getType() == "Bat") ||
-            (p_ce->getObject2()->getType() == "Bat")) {            WM.markForDelete(this);
+            (p_ce->getObject2()->getType() == "Bat")){
             WM.markForDelete(p_ce->getObject1());
             WM.markForDelete(p_ce->getObject2());
+            return 1;
+        }
+        if ((p_ce->getObject1()->getType() == "Block") ||
+            (p_ce->getObject2()->getType() == "Block"))
+        {
+            setVelocity(df::Vector(0,0));
             return 1;
         }
     }

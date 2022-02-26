@@ -10,6 +10,10 @@ private:
 	int moveCountdown;
 
     int hp;
+
+    int fireCountdown;
+
+    int fireSlowdown;
 public:
     int getHp() const;
 
@@ -18,6 +22,8 @@ public:
 	Boss();
 
 	int eventHandler(const df::Event *p_e) override;
+
+    void fire();
 };
 
 #endif //MEANT_2B_DF_BOSS_H
