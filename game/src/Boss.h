@@ -9,7 +9,11 @@ private:
 
 	int moveCountdown;
 
+    int hp;
 public:
+    int getHp() const;
+
+    void setHp(int hp);
 
 	Boss();
 

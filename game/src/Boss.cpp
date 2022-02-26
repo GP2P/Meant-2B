@@ -39,6 +39,16 @@ int Boss::eventHandler(const df::Event *p_e) {
 		    (p_ce->getObject2()->getType() == "Player")) {
 			WM.markForDelete(p_ce->getObject1());
 			WM.markForDelete(p_ce->getObject2());
+            return 1;
 		}
 	}
+    return 0;
+}
+
+int Boss::getHp() const {
+    return hp;
+}
+
+void Boss::setHp(int Hp) {
+    hp = Hp;
 }

@@ -230,7 +230,7 @@ void Player::shoot(df::Vector target) {
 	// Shoot Arrow towards target.
 	df::Vector v = target - getPosition();
 	v.normalize();
-	v.scale(1);
+	v.scale(1.5);
 
 	auto *p = new Arrow(getPosition());
     if((target - getPosition()).getX()<0){
