@@ -288,10 +288,10 @@ int Player::draw() {
     if(haveWand){
         if(direction == "right") {
             DM.drawCh(getPosition() + df::Vector(1.3, 0), '/', df::WHITE);
-            DM.drawCh(getPosition() + df::Vector(1.8, -0.5), 'o', df::RED);
+            DM.drawCh(getPosition() + df::Vector(1.8, -0.5), '*', df::MAGENTA);
         } else{
             DM.drawCh(getPosition() - df::Vector(1.3, 0), '\\', df::WHITE);
-            DM.drawCh(getPosition() - df::Vector(1.8, +0.5), 'o', df::RED);
+            DM.drawCh(getPosition() - df::Vector(1.8, +0.5), '*', df::MAGENTA);
         }
     }
 }

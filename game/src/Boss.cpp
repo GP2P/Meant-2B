@@ -12,11 +12,15 @@ Boss::Boss() {
 	moveCountdown = 30;
 	registerInterest(df::STEP_EVENT);
 	setSolidness(df::SOFT);
+    hp  = 5;
 }
 
 int Boss::eventHandler(const df::Event *p_e) {
 
 	if (p_e->getType() == df::STEP_EVENT) {
+        if(hp<=0){
+            WM.markForDelete(this);
+        }
 		if (moveCountdown > 0 && (getPosition().getX() < DM.getHorizontal() - 3) && (getPosition().getX() > 3)
 		    && (getPosition().getY() < DM.getVertical() - 7) && (getPosition().getY() > 2)) {
 			moveCountdown--;
