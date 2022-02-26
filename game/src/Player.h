@@ -24,6 +24,8 @@ public:
 
 	Player(int ID);
 
+	~Player() override;
+
 	int eventHandler(const df::Event *p_e) override;
 
 	bool onGround();
