@@ -19,6 +19,7 @@ int main() {
 
 	// load resources
 	RM.loadSprite("../game/sprites/Click2Start.txt", "Click2Start");
+	RM.loadMusic("../game/music/Map0BGM.wav", "Map0BGM");
 	RM.loadSprite("../game/sprites/Map1BG.txt", "Map1BG");
 	RM.loadMusic("../game/music/Map1BGM.wav", "Map1BGM");
 

@@ -1,7 +1,3 @@
-//
-// Created by 方申 on 2/25/22.
-//
-
 #include "Stone.h"
 #include "EventStep.h"
 #include "EventCollision.h"
@@ -9,14 +5,13 @@
 #include "WorldManager.h"
 #include "LogManager.h"
 
-
 Stone::Stone(df::Vector location) {
 	setSolidness(df::SOFT);
 	setType("Stone");
 	setPosition(location);
 	nearPlayer = false;
-	player = NULL;
-	nearcountdown = 0;
+	player = nullptr;
+	nearCountdown = 0;
 	acceleration = df::Vector(0, 0.02);
 	registerInterest(df::STEP_EVENT);
 	registerInterest(df::COLLISION_EVENT);
@@ -26,52 +21,53 @@ Stone::Stone(df::Vector location) {
 
 int Stone::eventHandler(const df::Event *p_e) {
 	if (p_e->getType() == df::COLLISION_EVENT) {
-		const df::EventCollision *p_ce = dynamic_cast <const df::EventCollision *> (p_e);
+		const auto *p_ce = dynamic_cast <const df::EventCollision *> (p_e);
 		if ((p_ce->getObject1()->getType() == "Player")) {
-			Player *p = dynamic_cast <Player *> (p_ce->getObject1());
+			auto *p = dynamic_cast <Player *> (p_ce->getObject1());
 			nearPlayer = true;
 			player = p;
-			nearcountdown = 4;
+			nearCountdown = 4;
 			return 1;
 		} else if (p_ce->getObject2()->getType() == "Player") {
-			Player *p = dynamic_cast <Player *> (p_ce->getObject2());
+			auto *p = dynamic_cast <Player *> (p_ce->getObject2());
 			nearPlayer = true;
 			player = p;
-			nearcountdown = 4;
+			nearCountdown = 4;
 			return 1;
 		}
 	}
 	if (p_e->getType() == df::STEP_EVENT) {
 		if (!onGround()) setVelocity(getVelocity() + acceleration);
 		else setVelocity(df::Vector(0, 0));
-		nearcountdown--;
-		if (nearcountdown <= 0) {
+		nearCountdown--;
+		if (nearCountdown <= 0) {
 			nearPlayer = false;
-			player = NULL;
+			player = nullptr;
 		}
 		return 1;
 	}
 
 	if (p_e->getType() == df::KEYBOARD_EVENT) {
-		const df::EventKeyboard *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
+		const auto *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
 		switch (p_keyboard_event->getKey()) {
 			case df::Keyboard::E:
 				if (nearPlayer && player->getID() == 1) {
-					player->setHavestone(true);
+					player->setHaveStone(true);
 					WM.markForDelete(this);
 				}
 				break;
 			case df::Keyboard::SLASH:
 				if (nearPlayer && player->getID() == 2) {
-					player->setHavestone(true);
+					player->setHaveStone(true);
 					WM.markForDelete(this);
 				}
 				break;
 			default:    // Key not included
 				break;
-		};
+		}
 		return 1;
 	}
+	return 0;
 }
 
 int Stone::draw() {
@@ -97,7 +93,7 @@ bool Stone::onGround() {
 			if (oli.currentObject()->getSolidness() == df::HARD)
 				on = true;
 			if (oli.currentObject()->getType() == "PressurePlate") {
-				df::EventCollision *p_ce = new df::EventCollision;
+				auto *p_ce = new df::EventCollision;
 				p_ce->setObject1(oli.currentObject());
 				p_ce->setObject2(this);
 				oli.currentObject()->eventHandler(p_ce);
