@@ -2,6 +2,10 @@
 #define DF_PLAYER_H
 
 #include "Object.h"
+#include "DisplayManager.h"
+#include "Block.h"
+#include "Reticle.h"
+#include "WorldManager.h"
 
 class Player : public df::Object {
 
@@ -17,8 +21,11 @@ private:
 	bool haveBow;
 	bool haveWand;
 	bool inMap;
-    std::string direction;
-    int hintcd;
+	std::string direction;
+	int mapNum;
+	Block *p_currentDrag[80] = {nullptr};
+	Reticle *p_reticle;
+	int hintcd;
 
 public:
 
@@ -58,11 +65,20 @@ public:
 
 	void setHaveBow(bool haveBow) {
 		Player::haveBow = haveBow;
-        shootCountdown = shootSlowdown;
+		shootCountdown = shootSlowdown;
+		if (haveBow && mapNum == 3) {
+			p_reticle = new Reticle(df::RED);
+			p_reticle->draw();
+		}
 	}
 
 	void setHaveWand(bool haveWand) {
 		Player::haveWand = haveWand;
+		if (haveWand && mapNum == 2) {
+			p_reticle = new Reticle(df::MAGENTA);
+			p_reticle->draw();
+		} else if (!haveWand)
+			WM.markForDelete(p_reticle);
 	}
 
 	bool isInMap() const {
@@ -75,7 +91,15 @@ public:
 
 	bool haveItem();
 
-    int draw() override;
+	int getMapNum() const {
+		return mapNum;
+	}
+
+	void setMapNum(int mapNum) {
+		Player::mapNum = mapNum;
+	}
+
+	int draw() override;
 };
 
 #endif //DF_PLAYER_H

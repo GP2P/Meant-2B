@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 23)
 
 # Meant 2B
 
+# must manually reload CMake Project after adding file
 file(GLOB_RECURSE MEANT2B_SRC game/src/*.cpp)
 
 add_executable(Meant_2B_df game/src/game.cpp ${MEANT2B_SRC})
@@ -19,6 +20,7 @@ target_include_directories(Meant_2B_df PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_
 
 # SaucerShoot
 
+# must manually reload CMake Project after adding file
 file(GLOB_RECURSE SAUCERSHOOT_SRC SaucerShoot/*.cpp)
 
 add_executable(SaucerShoot SaucerShoot/game.cpp ${SAUCERSHOOT_SRC})
