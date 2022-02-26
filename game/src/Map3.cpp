@@ -88,9 +88,18 @@ int Map3::draw() {
 		DM.drawString(df::Vector(78, 13), "Defeat the illuminati", df::RIGHT_JUSTIFIED, df::WHITE);
 		DM.drawString(df::Vector(78, 14), "with your bow!", df::RIGHT_JUSTIFIED, df::WHITE);
 	}
-	if (wandAlive)
-		DM.drawString(df::Vector(39, 27), "The wand was taken from you... Stay alive!", df::CENTER_JUSTIFIED,
+	if (wandAlive && bowAlive)
+		DM.drawString(df::Vector(39, 26), "The wand was taken from you... Stay alive!", df::CENTER_JUSTIFIED,
 		              df::MAGENTA);
+	if (wandAlive && !bowAlive) {
+
+		DM.drawString(df::Vector(39, 26), "The wand was taken from you...", df::CENTER_JUSTIFIED,
+		              df::MAGENTA);
+		DM.drawString(df::Vector(39, 27), "Defeat the illuminati with this completely normal bow!",
+		              df::CENTER_JUSTIFIED,
+		              df::WHITE);
+	}
+
 	return Object::draw();
 }
 

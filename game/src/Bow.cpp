@@ -79,6 +79,8 @@ int Bow::draw() {
 			} else {
 				DM.drawString(getPosition() - df::Vector(0, 4), "Can't carry more than 1 item", df::CENTER_JUSTIFIED,
 				              df::WHITE);
+				DM.drawString(getPosition() - df::Vector(0, 3), "Drop current item with R First", df::CENTER_JUSTIFIED,
+				              df::WHITE);
 			}
 		}
 		if (player->getID() == 2) {
@@ -88,6 +90,8 @@ int Bow::draw() {
 			} else {
 				DM.drawString(getPosition() - df::Vector(0, 4), "Can't carry more than 1 item", df::CENTER_JUSTIFIED,
 				              df::WHITE);
+				DM.drawString(getPosition() - df::Vector(0, 3), "Drop current item with Right Shift First",
+				              df::CENTER_JUSTIFIED, df::WHITE);
 			}
 		}
 	}
