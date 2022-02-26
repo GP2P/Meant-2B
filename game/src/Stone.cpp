@@ -51,13 +51,13 @@ int Stone::eventHandler(const df::Event *p_e) {
 		const auto *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
 		switch (p_keyboard_event->getKey()) {
 			case df::Keyboard::E:
-				if (nearPlayer && player->getID() == 1) {
+				if (nearPlayer && player->getID() == 1 && !player->haveItem()) {
 					player->setHaveStone(true);
 					WM.markForDelete(this);
 				}
 				break;
 			case df::Keyboard::SLASH:
-				if (nearPlayer && player->getID() == 2) {
+				if (nearPlayer && player->getID() == 2 && !player->haveItem()) {
 					player->setHaveStone(true);
 					WM.markForDelete(this);
 				}

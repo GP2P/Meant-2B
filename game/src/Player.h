@@ -14,7 +14,9 @@ private:
 	int shootSlowdown;
 	int walkingCountdown;
 	bool haveStone;
-	bool inMap;
+    bool haveBow;
+    bool haveWand;
+    bool inMap;
 
 public:
 
@@ -38,9 +40,25 @@ public:
 		return haveStone;
 	}
 
+    bool isHaveBow() const {
+        return haveBow;
+    }
+
+    bool isHaveWand() const {
+        return haveWand;
+    }
+
 	void setHaveStone(bool haveStone) {
 		Player::haveStone = haveStone;
 	}
+
+    void setHaveBow(bool haveBow) {
+        Player::haveBow = haveBow;
+    }
+
+    void setHaveWand(bool haveWand) {
+        Player::haveWand = haveWand;
+    }
 
 	bool isInMap() const {
 		return inMap;
@@ -49,6 +67,8 @@ public:
 	void setInMap(bool inMap) {
 		Player::inMap = inMap;
 	}
+
+    bool haveItem();
 };
 
 #endif //DF_PLAYER_H
