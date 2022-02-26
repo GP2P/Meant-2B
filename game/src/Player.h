@@ -17,6 +17,7 @@ private:
 	bool haveBow;
 	bool haveWand;
 	bool inMap;
+    std::string direction;
 
 public:
 
@@ -71,6 +72,8 @@ public:
 	}
 
 	bool haveItem();
+
+    int draw() override;
 };
 
 #endif //DF_PLAYER_H

@@ -70,7 +70,7 @@ int Wand::eventHandler(const df::Event *p_e) {
 
 int Wand::draw() {
 	DM.drawCh(getPosition(), '/', df::WHITE);
-	DM.drawCh(getPosition() + df::Vector(0.7, -0.7), 'o', df::MAGENTA);
+	DM.drawCh(getPosition() + df::Vector(0.7, -0.7), 'o', df::RED);
 
 	if (nearPlayer) {
 		if (player->getID() == 1) {
