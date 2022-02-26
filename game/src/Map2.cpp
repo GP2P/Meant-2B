@@ -74,6 +74,7 @@ void Map2::stop() {
 				oli.currentObject()->setPosition(df::Vector(71, 8));
 			else
 				oli.currentObject()->setPosition(df::Vector(39, 28));
+			p_player->setMapNum(3);
 		} else
 			WM.markForDelete(oli.currentObject());
 		oli.next();
