@@ -4,11 +4,12 @@ width 3
 height 3
 color blue
 slowdown 4
+transparency #
 </HEADER>
 <BODY>
- o 
+#o#
 /|\
-/ \
+/`\
 end
 </BODY>
 <FOOTER>

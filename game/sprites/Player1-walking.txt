@@ -4,19 +4,20 @@ width 3
 height 3
 color red
 slowdown 4
+transparency #
 </HEADER>
 <BODY>
- o 
-/| 
-/ \
+#o#
+/|#
+/#\
 end
- o 
- | 
- | 
+#o#
+#|#
+#|#
 end
- o 
- |\
-/ \
+#o#
+#|\
+/#\
 end
 </BODY>
 <FOOTER>
