@@ -28,8 +28,10 @@ int main() {
 	RM.loadSprite("../game/sprites/Player2-walking.txt", "Player2Walking");
 	RM.loadSprite("../game/sprites/Player2-standing.txt", "Player2Standing");
 
-	RM.loadSprite("../game/sprites/Arrow.txt", "Arrow");
-	RM.loadSprite("../game/sprites/Boss.txt", "Boss");
+	RM.loadSprite("../game/sprites/ArrowLeft.txt", "ArrowLeft");
+    RM.loadSprite("../game/sprites/ArrowRight.txt", "ArrowRight");
+
+    RM.loadSprite("../game/sprites/Boss.txt", "Boss");
 
 	// adjust view
 	WM.setBoundary(df::Box(df::Vector(), 80, DM.getVertical()));

@@ -8,6 +8,7 @@
 #include "DisplayManager.h"
 #include "EventOut.h"
 #include "Map1.h"
+#include "LogManager.h"
 
 Player::Player() = default;
 
@@ -108,7 +109,7 @@ int Player::eventHandler(const df::Event *p_e) {
 					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
 						if (walkingCountdown < 1 && onGround()) {
 							setSprite("Player1Walking");
-							walkingCountdown = 5;
+							walkingCountdown = 10;
 						}
 					WM.moveObject(this, df::Vector(getPosition().getX() + (float) 1.0, getPosition().getY()));
 				}
@@ -118,7 +119,7 @@ int Player::eventHandler(const df::Event *p_e) {
 					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
 						if (walkingCountdown < 1 && onGround()) {
 							setSprite("Player2Walking");
-							walkingCountdown = 5;
+							walkingCountdown = 10;
 						}
 					WM.moveObject(this, df::Vector(getPosition().getX() + (float) 1.0, getPosition().getY()));
 				}
@@ -145,6 +146,30 @@ int Player::eventHandler(const df::Event *p_e) {
 						haveStone = false;
 					}
 				break;
+            case df::Keyboard::E:    // shoot arrow to right
+                if (ID == 1)
+                    if (haveBow) {
+                        shoot(getPosition()+df::Vector(1,-0.08));
+                    }
+                break;
+            case df::Keyboard::PERIOD:    // shoot arrow to right
+                if (ID == 2)
+                    if (haveBow) {
+                        shoot(getPosition()+df::Vector(1,-0.08));
+                    }
+                break;
+            case df::Keyboard::Q:    // shoot arrow to left
+                if (ID == 1)
+                    if (haveBow) {
+                        shoot(getPosition()-df::Vector(1,0.08));
+                    }
+                break;
+            case df::Keyboard::COMMA:    // shoot arrow to left
+                if (ID == 2)
+                    if (haveBow) {
+                        shoot(getPosition()-df::Vector(1,0.08));
+                    }
+                break;
 			default:    // Key not included
 				break;
 		}
@@ -153,7 +178,7 @@ int Player::eventHandler(const df::Event *p_e) {
 	if (p_e->getType() == df::MSE_EVENT) {
 		const auto *p_mouse_event = dynamic_cast <const df::EventMouse *> (p_e);
 		if ((p_mouse_event->getMouseAction() == df::CLICKED) &&
-		    (p_mouse_event->getMouseButton() == df::Mouse::LEFT)) {
+		    (p_mouse_event->getMouseButton() == df::Mouse::LEFT) && haveBow) {
 			shoot(p_mouse_event->getMousePosition());
 		}
 		return 1;
@@ -196,7 +221,13 @@ void Player::shoot(df::Vector target) {
 	df::Vector v = target - getPosition();
 	v.normalize();
 	v.scale(1);
+
 	auto *p = new Arrow(getPosition());
+    if((target - getPosition()).getX()<0){
+        p->setSprite("ArrowLeft");
+    } else{
+        p->setSprite("ArrowRight");
+    }
 	p->setVelocity(v);
 }
 
