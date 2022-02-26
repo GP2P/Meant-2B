@@ -7,6 +7,7 @@
 #include "Gate.h"
 #include "Inventory.h"
 #include "Stone.h"
+#include "Lever.h"
 
 Map1::Map1() {
 	setType("Map1");
@@ -43,14 +44,16 @@ void Map1::start() {
 	buildBlocks(df::Vector(159, 24), df::Vector(159, 31), '|');
 
 	// gate 1
-	new PressurePlate(df::Vector(25, 12), df::WHITE, 2);
+    new Lever(df::Vector(40, 12));
+
+    new PressurePlate(df::Vector(25, 12), df::WHITE, 2);
 	new Gate(df::Vector(15, 12), UP, df::WHITE);
 	new PressurePlate(df::Vector(15, 18), df::WHITE, 2);
 
 	// gate 2
 	new PressurePlate(df::Vector(54, 18), df::YELLOW, 2);
 	new Gate(df::Vector(64, 18), UP, df::YELLOW);
-	new Stone(df::Vector(21, 9));
+	new Stone(df::Vector(64, 23));
 
 	auto *player1 = new Player(1);
 	auto *player2 = new Player(2);
