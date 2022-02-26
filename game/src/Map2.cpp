@@ -2,6 +2,7 @@
 #include "ResourceManager.h"
 #include "Block.h"
 #include "Player.h"
+#include "Map3.h"
 #include "Bat.h"
 #include "Lever.h"
 #include "Bow.h"
@@ -20,6 +21,7 @@ Map2::Map2() {
 
 Map2::~Map2() {
 	p_music->stop();
+	new Map3();
 }
 
 void Map2::start() {

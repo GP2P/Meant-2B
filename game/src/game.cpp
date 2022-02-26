@@ -23,6 +23,8 @@ int main() {
 	RM.loadMusic("../game/music/Map1BGM.wav", "Map1BGM");
 	RM.loadSprite("../game/sprites/Map2BG.txt", "Map2BG");
 	RM.loadMusic("../game/music/Map2BGM.wav", "Map2BGM");
+	RM.loadSprite("../game/sprites/Map3BG.txt", "Map3BG");
+	RM.loadMusic("../game/music/Map3BGM.wav", "Map3BGM");
 
 	RM.loadSprite("../game/sprites/Player1-walking.txt", "Player1Walking");
 	RM.loadSprite("../game/sprites/Player1-standing.txt", "Player1Standing");

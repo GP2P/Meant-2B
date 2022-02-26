@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "EventKeyboard.h"
 #include "Map2.h"
+#include "Map3.h"
 
 Lever::Lever() {}
 
@@ -78,6 +79,11 @@ int Lever::eventHandler(const df::Event *p_e) {
 						auto mli = df::ObjectListIterator(&m2l);
 						auto *p_Map2 = dynamic_cast<Map2 *>(mli.currentObject());
 						p_Map2->stop();
+					} else {
+						auto m3l = df::ObjectList(WM.objectsOfType("Map3"));
+						auto mli = df::ObjectListIterator(&m3l);
+						auto *p_Map3 = dynamic_cast<Map3 *>(mli.currentObject());
+						p_Map3->escape();
 					}
 				}
 				break;
@@ -89,6 +95,11 @@ int Lever::eventHandler(const df::Event *p_e) {
 						auto mli = df::ObjectListIterator(&m2l);
 						auto *p_Map2 = dynamic_cast<Map2 *>(mli.currentObject());
 						p_Map2->stop();
+					} else {
+						auto m3l = df::ObjectList(WM.objectsOfType("Map3"));
+						auto mli = df::ObjectListIterator(&m3l);
+						auto *p_Map3 = dynamic_cast<Map3 *>(mli.currentObject());
+						p_Map3->escape();
 					}
 				}
 				break;
