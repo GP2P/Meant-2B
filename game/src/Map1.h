@@ -14,9 +14,13 @@ public:
 
 	Map1();
 
+	~Map1() override;
+
 	void start();
 
-	int draw();
+	void stop();
+
+	int draw() override;
 };
 
 #endif //DF_MAP1_H

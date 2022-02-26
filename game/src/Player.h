@@ -13,8 +13,8 @@ private:
 	int shootCountdown;
 	int shootSlowdown;
 	int walkingCountdown;
-
-	bool havestone;
+	bool haveStone;
+	bool inMap;
 
 public:
 
@@ -34,15 +34,21 @@ public:
 
 	void setID(int id);
 
-	bool isHavestone() const {
-		return havestone;
+	bool isHaveStone() const {
+		return haveStone;
 	}
 
-	void setHavestone(bool havestone) {
-		Player::havestone = havestone;
+	void setHaveStone(bool haveStone) {
+		Player::haveStone = haveStone;
 	}
 
+	bool isInMap() const {
+		return inMap;
+	}
 
+	void setInMap(bool inMap) {
+		Player::inMap = inMap;
+	}
 };
 
 #endif //DF_PLAYER_H

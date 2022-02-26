@@ -6,6 +6,8 @@
 #include "EventMouse.h"
 #include "Stone.h"
 #include "DisplayManager.h"
+#include "EventOut.h"
+#include "Map1.h"
 
 Player::Player() = default;
 
@@ -26,7 +28,8 @@ Player::Player(int ID) {
 	shootSlowdown = 30;
 	shootCountdown = shootSlowdown;
 	walkingCountdown = 0;
-	havestone = false;
+	haveStone = false;
+	inMap = true;
 }
 
 bool Player::onGround() {
@@ -63,7 +66,7 @@ int Player::eventHandler(const df::Event *p_e) {
 		} else {
 			walkingCountdown--;
 		}
-		if (havestone) {
+		if (haveStone) {
 			if (getID() == 1) {
 				DM.drawString(getPosition() - df::Vector(0, 3), "Press R to drop stone", df::CENTER_JUSTIFIED,
 				              df::WHITE);
@@ -105,7 +108,7 @@ int Player::eventHandler(const df::Event *p_e) {
 					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
 						if (walkingCountdown < 1 && onGround()) {
 							setSprite("Player1Walking");
-							walkingCountdown = 10;
+							walkingCountdown = 5;
 						}
 					WM.moveObject(this, df::Vector(getPosition().getX() + (float) 1.0, getPosition().getY()));
 				}
@@ -115,7 +118,7 @@ int Player::eventHandler(const df::Event *p_e) {
 					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
 						if (walkingCountdown < 1 && onGround()) {
 							setSprite("Player2Walking");
-							walkingCountdown = 10;
+							walkingCountdown = 5;
 						}
 					WM.moveObject(this, df::Vector(getPosition().getX() + (float) 1.0, getPosition().getY()));
 				}
@@ -130,16 +133,16 @@ int Player::eventHandler(const df::Event *p_e) {
 				break;
 			case df::Keyboard::R:    // use item
 				if (ID == 1)
-					if (havestone) {
+					if (haveStone) {
 						new Stone(getPosition());
-						havestone = false;
+						haveStone = false;
 					}
 				break;
 			case df::Keyboard::RIGHTSHIFT:    // use item
 				if (ID == 2)
-					if (havestone) {
+					if (haveStone) {
 						new Stone(getPosition());
-						havestone = false;
+						haveStone = false;
 					}
 				break;
 			default:    // Key not included
@@ -154,6 +157,21 @@ int Player::eventHandler(const df::Event *p_e) {
 			shoot(p_mouse_event->getMousePosition());
 		}
 		return 1;
+	}
+	if (p_e->getType() == df::OUT_EVENT) {
+		inMap = false;
+		auto ol = df::ObjectList(WM.objectsOfType("Player"));
+		auto oli = df::ObjectListIterator(&ol);
+		while (!oli.isDone()) {
+			auto *p_player = dynamic_cast<Player *>(oli.currentObject());
+			if (p_player->isInMap())
+				return 1;
+			oli.next();
+		}
+		auto ml = df::ObjectList(WM.objectsOfType("Map1"));
+		auto mli = df::ObjectListIterator(&ml);
+		auto *p_Map1 = dynamic_cast<Map1 *>(mli.currentObject());
+		p_Map1->stop();
 	}
 	return 0;
 }
