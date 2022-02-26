@@ -7,7 +7,7 @@
 #include "Gate.h"
 #include "Inventory.h"
 #include "Stone.h"
-#include "Lever.h"
+#include "Map2.h"
 
 Map1::Map1() {
 	setType("Map1");
@@ -20,6 +20,7 @@ Map1::Map1() {
 
 Map1::~Map1() {
 	p_music->stop();
+	new Map2();
 }
 
 void Map1::start() {
@@ -44,9 +45,7 @@ void Map1::start() {
 	buildBlocks(df::Vector(159, 24), df::Vector(159, 31), '|');
 
 	// gate 1
-    new Lever(df::Vector(40, 12));
-
-    new PressurePlate(df::Vector(25, 12), df::WHITE, 2);
+	new PressurePlate(df::Vector(25, 12), df::WHITE, 2);
 	new Gate(df::Vector(15, 12), UP, df::WHITE);
 	new PressurePlate(df::Vector(15, 18), df::WHITE, 2);
 

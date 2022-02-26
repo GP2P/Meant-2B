@@ -22,6 +22,10 @@ int main() {
 	RM.loadMusic("../game/music/Map0BGM.wav", "Map0BGM");
 	RM.loadSprite("../game/sprites/Map1BG.txt", "Map1BG");
 	RM.loadMusic("../game/music/Map1BGM.wav", "Map1BGM");
+	RM.loadSprite("../game/sprites/Map2BG.txt", "Map2BG");
+	RM.loadMusic("../game/music/Map2BGM.wav", "Map2BGM");
+	RM.loadSprite("../game/sprites/Map3BG.txt", "Map3BG");
+	RM.loadMusic("../game/music/Map3BGM.wav", "Map3BGM");
 
 	RM.loadSprite("../game/sprites/Player1-walking.txt", "Player1Walking");
 	RM.loadSprite("../game/sprites/Player1-standing.txt", "Player1Standing");
@@ -30,7 +34,7 @@ int main() {
 
 	RM.loadSprite("../game/sprites/ArrowLeft.txt", "ArrowLeft");
     RM.loadSprite("../game/sprites/ArrowRight.txt", "ArrowRight");
-
+    RM.loadSprite("../game/sprites/Bat.txt", "Bat");
     RM.loadSprite("../game/sprites/Boss.txt", "Boss");
 
 	// adjust view
@@ -38,7 +42,7 @@ int main() {
 	WM.setView(df::Box(df::Vector(), 80, DM.getVertical()));
 
 	// start with map 0
-	new Boss();
+    new Map0();
 
 	// Run game (this blocks until game loop is over).
 	GM.run();

@@ -14,15 +14,17 @@ private:
 	int shootSlowdown;
 	int walkingCountdown;
 	bool haveStone;
-    bool haveBow;
-    bool haveWand;
-    bool inMap;
+	bool haveBow;
+	bool haveWand;
+	bool inMap;
 
 public:
 
 	Player();
 
 	Player(int ID);
+
+	~Player() override;
 
 	int eventHandler(const df::Event *p_e) override;
 
@@ -40,25 +42,25 @@ public:
 		return haveStone;
 	}
 
-    bool isHaveBow() const {
-        return haveBow;
-    }
+	bool isHaveBow() const {
+		return haveBow;
+	}
 
-    bool isHaveWand() const {
-        return haveWand;
-    }
+	bool isHaveWand() const {
+		return haveWand;
+	}
 
 	void setHaveStone(bool haveStone) {
 		Player::haveStone = haveStone;
 	}
 
-    void setHaveBow(bool haveBow) {
-        Player::haveBow = haveBow;
-    }
+	void setHaveBow(bool haveBow) {
+		Player::haveBow = haveBow;
+	}
 
-    void setHaveWand(bool haveWand) {
-        Player::haveWand = haveWand;
-    }
+	void setHaveWand(bool haveWand) {
+		Player::haveWand = haveWand;
+	}
 
 	bool isInMap() const {
 		return inMap;
@@ -68,7 +70,7 @@ public:
 		Player::inMap = inMap;
 	}
 
-    bool haveItem();
+	bool haveItem();
 };
 
 #endif //DF_PLAYER_H

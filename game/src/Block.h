@@ -20,6 +20,8 @@ public:
 
 	Block(df::Vector position, char character, df::Color color);
 
+	Block(df::Vector position, char character, df::Color color, char type);
+
 	char getCharacter() const;
 
 	void setCharacter(char character);

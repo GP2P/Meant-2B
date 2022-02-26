@@ -9,6 +9,7 @@
 #include "EventOut.h"
 #include "Map1.h"
 #include "LogManager.h"
+#include "GameManager.h"
 
 Player::Player() = default;
 
@@ -31,6 +32,15 @@ Player::Player(int ID) {
 	walkingCountdown = 0;
 	haveStone = false;
 	inMap = true;
+}
+
+Player::~Player() {
+// if both players are dead, end the game
+	auto ol = df::ObjectList(WM.objectsOfType("Player"));
+	auto oli = df::ObjectListIterator(&ol);
+	oli.next();
+	if (oli.isDone())
+		GM.setGameOver();
 }
 
 bool Player::onGround() {
@@ -240,5 +250,5 @@ void Player::setID(int id) {
 }
 
 bool Player::haveItem() {
-    return (haveStone||haveBow||haveWand);
+	return (haveStone || haveBow || haveWand);
 }
