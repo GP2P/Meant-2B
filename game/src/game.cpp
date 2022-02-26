@@ -5,6 +5,7 @@
 #include "DisplayManager.h"
 #include "Box.h"
 #include "Map0.h"
+#include "Boss.h"
 
 int main() {
 	// start up game manager
@@ -34,7 +35,7 @@ int main() {
 	WM.setView(df::Box(df::Vector(), 80, DM.getVertical()));
 
 	// start with map 0
-	new Map0();
+	new Boss();
 
 	// Run game (this blocks until game loop is over).
 	GM.run();
