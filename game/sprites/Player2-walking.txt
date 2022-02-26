@@ -1,14 +1,22 @@
 <HEADER>
-frames 2
+frames 4
 width 3
 height 3
-color yellow
+color red
 slowdown 4
 transparency #
 </HEADER>
 <BODY>
 #o#
-/|\
+/|#
+/#\
+end
+#o#
+#|#
+#|#
+end
+#o#
+#|\
 /#\
 end
 #o#

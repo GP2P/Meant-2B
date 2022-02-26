@@ -18,6 +18,7 @@ private:
 	bool haveWand;
 	bool inMap;
     std::string direction;
+    int hintcd;
 
 public:
 
@@ -57,6 +58,7 @@ public:
 
 	void setHaveBow(bool haveBow) {
 		Player::haveBow = haveBow;
+        shootCountdown = shootSlowdown;
 	}
 
 	void setHaveWand(bool haveWand) {

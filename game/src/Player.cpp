@@ -10,6 +10,8 @@
 #include "Map1.h"
 #include "LogManager.h"
 #include "GameManager.h"
+#include "Bow.h"
+#include "Wand.h"
 
 Player::Player() = default;
 
@@ -33,6 +35,7 @@ Player::Player(int ID) {
 	haveStone = false;
 	inMap = true;
     direction = "right";
+    hintcd = 60;
 }
 
 Player::~Player() {
@@ -78,96 +81,129 @@ int Player::eventHandler(const df::Event *p_e) {
 		} else {
 			walkingCountdown--;
 		}
-		if (haveStone) {
+		if (haveItem() && hintcd>0) {
 			if (getID() == 1) {
-				DM.drawString(getPosition() - df::Vector(0, 3), "Press R to drop stone", df::CENTER_JUSTIFIED,
+				DM.drawString(getPosition() - df::Vector(0, 3), "Press R to drop item", df::CENTER_JUSTIFIED,
 				              df::WHITE);
 			}
 			if (getID() == 2) {
-				DM.drawString(getPosition() - df::Vector(0, 3), "Press Right Shift to drop stone", df::CENTER_JUSTIFIED,
+				DM.drawString(getPosition() - df::Vector(0, 3), "Press Right Shift to drop item", df::CENTER_JUSTIFIED,
 				              df::WHITE);
 			}
+            hintcd --;
 		}
-
 		return 1;
-
 	}
 	if (p_e->getType() == df::KEYBOARD_EVENT) {
 		const auto *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
 		switch (p_keyboard_event->getKey()) {
-			case df::Keyboard::A:    // left
-				if (ID == 1) {
-					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
-						if (walkingCountdown < 1 && onGround()) {
-							setSprite("Player1Walking");
-							walkingCountdown = 10;
+            case df::Keyboard::A:    // left
+                if (ID == 1) {
+                    if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
+                        if (walkingCountdown < 1 && onGround()) {
+                            setSprite("Player1Walking");
+                            walkingCountdown = 10;
                             direction = "left";
                         }
-					WM.moveObject(this, df::Vector(getPosition().getX() - (float) 1.0, getPosition().getY()));
-				}
-				break;
-			case df::Keyboard::LEFTARROW:    // left
-				if (ID == 2) {
-					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
-						if (walkingCountdown < 1 && onGround()) {
-							setSprite("Player2Walking");
-							walkingCountdown = 10;
+                    WM.moveObject(this, df::Vector(getPosition().getX() - (float) 1.0, getPosition().getY()));
+                }
+                break;
+            case df::Keyboard::LEFTARROW:    // left
+                if (ID == 2) {
+                    if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
+                        if (walkingCountdown < 1 && onGround()) {
+                            setSprite("Player2Walking");
+                            walkingCountdown = 10;
                             direction = "left";
                         }
-					WM.moveObject(this, df::Vector(getPosition().getX() - (float) 1.0, getPosition().getY()));
-				}
-				break;
-			case df::Keyboard::D:    // right
-				if (ID == 1) {
-					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
-						if (walkingCountdown < 1 && onGround()) {
-							setSprite("Player1Walking");
-							walkingCountdown = 10;
+                    WM.moveObject(this, df::Vector(getPosition().getX() - (float) 1.0, getPosition().getY()));
+                }
+                break;
+            case df::Keyboard::D:    // right
+                if (ID == 1) {
+                    if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
+                        if (walkingCountdown < 1 && onGround()) {
+                            setSprite("Player1Walking");
+                            walkingCountdown = 10;
                             direction = "right";
                         }
                     WM.moveObject(this, df::Vector(getPosition().getX() + (float) 1.0, getPosition().getY()));
-				}
-				break;
-			case df::Keyboard::RIGHTARROW:    // right
-				if (ID == 2) {
-					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
-						if (walkingCountdown < 1 && onGround()) {
-							setSprite("Player2Walking");
-							walkingCountdown = 10;
+                }
+                break;
+            case df::Keyboard::RIGHTARROW:    // right
+                if (ID == 2) {
+                    if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
+                        if (walkingCountdown < 1 && onGround()) {
+                            setSprite("Player2Walking");
+                            walkingCountdown = 10;
                             direction = "right";
                         }
-					WM.moveObject(this, df::Vector(getPosition().getX() + (float) 1.0, getPosition().getY()));
-				}
-				break;
-			case df::Keyboard::W:    // jump
-				if (ID == 1)
-					jump();
-				break;
-			case df::Keyboard::UPARROW:    // jump
-				if (ID == 2)
-					jump();
-				break;
-			case df::Keyboard::R:    // use item
-				if (ID == 1)
-					if (haveStone) {
-                        if(direction == "right") {
-                            new Stone(getPosition()+df::Vector(1,0));
-                        } else{
-                            new Stone(getPosition()-df::Vector(1,0));
+                    WM.moveObject(this, df::Vector(getPosition().getX() + (float) 1.0, getPosition().getY()));
+                }
+                break;
+            case df::Keyboard::W:    // jump
+                if (ID == 1)
+                    jump();
+                break;
+            case df::Keyboard::UPARROW:    // jump
+                if (ID == 2)
+                    jump();
+                break;
+            case df::Keyboard::R:    // place item
+                if (ID == 1) {
+                    if (haveStone) {
+                        if (direction == "right") {
+                            new Stone(getPosition() + df::Vector(1, 1));
+                        } else {
+                            new Stone(getPosition() - df::Vector(1, -1));
                         }
-						haveStone = false;
-					}
-				break;
-			case df::Keyboard::RIGHTSHIFT:    // use item
-				if (ID == 2)
-					if (haveStone) {
-                        if(direction == "right") {
-                            new Stone(getPosition()+df::Vector(1,0));
-                        } else{
-                            new Stone(getPosition()-df::Vector(1,0));
+                        haveStone = false;
+                    }
+                    if (haveBow) {
+                        if (direction == "right") {
+                            new Bow(getPosition() + df::Vector(0.5, 1));
+                        } else {
+                            new Bow(getPosition() - df::Vector(0.5, -1));
                         }
-						haveStone = false;
-					}
+                        haveBow = false;
+                    }
+                    if (haveWand) {
+                        if (direction == "right") {
+                            new Wand(getPosition() + df::Vector(0.5, 1));
+                        } else {
+                            new Wand(getPosition() - df::Vector(0.5, -1));
+                        }
+                        haveWand = false;
+                    }
+                }
+				break;
+			case df::Keyboard::RIGHTSHIFT:    // place item
+				if (ID == 2){
+                    if (haveStone) {
+                        if (direction == "right") {
+                            new Stone(getPosition() + df::Vector(1, 1));
+                        } else {
+                            new Stone(getPosition() - df::Vector(1, -1));
+                        }
+                        haveStone = false;
+                    }
+                    if (haveBow) {
+                        if (direction == "right") {
+                            new Bow(getPosition() + df::Vector(0.5, 1));
+                        } else {
+                            new Bow(getPosition() - df::Vector(0.5, -1));
+                        }
+                        haveBow = false;
+                    }
+                    if (haveWand) {
+                        if (direction == "right") {
+                            new Wand(getPosition() + df::Vector(0.5, 1));
+                        } else {
+                            new Wand(getPosition() - df::Vector(0.5, -1));
+                        }
+                        haveWand = false;
+                    }
+                }
 				break;
             case df::Keyboard::E:    // shoot arrow to right
                 if (ID == 1)
@@ -271,9 +307,9 @@ int Player::draw() {
 
     if(haveStone){
         if(direction == "right") {
-            DM.drawCh(getPosition()+df::Vector(1,0), '@', df::CYAN);
+            DM.drawCh(getPosition()+df::Vector(1,0), '@', df::WHITE);
         } else{
-            DM.drawCh(getPosition()-df::Vector(1,0), '@', df::CYAN);
+            DM.drawCh(getPosition()-df::Vector(1,0), '@', df::WHITE);
         }
     }
     if(haveBow){

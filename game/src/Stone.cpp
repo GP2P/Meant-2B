@@ -71,7 +71,7 @@ int Stone::eventHandler(const df::Event *p_e) {
 }
 
 int Stone::draw() {
-	DM.drawCh(getPosition(), '@', df::CYAN);
+	DM.drawCh(getPosition(), '@', df::WHITE);
 	if (nearPlayer) {
 		if (player->getID() == 1) {
 			DM.drawString(getPosition() - df::Vector(0, 4), "Press E to carry", df::CENTER_JUSTIFIED, df::WHITE);
