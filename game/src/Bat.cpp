@@ -1,27 +1,35 @@
-#include "Boss.h"
+//
+// Created by 方申 on 2/25/22.
+//
+
+#include "Bat.h"
 #include "EventStep.h"
 #include "DisplayManager.h"
-#include "LogManager.h"
 #include "EventCollision.h"
 #include "WorldManager.h"
 
-Boss::Boss() {
-	setType("Boss");
-	setSprite("Boss");
-	setPosition(df::Vector(10, 10));
+Bat::Bat() {
+    setType("Bat");
+    setSprite("Bat");
+    int x = rand() % (DM.getHorizontal() - 10) + 5;
+    int y = rand() % (DM.getVertical()-10) +5;
+    df::Vector position(x,y);
+    setPosition(position);
     moveCountdown = 30;
     registerInterest(df::STEP_EVENT);
+    registerInterest(df::COLLISION_EVENT);
+
     setSolidness(df::SOFT);
 }
 
-int Boss::eventHandler(const df::Event *p_e) {
+int Bat::eventHandler(const df::Event *p_e) {
 
     if (p_e->getType() == df::STEP_EVENT) {
-        if(moveCountdown > 0 && (getPosition().getX() < DM.getHorizontal()-3) && (getPosition().getX() > 3)
-           && (getPosition().getY() < DM.getVertical()-7) && (getPosition().getY() > 2)){
+        if(moveCountdown > 0 && (getPosition().getX() < DM.getHorizontal()-2) && (getPosition().getX() > 2)
+                                                                                         && (getPosition().getY() < DM.getVertical()-7) && (getPosition().getY() > 1)){
             moveCountdown--;
         } else{
-            int x = rand() % (DM.getHorizontal()-10) +5;
+            int x = rand() % (DM.getHorizontal() - 10) + 5;
             int y = rand() % (DM.getVertical()-10) +5;
             df::Vector direction(x,y);
             direction = (direction - getPosition());
