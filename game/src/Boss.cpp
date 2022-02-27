@@ -27,11 +27,7 @@ int Boss::eventHandler(const df::Event *p_e) {
 		if (hp <= 0) {
 			WM.markForDelete(this);
 		}
-		if (moveCountdown > 0 && (getPosition().getX() < DM.getHorizontal() - 3) && (getPosition().getX() > 3)
-		    && (getPosition().getY() < DM.getVertical() - 7) && (getPosition().getY() > 2)) {
-        if(hp<=0){
-            WM.markForDelete(this);
-        }
+
         bool withinX = (getPosition().getX() < DM.getHorizontal() - 3) && (getPosition().getX() > 3);
         bool withinY = (getPosition().getY() < DM.getVertical() - 7) && (getPosition().getY() > 2);
         bool outOfCage = (getPosition().getX()<64)||(getPosition().getY()>11);
