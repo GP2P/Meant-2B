@@ -2,8 +2,6 @@
 #include "EventStep.h"
 #include "WorldManager.h"
 #include "Boss.h"
-#include "DisplayManager.h"
-#include "LogManager.h"
 
 BossProjectile::BossProjectile(df::Vector boss_pos) {
 	// Make the Bullets soft so can pass through Hero.

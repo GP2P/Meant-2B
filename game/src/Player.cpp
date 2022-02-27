@@ -12,6 +12,7 @@
 #include "Bow.h"
 #include "Wand.h"
 #include "FragileBlock.h"
+#include "Map0.h"
 
 Player::Player() = default;
 
@@ -239,8 +240,11 @@ int Player::eventHandler(const df::Event *p_e) {
 						shoot(getPosition() - df::Vector(1, 0.08));
 					}
 				break;
-			case df::Keyboard::BACKSPACE:    // TODO: replay game
-
+			case df::Keyboard::BACKSPACE:    // replay game
+				if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN) {
+					WM.markForDelete(WM.getAllObjects());
+					new Map0();
+				}
 				break;
 			default:    // Key not included
 				break;
