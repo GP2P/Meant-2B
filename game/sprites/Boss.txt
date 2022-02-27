@@ -1,5 +1,5 @@
 <HEADER>
-frames 6
+frames 1
 width 10
 height 5
 color red
@@ -7,36 +7,6 @@ slowdown 4
 transparency #
 </HEADER>
 <BODY>
-####/\####
-###/LL\###
-##/LL@L\##
-#/@LLLLL\#
-/LLLL@LLL\
-end
-####/\####
-###/LL\###
-##/oLLo\##
-#/LLLLLL\#
-/LLLoLLLL\
-end
-####/\####
-###/LL\###
-##/LLLL\##
-#/LLLLLL\#
-/LLLLLLLL\
-end
-####/\####
-###/LL\###
-##/L@LL\##
-#/LLLLL@\#
-/LLL@LLLL\
-end
-####/\####
-###/LL\###
-##/LLLo\##
-#/LoLLLL\#
-/LLLLLLoL\
-end
 ####/\####
 ###/LL\###
 ##/LLLL\##

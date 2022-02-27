@@ -10,7 +10,7 @@ BossProjectile::BossProjectile(df::Vector boss_pos) {
     setSolidness(df::SOFT);
     // Set other object properties.
     setType("BossProjectile");
-    setSprite("ArrowLeft");
+    setSprite("BossProjectile");
 
     // Set starting location, based on boss's position passed in.
     df::Vector p(boss_pos.getX(), boss_pos.getY());

@@ -5,6 +5,8 @@
 #include "EventCollision.h"
 #include "WorldManager.h"
 #include "BossProjectile.h"
+#include "Boss2.h"
+#include "BossEye.h"
 
 #include <math.h>
 
@@ -19,6 +21,9 @@ Boss::Boss() {
 	fireSlowdown = 60;
 	fireCountdown = fireSlowdown;
 	hp = 5;
+    new Boss2(this);
+    new BossEye(this);
+
 }
 
 int Boss::eventHandler(const df::Event *p_e) {
@@ -78,7 +83,7 @@ void Boss::setHp(int Hp) {
 void Boss::fire() {
     for(int i=0;i<=5;i++){
         auto b = new BossProjectile(getPosition());
-        df::Vector a(tan(i*18),1);
+        df::Vector a(tan(1+i*17.5),1);
         a.normalize();
         b->setDirection(a);
         b->setVelocity(df::Vector(b->getVelocity().getX(),b->getVelocity().getY()/2));
