@@ -293,8 +293,10 @@ void Player::shoot(df::Vector target) {
 	df::Vector v = target - getPosition();
 	v.normalize();
 	v.scale(1.5);
+    v = df::Vector(v.getX(),v.getY()/2);
 
-	auto *p = new Arrow(getPosition());
+
+    auto *p = new Arrow(getPosition());
 	if ((target - getPosition()).getX() < 0) {
 		p->setSprite("ArrowLeft");
 	} else {

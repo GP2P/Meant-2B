@@ -41,8 +41,9 @@ int Boss::eventHandler(const df::Event *p_e) {
 			direction = (direction - getPosition());
 			direction.normalize();
 			direction.scale(0.5);
-			setVelocity(direction);
-			moveCountdown = 30;
+            direction = df::Vector(direction.getX(),direction.getY()/2);
+            setVelocity(direction);
+            moveCountdown = 30;
 		}
 
         if(fireCountdown<=0){
@@ -75,7 +76,11 @@ void Boss::setHp(int Hp) {
 }
 
 void Boss::fire(){
-    LM.writeLog("shoot");
-    auto b = new BossProjectile(getPosition());
-    b->setVelocity(df::Vector(1,0));
+    for(int i=0;i<=5;i++){
+        auto b = new BossProjectile(getPosition());
+        df::Vector a(tan(i*18),1);
+        a.normalize();
+        b->setDirection(a);
+        b->setVelocity(df::Vector(b->getVelocity().getX(),b->getVelocity().getY()/2));
+    }
 }
