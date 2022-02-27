@@ -54,10 +54,10 @@ void Map3::start() {
 
 	if (bowAlive) {
 		// cage
-		buildBlocks(df::Vector(64, 6), df::Vector(78, 6), ':'); // top
-		buildBlocks(df::Vector(71, 1), df::Vector(71, 6), '8', df::BLUE); // chain
-		buildBlocks(df::Vector(64, 11), df::Vector(78, 11), ':'); // bottom
-		buildBlocks(df::Vector(63, 7), df::Vector(64, 10), ':'); // left
+		buildBlocks(df::Vector(64, 6), df::Vector(78, 6), ':', df::GREEN, 'c'); // top
+		buildBlocks(df::Vector(71, 1), df::Vector(71, 6), '8', df::BLUE, 'c'); // chain
+		buildBlocks(df::Vector(64, 11), df::Vector(78, 11), ':', df::GREEN, 'c'); // bottom
+		buildBlocks(df::Vector(63, 7), df::Vector(64, 10), ':', df::GREEN, 'c'); // left
 
 		// lever
 		new Lever(df::Vector(78, 9));

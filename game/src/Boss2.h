@@ -6,12 +6,13 @@
 #include "Object.h"
 #include "Boss.h"
 
-class Boss2: public df::Object {
+class Boss2 : public df::Object {
 private:
-    Boss *boss;
+	Boss *boss;
 public:
-    Boss2(Boss *Boss);
-    int eventHandler(const df::Event *p_e) override;
+	Boss2(Boss *Boss);
+
+	int eventHandler(const df::Event *p_e) override;
 };
 
 

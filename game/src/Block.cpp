@@ -67,3 +67,9 @@ void buildBlocks(df::Vector start, df::Vector end, char character, df::Color col
 		for (int y = start.getY(); y <= end.getY(); y++)
 			new Block(df::Vector(x, y), character, color);
 }
+
+void buildBlocks(df::Vector start, df::Vector end, char character, df::Color color, char type) {
+	for (int x = start.getX(); x <= end.getX(); x++)
+		for (int y = start.getY(); y <= end.getY(); y++)
+			new Block(df::Vector(x, y), character, color, type);
+}

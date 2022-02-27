@@ -16,7 +16,7 @@
 Player::Player() = default;
 
 Player::Player(int ID) {
-	setID(ID);
+	setPlayerID(ID);
 	setType("Player");
 	setSolidness(df::HARD);
 	if (ID == 1)
@@ -82,7 +82,7 @@ int Player::eventHandler(const df::Event *p_e) {
 			shootCountdown = 0;
 
 		if (walkingCountdown == 0) {
-			if (ID == 1)
+			if (playerID == 1)
 				setSprite("Player1Standing");
 			else
 				setSprite("Player2Standing");
@@ -92,11 +92,11 @@ int Player::eventHandler(const df::Event *p_e) {
 		}
 
 		if (haveItem() && hintCD > 0) {
-			if (getID() == 1) {
+			if (getPlayerID() == 1) {
 				DM.drawString(getPosition() - df::Vector(0, 3), "Press R to drop item", df::CENTER_JUSTIFIED,
 				              df::WHITE);
 			}
-			if (getID() == 2) {
+			if (getPlayerID() == 2) {
 				DM.drawString(getPosition() - df::Vector(0, 3), "Press Right Shift to drop item", df::CENTER_JUSTIFIED,
 				              df::WHITE);
 			}
@@ -108,7 +108,7 @@ int Player::eventHandler(const df::Event *p_e) {
 		const auto *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
 		switch (p_keyboard_event->getKey()) {
 			case df::Keyboard::A:    // left
-				if (ID == 1) {
+				if (playerID == 1) {
 					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
 						if (walkingCountdown < 1 && onGround()) {
 							setSprite("Player1Walking");
@@ -119,7 +119,7 @@ int Player::eventHandler(const df::Event *p_e) {
 				}
 				break;
 			case df::Keyboard::LEFTARROW:    // left
-				if (ID == 2) {
+				if (playerID == 2) {
 					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
 						if (walkingCountdown < 1 && onGround()) {
 							setSprite("Player2Walking");
@@ -130,7 +130,7 @@ int Player::eventHandler(const df::Event *p_e) {
 				}
 				break;
 			case df::Keyboard::D:    // right
-				if (ID == 1) {
+				if (playerID == 1) {
 					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
 						if (walkingCountdown < 1 && onGround()) {
 							setSprite("Player1Walking");
@@ -141,7 +141,7 @@ int Player::eventHandler(const df::Event *p_e) {
 				}
 				break;
 			case df::Keyboard::RIGHTARROW:    // right
-				if (ID == 2) {
+				if (playerID == 2) {
 					if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
 						if (walkingCountdown < 1 && onGround()) {
 							setSprite("Player2Walking");
@@ -152,15 +152,15 @@ int Player::eventHandler(const df::Event *p_e) {
 				}
 				break;
 			case df::Keyboard::W:    // jump
-				if (ID == 1)
+				if (playerID == 1)
 					jump();
 				break;
 			case df::Keyboard::UPARROW:    // jump
-				if (ID == 2)
+				if (playerID == 2)
 					jump();
 				break;
 			case df::Keyboard::R:    // place item
-				if (ID == 1) {
+				if (playerID == 1) {
 					if (haveStone) {
 						if (direction == "right") {
 							new Stone(getPosition() + df::Vector(1, 1));
@@ -188,7 +188,7 @@ int Player::eventHandler(const df::Event *p_e) {
 				}
 				break;
 			case df::Keyboard::RIGHTSHIFT:    // place item
-				if (ID == 2) {
+				if (playerID == 2) {
 					if (haveStone) {
 						if (direction == "right") {
 							new Stone(getPosition() + df::Vector(1, 1));
@@ -216,25 +216,25 @@ int Player::eventHandler(const df::Event *p_e) {
 				}
 				break;
 			case df::Keyboard::E:    // shoot arrow to right
-				if (ID == 1)
+				if (playerID == 1)
 					if (haveBow) {
 						shoot(getPosition() + df::Vector(1, -0.08));
 					}
 				break;
 			case df::Keyboard::PERIOD:    // shoot arrow to right
-				if (ID == 2)
+				if (playerID == 2)
 					if (haveBow) {
 						shoot(getPosition() + df::Vector(1, -0.08));
 					}
 				break;
 			case df::Keyboard::Q:    // shoot arrow to left
-				if (ID == 1)
+				if (playerID == 1)
 					if (haveBow) {
 						shoot(getPosition() - df::Vector(1, 0.08));
 					}
 				break;
 			case df::Keyboard::COMMA:    // shoot arrow to left
-				if (ID == 2)
+				if (playerID == 2)
 					if (haveBow) {
 						shoot(getPosition() - df::Vector(1, 0.08));
 					}
@@ -298,10 +298,10 @@ void Player::shoot(df::Vector target) {
 	df::Vector v = target - getPosition();
 	v.normalize();
 	v.scale(1.5);
-    v = df::Vector(v.getX(),v.getY()/2);
+	v = df::Vector(v.getX(), v.getY() / 2);
 
 
-    auto *p = new Arrow(getPosition());
+	auto *p = new Arrow(getPosition());
 	if ((target - getPosition()).getX() < 0) {
 		p->setSprite("ArrowLeft");
 	} else {
@@ -310,12 +310,12 @@ void Player::shoot(df::Vector target) {
 	p->setVelocity(v);
 }
 
-int Player::getID() const {
-	return ID;
+int Player::getPlayerID() const {
+	return playerID;
 }
 
-void Player::setID(int id) {
-	ID = id;
+void Player::setPlayerID(int id) {
+	playerID = id;
 }
 
 bool Player::haveItem() {

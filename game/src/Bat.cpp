@@ -24,8 +24,8 @@ int Bat::eventHandler(const df::Event *p_e) {
 			                 getPosition();
 			direction.normalize();
 			direction.scale(0.5);
-            direction = df::Vector(direction.getX(),direction.getY()/2);
-            setVelocity(direction);
+			direction = df::Vector(direction.getX(), direction.getY() / 2);
+			setVelocity(direction);
 			moveCountdown = 30;
 		}
 		return 1;

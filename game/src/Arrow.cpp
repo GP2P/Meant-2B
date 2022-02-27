@@ -15,9 +15,9 @@ Arrow::Arrow(df::Vector player_pos) {
 	df::Vector p(player_pos.getX(), player_pos.getY());
 	setPosition(p);
 
-	// Bullets move 1 space each game loop.
+	// Bullets move 2 space each game loop.
 	// The direction is set when the Hero fires.
-	setSpeed(1);
+	setSpeed(2);
 
 	registerInterest(df::STEP_EVENT);
 	registerInterest(df::COLLISION_EVENT);
