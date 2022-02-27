@@ -23,9 +23,8 @@ private:
 	bool inMap;
 	std::string direction;
 	int mapNum;
-	Block *p_currentDrag[80] = {nullptr};
 	Reticle *p_reticle;
-	int hintcd;
+	int hintCD;
 
 public:
 

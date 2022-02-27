@@ -20,7 +20,7 @@ BossProjectile::BossProjectile(df::Vector boss_pos) {
     // The direction is set when the Hero fires.
     setSpeed(0.4);
 
-    registerInterest(df::COLLISION_EVENT);
+	registerInterest(df::COLLISION_EVENT);
 }
 
 int BossProjectile::eventHandler(const df::Event *p_e) {

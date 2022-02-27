@@ -103,17 +103,23 @@ int Map2::draw() {
 
 	if (!bowOut) {
 		auto bl = WM.objectsOfType("Bow");
-		auto bli = df::ObjectListIterator(&bl);
-		DM.drawString(
-				df::Vector(bli.currentObject()->getPosition().getX(), bli.currentObject()->getPosition().getY() - 2),
-				"Just a normal Bow", df::CENTER_JUSTIFIED, df::WHITE);
+		if (!bl.isEmpty()) {
+			auto bli = df::ObjectListIterator(&bl);
+			DM.drawString(
+					df::Vector(bli.currentObject()->getPosition().getX(),
+					           bli.currentObject()->getPosition().getY() - 2),
+					"Just a normal Bow", df::CENTER_JUSTIFIED, df::WHITE);
+		}
 	}
 	if (!wandOut) {
 		auto wl = WM.objectsOfType("Wand");
-		auto wli = df::ObjectListIterator(&wl);
-		DM.drawString(
-				df::Vector(wli.currentObject()->getPosition().getX(), wli.currentObject()->getPosition().getY() - 2),
-				"The Great Wand of Creation", df::CENTER_JUSTIFIED, df::MAGENTA);
+		if (!wl.isEmpty()) {
+			auto wli = df::ObjectListIterator(&wl);
+			DM.drawString(
+					df::Vector(wli.currentObject()->getPosition().getX(),
+					           wli.currentObject()->getPosition().getY() - 2),
+					"The Great Wand of Creation", df::CENTER_JUSTIFIED, df::MAGENTA);
+		}
 	}
 
 	DM.drawString(df::Vector(71, 5), "Pull to leave", df::CENTER_JUSTIFIED, df::YELLOW);

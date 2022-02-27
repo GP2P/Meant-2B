@@ -12,9 +12,9 @@
 class BossProjectile : public df::Object {
 
 public:
-    BossProjectile(df::Vector boss_pos);
+	BossProjectile(df::Vector boss_pos);
 
-    int eventHandler(const df::Event *p_e);
+	int eventHandler(const df::Event *p_e);
 };
 
 
