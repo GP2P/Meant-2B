@@ -6,14 +6,14 @@
 #include "Object.h"
 #include "Boss.h"
 
-class BossEye: public df::Object {
+class BossEye : public df::Object {
 private:
-    Boss *boss;
+	Boss *boss;
 public:
-    BossEye(Boss *Boss);
-    int eventHandler(const df::Event *p_e) override;
-};
+	BossEye(Boss *Boss);
 
+	int eventHandler(const df::Event *p_e) override;
+};
 
 
 #endif //MEANT_2B_DF_BOSSEYE_H

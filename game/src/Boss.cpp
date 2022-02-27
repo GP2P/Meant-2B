@@ -7,6 +7,7 @@
 #include "BossProjectile.h"
 #include "Boss2.h"
 #include "BossEye.h"
+#include "Map3.h"
 
 #include <math.h>
 
@@ -24,6 +25,13 @@ Boss::Boss() {
     new Boss2(this);
     new BossEye(this);
 
+}
+
+Boss::~Boss() {
+	auto ol = WM.objectsOfType("Map3");
+	auto oli = df::ObjectListIterator(&ol);
+	auto *p_map3 = dynamic_cast<Map3 *>(oli.currentObject());
+	p_map3->stop();
 }
 
 int Boss::eventHandler(const df::Event *p_e) {

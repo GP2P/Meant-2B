@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Lever.h"
 #include "Bow.h"
+#include "Map4.h"
 
 Map3::Map3() {
 	setType("Map3");
@@ -21,6 +22,7 @@ Map3::Map3() {
 
 Map3::~Map3() {
 	p_music->stop();
+	new Map4(0);
 }
 
 void Map3::start() {
@@ -82,8 +84,21 @@ void Map3::start() {
 	DM.shake(20, 20, 10);
 }
 
-void Map3::stop(int endingNum) {
-
+void Map3::stop() {
+	auto ol = df::ObjectList(WM.getAllObjects());
+	auto oli = df::ObjectListIterator(&ol);
+	while (!oli.isDone()) {
+		if (oli.currentObject()->getType() == "Player") {
+			auto *p_player = dynamic_cast<Player *>(oli.currentObject());
+			if (p_player->getPlayerID() == 1)
+				oli.currentObject()->setPosition(df::Vector(39, 28));
+			else
+				oli.currentObject()->setPosition(df::Vector(69, 28));
+			p_player->setMapNum(3);
+		} else
+			WM.markForDelete(oli.currentObject());
+		oli.next();
+	}
 }
 
 int Map3::draw() {

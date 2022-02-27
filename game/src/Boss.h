@@ -14,12 +14,16 @@ private:
 	int fireCountdown;
 
 	int fireSlowdown;
+
 public:
+
+	Boss();
+
+	~Boss();
+
 	int getHp() const;
 
 	void setHp(int hp);
-
-	Boss();
 
 	int eventHandler(const df::Event *p_e) override;
 
