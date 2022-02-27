@@ -36,12 +36,17 @@ Player::Player(int ID) {
 	inMap = true;
 	mapNum = 0;
 	direction = "right";
-	hintcd = 60;
+	hintCD = 60;
 }
 
 Player::~Player() {
 	delete p_reticle;
 	p_reticle = nullptr;
+
+	if (mapNum == 2 && isHaveWand())
+		new Wand(df::Vector(getPosition().getX(), 29));
+	else if (isHaveBow())
+		new Bow(df::Vector(getPosition().getX(), 29));
 
 // if both players are dead, end the game
 	auto ol = df::ObjectList(WM.objectsOfType("Player"));
@@ -86,7 +91,7 @@ int Player::eventHandler(const df::Event *p_e) {
 			walkingCountdown--;
 		}
 
-		if (haveItem() && hintcd > 0) {
+		if (haveItem() && hintCD > 0) {
 			if (getID() == 1) {
 				DM.drawString(getPosition() - df::Vector(0, 3), "Press R to drop item", df::CENTER_JUSTIFIED,
 				              df::WHITE);
@@ -95,7 +100,7 @@ int Player::eventHandler(const df::Event *p_e) {
 				DM.drawString(getPosition() - df::Vector(0, 3), "Press Right Shift to drop item", df::CENTER_JUSTIFIED,
 				              df::WHITE);
 			}
-			hintcd--;
+			hintCD--;
 		}
 		return 1;
 	}
