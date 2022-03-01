@@ -7,18 +7,19 @@
 class Map0 : public df::ViewObject {
 
 private:
+
 	df::Music *p_music;
+	int difficulty = 0;
 
 public:
+
 	Map0();
 
-	~Map0();
+	~Map0() override;
 
-	void start();
+	int eventHandler(const df::Event *p_e) override;
 
-	int eventHandler(const df::Event *p_e);
-
-	int draw();
+	int draw() override;
 };
 
 #endif //MEANT_2B_DF_MAP0_H

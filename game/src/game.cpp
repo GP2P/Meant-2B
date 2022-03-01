@@ -17,8 +17,8 @@ int main() {
 	LM.setFlush(true);
 
 	// load resources
-	RM.loadSprite("../game/sprites/Click2Start.txt", "Click2Start");
 	RM.loadMusic("../game/music/Map0BGM.wav", "Map0BGM");
+	RM.loadSprite("../game/sprites/Map0BG.txt", "Map0BG");
 	RM.loadSprite("../game/sprites/Map1BG.txt", "Map1BG");
 	RM.loadMusic("../game/music/Map1BGM.wav", "Map1BGM");
 	RM.loadSprite("../game/sprites/Map2BG.txt", "Map2BG");

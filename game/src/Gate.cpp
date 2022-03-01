@@ -39,9 +39,8 @@ int Gate::draw() {
 			}
 			return 0;
 		default:
-			return 0;
+			return -1;
 	}
-	return -1;
 }
 
 int Gate::eventHandler(const df::Event *p_e) {
