@@ -13,6 +13,8 @@
 #include "Wand.h"
 #include "FragileBlock.h"
 #include "Map0.h"
+#include "LogManager.h"
+#include <string>
 
 Player::Player() = default;
 
@@ -38,6 +40,8 @@ Player::Player(int ID) {
 	mapNum = 0;
 	direction = "right";
 	hintCD = 60;
+    clock = new df::Clock;
+    clock->delta();
 }
 
 Player::~Player() {
@@ -55,6 +59,7 @@ Player::~Player() {
 	oli.next();
 	if (oli.isDone())
 		GM.setGameOver();
+
 }
 
 bool Player::onGround() {
@@ -354,5 +359,25 @@ int Player::draw() {
 			DM.drawCh(getPosition() - df::Vector(1.8, +0.5), '*', df::MAGENTA);
 		}
 	}
+    int time = static_cast<int>(clock->split()/1000000);
+    std::string s = std::to_string(time);
+    DM.drawString(df::Vector(5,3), "Total Time:" + s,df::LEFT_JUSTIFIED,df::WHITE);
+
 	return result;
+}
+
+df::Clock *Player::getClock() const {
+    return clock;
+}
+
+void Player::setClock(df::Clock *clock) {
+    Player::clock = clock;
+}
+
+long Player::getTotalTime() const {
+    return totalTime;
+}
+
+void Player::setTotalTime(long totalTime) {
+    Player::totalTime = totalTime;
 }

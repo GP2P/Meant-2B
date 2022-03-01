@@ -7,8 +7,12 @@
 #include "Boss2.h"
 #include "BossEye.h"
 #include "Map3.h"
+#include "LogManager.h"
+#include "Player.h"
 
 #include <math.h>
+#include <fstream>
+
 
 Boss::Boss() {
 	setType("Boss");
@@ -20,7 +24,7 @@ Boss::Boss() {
 	hp = 5;
 	fireSlowdown = 60;
 	fireCountdown = fireSlowdown;
-	hp = 5;
+	hp = 1;
 	new Boss2(this);
 	new BossEye(this);
 
@@ -31,6 +35,49 @@ Boss::~Boss() {
 	auto oli = df::ObjectListIterator(&ol);
 	auto *p_map3 = dynamic_cast<Map3 *>(oli.currentObject());
 	p_map3->stop();
+
+    FILE* pFile;
+    auto ol2 = df::ObjectList(WM.objectsOfType("Player"));
+    auto oli2 = df::ObjectListIterator(&ol2);
+    auto *p_player = dynamic_cast<Player *>(oli2.currentObject());
+    int longestTime = p_player->getClock()->delta()/100000;
+
+    int scoreList[4];
+
+
+    std::fstream myFile;
+    myFile.open("../game/easyScoreBoard.txt", std::ios::in);
+    if (myFile.is_open()) {
+        std::string line;
+        int lineCount = 0;
+        while(getline(myFile,line)){
+            int l = std::stoi(line);
+
+            if( l<=longestTime){
+                scoreList[lineCount] = l;
+            } else{
+                scoreList[lineCount] = longestTime;
+                longestTime = l;
+            }
+            lineCount++;
+        }
+        myFile.close();
+    } else{
+        LM.writeLog("Error: Easy scoreboard not found r");
+        return;
+    }
+
+    myFile.open("../game/easyScoreBoard.txt", std::ios::out);
+    if (myFile.is_open()) {
+        for(int i=0; i<=2; i++){
+            int a = scoreList[i];
+            myFile<<a<<std::endl;
+        }
+        myFile.close();
+    } else{
+        LM.writeLog("Error: Easy scoreboard not found w");
+        return;
+    }
 }
 
 int Boss::eventHandler(const df::Event *p_e) {

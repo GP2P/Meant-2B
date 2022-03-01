@@ -6,6 +6,7 @@
 #include "Block.h"
 #include "Reticle.h"
 #include "WorldManager.h"
+#include "Clock.h"
 
 class Player : public df::Object {
 
@@ -25,6 +26,12 @@ private:
 	int mapNum;
 	Reticle *p_reticle;
 	int hintCD;
+    df::Clock *clock;
+    long int totalTime;
+public:
+    long getTotalTime() const;
+
+    void setTotalTime(long totalTime);
 
 public:
 
@@ -99,6 +106,10 @@ public:
 	}
 
 	int draw() override;
+
+    df::Clock *getClock() const;
+
+    void setClock(df::Clock *clock);
 };
 
 #endif //DF_PLAYER_H

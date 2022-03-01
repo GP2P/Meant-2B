@@ -9,6 +9,7 @@
 #include "Stone.h"
 #include "Map2.h"
 
+
 Map1::Map1() {
 	setType("Map1");
 	setSprite("Map1BG");
