@@ -79,7 +79,7 @@ void Map3::start() {
 	p_escapeDoor[3] = new Block(df::Vector(79, 10), '|');
 
 	// boss
-	new Boss();
+	new Boss(difficulty);
 
 	DM.shake(20, 20, 10);
 }

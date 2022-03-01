@@ -9,7 +9,11 @@ private:
 
 	int moveCountdown;
 
-	int hp = 5;
+	int difficulty = 0;
+
+	int maxHP;
+
+	int hp;
 
 	int fireCountdown;
 
@@ -17,7 +21,9 @@ private:
 
 public:
 
-	Boss();
+	Boss(int difficulty);
+
+	void defeat();
 
 	int getHp() const;
 
