@@ -31,10 +31,10 @@ int Lever::draw() {
 	DM.drawCh(getPosition() - df::Vector(0, 0.1), character, color);
 
 	if (nearPlayer) {
-		if (player->getID() == 1) {
+		if (player->getPlayerID() == 1) {
 			DM.drawString(getPosition() - df::Vector(0, 4), "Press E to pull lever", df::CENTER_JUSTIFIED, df::WHITE);
 		}
-		if (player->getID() == 2) {
+		if (player->getPlayerID() == 2) {
 			DM.drawString(getPosition() - df::Vector(0, 4), "Press slash to pull lever", df::CENTER_JUSTIFIED,
 			              df::WHITE);
 		}
@@ -72,7 +72,7 @@ int Lever::eventHandler(const df::Event *p_e) {
 		const auto *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
 		switch (p_keyboard_event->getKey()) {
 			case df::Keyboard::E:
-				if (nearPlayer && player->getID() == 1) {
+				if (nearPlayer && player->getPlayerID() == 1) {
 					character = '\\';
 					auto m2l = df::ObjectList(WM.objectsOfType("Map2"));
 					if (!m2l.isEmpty()) {
@@ -88,7 +88,7 @@ int Lever::eventHandler(const df::Event *p_e) {
 				}
 				break;
 			case df::Keyboard::SLASH:
-				if (nearPlayer && player->getID() == 2) {
+				if (nearPlayer && player->getPlayerID() == 2) {
 					character = '\\';
 					auto m2l = df::ObjectList(WM.objectsOfType("Map2"));
 					if (!m2l.isEmpty()) {

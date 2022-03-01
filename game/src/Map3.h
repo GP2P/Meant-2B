@@ -23,7 +23,7 @@ public:
 
 	void start();
 
-	void stop(int endingNum);
+	void stop();
 
 	int draw() override;
 

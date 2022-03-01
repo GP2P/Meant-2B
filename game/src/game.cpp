@@ -25,6 +25,8 @@ int main() {
 	RM.loadMusic("../game/music/Map2BGM.wav", "Map2BGM");
 	RM.loadSprite("../game/sprites/Map3BG.txt", "Map3BG");
 	RM.loadMusic("../game/music/Map3BGM.wav", "Map3BGM");
+	RM.loadSprite("../game/sprites/Map4BG.txt", "Map4BG");
+	RM.loadMusic("../game/music/Map4BGM.wav", "Map4BGM");
 
 	RM.loadSprite("../game/sprites/Player1-walking.txt", "Player1Walking");
 	RM.loadSprite("../game/sprites/Player1-standing.txt", "Player1Standing");
@@ -35,9 +37,9 @@ int main() {
 	RM.loadSprite("../game/sprites/ArrowRight.txt", "ArrowRight");
 	RM.loadSprite("../game/sprites/Bat.txt", "Bat");
 	RM.loadSprite("../game/sprites/Boss.txt", "Boss");
-    RM.loadSprite("../game/sprites/Boss2.txt", "Boss2");
-    RM.loadSprite("../game/sprites/BossEye.txt", "BossEye");
-    RM.loadSprite("../game/sprites/BossProjectile.txt", "BossProjectile");
+	RM.loadSprite("../game/sprites/Boss2.txt", "Boss2");
+	RM.loadSprite("../game/sprites/BossEye.txt", "BossEye");
+	RM.loadSprite("../game/sprites/BossProjectile.txt", "BossProjectile");
 
 	// adjust view
 	WM.setBoundary(df::Box(df::Vector(), 80, DM.getVertical()));

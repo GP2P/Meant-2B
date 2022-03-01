@@ -11,7 +11,7 @@ class Player : public df::Object {
 
 private:
 
-	int ID;
+	int playerID;
 	df::Vector acceleration;
 	float jumpSpeed;
 	int shootCountdown;
@@ -42,9 +42,9 @@ public:
 
 	void shoot(df::Vector target);
 
-	int getID() const;
+	int getPlayerID() const;
 
-	void setID(int id);
+	void setPlayerID(int id);
 
 	bool isHaveStone() const {
 		return haveStone;

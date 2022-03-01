@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Lever.h"
 #include "Bow.h"
+#include "Map4.h"
 
 Map3::Map3() {
 	setType("Map3");
@@ -21,6 +22,7 @@ Map3::Map3() {
 
 Map3::~Map3() {
 	p_music->stop();
+	new Map4(0);
 }
 
 void Map3::start() {
@@ -52,10 +54,10 @@ void Map3::start() {
 
 	if (bowAlive) {
 		// cage
-		buildBlocks(df::Vector(64, 6), df::Vector(78, 6), ':'); // top
-		buildBlocks(df::Vector(71, 1), df::Vector(71, 6), '8', df::BLUE); // chain
-		buildBlocks(df::Vector(64, 11), df::Vector(78, 11), ':'); // bottom
-		buildBlocks(df::Vector(63, 7), df::Vector(64, 10), ':'); // left
+		buildBlocks(df::Vector(64, 6), df::Vector(78, 6), ':', df::GREEN, 'c'); // top
+		buildBlocks(df::Vector(71, 1), df::Vector(71, 6), '8', df::BLUE, 'c'); // chain
+		buildBlocks(df::Vector(64, 11), df::Vector(78, 11), ':', df::GREEN, 'c'); // bottom
+		buildBlocks(df::Vector(63, 7), df::Vector(64, 10), ':', df::GREEN, 'c'); // left
 
 		// lever
 		new Lever(df::Vector(78, 9));
@@ -82,8 +84,21 @@ void Map3::start() {
 	DM.shake(20, 20, 10);
 }
 
-void Map3::stop(int endingNum) {
-
+void Map3::stop() {
+	auto ol = df::ObjectList(WM.getAllObjects());
+	auto oli = df::ObjectListIterator(&ol);
+	while (!oli.isDone()) {
+		if (oli.currentObject()->getType() == "Player") {
+			auto *p_player = dynamic_cast<Player *>(oli.currentObject());
+			if (p_player->getPlayerID() == 1)
+				oli.currentObject()->setPosition(df::Vector(39, 28));
+			else
+				oli.currentObject()->setPosition(df::Vector(69, 28));
+			p_player->setMapNum(3);
+		} else
+			WM.markForDelete(oli.currentObject());
+		oli.next();
+	}
 }
 
 int Map3::draw() {

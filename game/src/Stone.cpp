@@ -51,13 +51,13 @@ int Stone::eventHandler(const df::Event *p_e) {
 		const auto *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
 		switch (p_keyboard_event->getKey()) {
 			case df::Keyboard::E:
-				if (nearPlayer && player->getID() == 1 && !player->haveItem()) {
+				if (nearPlayer && player->getPlayerID() == 1 && !player->haveItem()) {
 					player->setHaveStone(true);
 					WM.markForDelete(this);
 				}
 				break;
 			case df::Keyboard::SLASH:
-				if (nearPlayer && player->getID() == 2 && !player->haveItem()) {
+				if (nearPlayer && player->getPlayerID() == 2 && !player->haveItem()) {
 					player->setHaveStone(true);
 					WM.markForDelete(this);
 				}
@@ -73,10 +73,10 @@ int Stone::eventHandler(const df::Event *p_e) {
 int Stone::draw() {
 	DM.drawCh(getPosition(), '@', df::WHITE);
 	if (nearPlayer) {
-		if (player->getID() == 1) {
+		if (player->getPlayerID() == 1) {
 			DM.drawString(getPosition() - df::Vector(0, 4), "Press E to carry", df::CENTER_JUSTIFIED, df::WHITE);
 		}
-		if (player->getID() == 2) {
+		if (player->getPlayerID() == 2) {
 			DM.drawString(getPosition() - df::Vector(0, 4), "Press slash to carry", df::CENTER_JUSTIFIED, df::WHITE);
 		}
 	}

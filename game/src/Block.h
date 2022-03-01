@@ -36,4 +36,6 @@ public:
 // limited to build only on integer coordinates, will convert floats to ints
 void buildBlocks(df::Vector start, df::Vector end, char character = '#', df::Color color = df::GREEN);
 
+void buildBlocks(df::Vector start, df::Vector end, char character, df::Color color, char type);
+
 #endif //DF_BLOCK_H

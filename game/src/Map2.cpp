@@ -92,7 +92,7 @@ int Map2::draw() {
 		if (p_player->isHaveBow()) {
 			bowOut = true;
 			DM.drawString(df::Vector(24, 27),
-			              p_player->getID() == 1 ? "Use Q and E to shoot arrows" : "Use < and > to shoot arrows",
+			              p_player->getPlayerID() == 1 ? "Use Q and E to shoot arrows" : "Use < and > to shoot arrows",
 			              df::CENTER_JUSTIFIED, df::WHITE);
 		} else if (p_player->isHaveWand()) {
 			wandOut = true;

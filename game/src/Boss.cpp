@@ -1,12 +1,12 @@
 #include "Boss.h"
 #include "EventStep.h"
 #include "DisplayManager.h"
-#include "LogManager.h"
 #include "EventCollision.h"
 #include "WorldManager.h"
 #include "BossProjectile.h"
 #include "Boss2.h"
 #include "BossEye.h"
+#include "Map3.h"
 
 #include <math.h>
 
@@ -21,9 +21,16 @@ Boss::Boss() {
 	fireSlowdown = 60;
 	fireCountdown = fireSlowdown;
 	hp = 5;
-    new Boss2(this);
-    new BossEye(this);
+	new Boss2(this);
+	new BossEye(this);
 
+}
+
+Boss::~Boss() {
+	auto ol = WM.objectsOfType("Map3");
+	auto oli = df::ObjectListIterator(&ol);
+	auto *p_map3 = dynamic_cast<Map3 *>(oli.currentObject());
+	p_map3->stop();
 }
 
 int Boss::eventHandler(const df::Event *p_e) {
@@ -46,9 +53,9 @@ int Boss::eventHandler(const df::Event *p_e) {
 			direction = (direction - getPosition());
 			direction.normalize();
 			direction.scale(0.5);
-            direction = df::Vector(direction.getX(),direction.getY()/2);
-            setVelocity(direction);
-            moveCountdown = 30;
+			direction = df::Vector(direction.getX(), direction.getY() / 2);
+			setVelocity(direction);
+			moveCountdown = 30;
 		}
 
 		if (fireCountdown <= 0) {
@@ -81,11 +88,11 @@ void Boss::setHp(int Hp) {
 }
 
 void Boss::fire() {
-    for(int i=0;i<=5;i++){
-        auto b = new BossProjectile(getPosition());
-        df::Vector a(tan(1+i*17.5),1);
-        a.normalize();
-        b->setDirection(a);
-        b->setVelocity(df::Vector(b->getVelocity().getX(),b->getVelocity().getY()/2));
-    }
+	for (int i = 0; i <= 5; i++) {
+		auto b = new BossProjectile(getPosition());
+		df::Vector a(tan(1 + i * 17.5), 1);
+		a.normalize();
+		b->setDirection(a);
+		b->setVelocity(df::Vector(b->getVelocity().getX(), b->getVelocity().getY() / 2));
+	}
 }
