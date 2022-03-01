@@ -15,6 +15,8 @@ private:
 	Block *p_escapeDoor[4];
 	df::Music *p_music;
 	int difficulty = 0;
+public:
+    int getDifficulty() const;
 
 public:
 

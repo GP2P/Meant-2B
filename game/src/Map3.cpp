@@ -131,3 +131,7 @@ void Map3::escape() {
 		i->setColor(df::BLACK);
 	}
 }
+
+int Map3::getDifficulty() const {
+    return difficulty;
+}

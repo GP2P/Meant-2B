@@ -367,7 +367,7 @@ int Player::draw() {
 	}
     int time = static_cast<int>(clock->split()/1000000);
     std::string s = std::to_string(time);
-    DM.drawString(df::Vector(5,3), "Total Time:" + s,df::LEFT_JUSTIFIED,df::WHITE);
+    DM.drawString(df::Vector(5,1), "Total Time:" + s,df::LEFT_JUSTIFIED,df::WHITE);
 
 	return result;
 }

@@ -30,67 +30,82 @@ Boss::Boss() {
 
 }
 
-Boss::~Boss() {
-	auto ol = WM.objectsOfType("Map3");
-	auto oli = df::ObjectListIterator(&ol);
-	auto *p_map3 = dynamic_cast<Map3 *>(oli.currentObject());
-	p_map3->stop();
-
-    FILE* pFile;
-    auto ol2 = df::ObjectList(WM.objectsOfType("Player"));
-    auto oli2 = df::ObjectListIterator(&ol2);
-    auto *p_player = dynamic_cast<Player *>(oli2.currentObject());
-    int longestTime = p_player->getClock()->delta()/100000;
-
-    int scoreList[4];
-
-
-    std::fstream myFile;
-    myFile.open("../game/easyScoreBoard.txt", std::ios::in);
-    if (myFile.is_open()) {
-        std::string line;
-        int lineCount = 0;
-        while(getline(myFile,line)){
-            int l = std::stoi(line);
-
-            if( l<=longestTime){
-                scoreList[lineCount] = l;
-            } else{
-                scoreList[lineCount] = longestTime;
-                longestTime = l;
-            }
-            lineCount++;
-        }
-        myFile.close();
-    } else{
-        LM.writeLog("Error: Easy scoreboard not found r");
-        return;
-    }
-
-    myFile.open("../game/easyScoreBoard.txt", std::ios::out);
-    if (myFile.is_open()) {
-        for(int i=0; i<=2; i++){
-            int a = scoreList[i];
-            myFile<<a<<std::endl;
-        }
-        myFile.close();
-    } else{
-        LM.writeLog("Error: Easy scoreboard not found w");
-        return;
-    }
-}
 
 int Boss::eventHandler(const df::Event *p_e) {
 
 	if (p_e->getType() == df::STEP_EVENT) {
 		if (hp <= 0) {
+            int difficulty = -1;
             auto ol = WM.objectsOfType("Map3");
             if (!ol.isEmpty()) {
                 auto oli = df::ObjectListIterator(&ol);
                 auto *p_map3 = dynamic_cast<Map3 *>(oli.currentObject());
+                difficulty = p_map3->getDifficulty();
                 p_map3->stop();
             }
+
+            FILE* pFile;
+            auto ol2 = df::ObjectList(WM.objectsOfType("Player"));
+            auto oli2 = df::ObjectListIterator(&ol2);
+            auto *p_player = dynamic_cast<Player *>(oli2.currentObject());
+            int longestTime = p_player->getClock()->delta()/100000;
+
+            int scoreList[4];
+
+
+            std::fstream myFile;
+            switch(difficulty){
+                case 0:
+                    myFile.open("../game/easyScoreBoard.txt", std::ios::in);
+                    break;
+                case 1:
+                    myFile.open("../game/normalScoreBoard.txt", std::ios::in);
+                    break;
+                case 2:
+                    myFile.open("../game/hardScoreBoard.txt", std::ios::in);
+                    break;
+            }
+            if (myFile.is_open()) {
+                std::string line;
+                int lineCount = 0;
+                while(getline(myFile,line)){
+                    int l = std::stoi(line);
+
+                    if( l<=longestTime){
+                        scoreList[lineCount] = l;
+                    } else{
+                        scoreList[lineCount] = longestTime;
+                        longestTime = l;
+                    }
+                    lineCount++;
+                }
+                myFile.close();
+            } else{
+                LM.writeLog("Error: Easy scoreboard not found r");
+            }
+
+            switch(difficulty){
+                case 0:
+                    myFile.open("../game/easyScoreBoard.txt", std::ios::out);
+                    break;
+                case 1:
+                    myFile.open("../game/normalScoreBoard.txt", std::ios::out);
+                    break;
+                case 2:
+                    myFile.open("../game/hardScoreBoard.txt", std::ios::out);
+                    break;
+            }
+            if (myFile.is_open()) {
+                for(int i=0; i<=2; i++){
+                    int a = scoreList[i];
+                    myFile<<a<<std::endl;
+                }
+                myFile.close();
+            } else{
+                LM.writeLog("Error: Easy scoreboard not found w");
+            }
             WM.markForDelete(this);
+            return 1;
         }
 
 		bool withinX = (getPosition().getX() < DM.getHorizontal() - 3) && (getPosition().getX() > 3);
@@ -141,7 +156,7 @@ void Boss::setHp(int Hp) {
 }
 
 void Boss::fire() {
-	for (int i = 0; i <= 5; i++) {
+	for (int i = 0; i <= 6; i++) {
 		auto b = new BossProjectile(getPosition());
 		df::Vector a(tan(1 + i * 17.5), 1);
 		a.normalize();
