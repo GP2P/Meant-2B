@@ -56,8 +56,8 @@ void Map1::start() {
 
 	auto *player1 = new Player(1);
 	auto *player2 = new Player(2);
-	player1->setPosition(df::Vector(10, 2));
-	player2->setPosition(df::Vector(69, 2));
+	player1->setPosition(df::Vector(15, 2));
+	player2->setPosition(df::Vector(63, 2));
 	player1->setMapNum(1);
 	player2->setMapNum(1);
 }
@@ -83,5 +83,17 @@ void Map1::stop() {
 }
 
 int Map1::draw() {
+	// hint
+	auto ol = df::ObjectList(WM.objectsOfType("Player"));
+	auto oli = df::ObjectListIterator(&ol);
+	while (!oli.isDone()) {
+		auto *p_player = dynamic_cast<Player *>(oli.currentObject());
+		if (p_player->getPosition().getY() < 8)
+			p_player->getPlayerID() == 1
+			? DM.drawString(df::Vector(15, 2), "Move/jump with W, A, and D", df::CENTER_JUSTIFIED, df::WHITE)
+			: DM.drawString(df::Vector(63, 2), "Move/jump with the arrow keys", df::CENTER_JUSTIFIED, df::WHITE);
+		oli.next();
+	}
+
 	return Object::draw();
 }

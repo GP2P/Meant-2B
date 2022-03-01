@@ -23,7 +23,6 @@ Map3::Map3(int difficulty) {
 
 Map3::~Map3() {
 	p_music->stop();
-	new Map4(0);
 }
 
 void Map3::start() {
