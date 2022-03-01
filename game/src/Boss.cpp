@@ -17,26 +17,22 @@ Boss::Boss() {
 	moveCountdown = 30;
 	registerInterest(df::STEP_EVENT);
 	setSolidness(df::SOFT);
-	hp = 5;
-	fireSlowdown = 60;
 	fireCountdown = fireSlowdown;
 	hp = 5;
 	new Boss2(this);
 	new BossEye(this);
-
-}
-
-Boss::~Boss() {
-	auto ol = WM.objectsOfType("Map3");
-	auto oli = df::ObjectListIterator(&ol);
-	auto *p_map3 = dynamic_cast<Map3 *>(oli.currentObject());
-	p_map3->stop();
 }
 
 int Boss::eventHandler(const df::Event *p_e) {
 
 	if (p_e->getType() == df::STEP_EVENT) {
 		if (hp <= 0) {
+			auto ol = WM.objectsOfType("Map3");
+			if (!ol.isEmpty()) {
+				auto oli = df::ObjectListIterator(&ol);
+				auto *p_map3 = dynamic_cast<Map3 *>(oli.currentObject());
+				p_map3->stop();
+			}
 			WM.markForDelete(this);
 		}
 
@@ -65,16 +61,6 @@ int Boss::eventHandler(const df::Event *p_e) {
 			fireCountdown--;
 		}
 		return 1;
-	}
-
-	if (p_e->getType() == df::COLLISION_EVENT) {
-		const df::EventCollision *p_ce = dynamic_cast <const df::EventCollision *> (p_e);
-		if ((p_ce->getObject1()->getType() == "Player") ||
-		    (p_ce->getObject2()->getType() == "Player")) {
-			WM.markForDelete(p_ce->getObject1());
-			WM.markForDelete(p_ce->getObject2());
-			return 1;
-		}
 	}
 	return 0;
 }
