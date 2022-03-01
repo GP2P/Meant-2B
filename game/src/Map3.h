@@ -14,10 +14,11 @@ private:
 	bool wandAlive;
 	Block *p_escapeDoor[4];
 	df::Music *p_music;
+	int difficulty = 0;
 
 public:
 
-	Map3();
+	explicit Map3(int difficulty);
 
 	~Map3() override;
 

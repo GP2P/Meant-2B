@@ -9,7 +9,8 @@
 #include "Stone.h"
 #include "Map2.h"
 
-Map1::Map1() {
+Map1::Map1(int difficulty) {
+	this->difficulty = difficulty;
 	setType("Map1");
 	setSprite("Map1BG");
 	setLocation(df::CENTER_CENTER);
@@ -20,7 +21,6 @@ Map1::Map1() {
 
 Map1::~Map1() {
 	p_music->stop();
-	new Map2();
 }
 
 void Map1::start() {
@@ -72,10 +72,14 @@ void Map1::stop() {
 				oli.currentObject()->setPosition(oli.currentObject()->getPosition() + df::Vector(-80, 0));
 			auto *p_player = dynamic_cast<Player *>(oli.currentObject());
 			p_player->setMapNum(2);
+		} else if (oli.currentObject()->getType() == "Map1") {
+			// do nothing to prevent double delete
 		} else
 			WM.markForDelete(oli.currentObject());
 		oli.next();
 	}
+	new Map2(difficulty);
+	delete this;
 }
 
 int Map1::draw() {

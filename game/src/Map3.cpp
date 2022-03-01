@@ -9,7 +9,8 @@
 #include "Bow.h"
 #include "Map4.h"
 
-Map3::Map3() {
+Map3::Map3(int difficulty) {
+	this->difficulty = difficulty;
 	setType("Map3");
 	setSprite("Map3BG");
 	setLocation(df::CENTER_CENTER);
@@ -95,10 +96,14 @@ void Map3::stop() {
 			else
 				oli.currentObject()->setPosition(df::Vector(69, 28));
 			p_player->setMapNum(3);
+		} else if (oli.currentObject()->getType() == "Map3") {
+			// do nothing to prevent double delete
 		} else
 			WM.markForDelete(oli.currentObject());
 		oli.next();
 	}
+	new Map4(difficulty, 0);
+	delete this;
 }
 
 int Map3::draw() {

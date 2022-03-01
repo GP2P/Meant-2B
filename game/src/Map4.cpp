@@ -9,36 +9,23 @@
 #include "Map0.h"
 #include "Block.h"
 
-Map4::Map4() {
-	setType("Map4");
-	setSprite("Map4BG");
-	countDown = getAnimation().getSprite()->getFrameCount() * getAnimation().getSprite()->getSlowdown();
-	setLocation(df::CENTER_CENTER);
-	setAltitude(0);
-	registerInterest(df::STEP_EVENT);
-	registerInterest(df::KEYBOARD_EVENT);
-	endingNumber = 0;
-	p_music = RM.getMusic("Map4BGM");
-	p_music->play();
-	buildBlocks(df::Vector(-100, 32), df::Vector(180, 32), '#'); // bottom
-}
-
-Map4::Map4(int endingNum) {
-	setType("Map4");
-	setSprite("Map4BG");
-	countDown = getAnimation().getSprite()->getFrameCount() * getAnimation().getSprite()->getSlowdown();
-	setLocation(df::CENTER_CENTER);
-	setAltitude(0);
-	registerInterest(df::STEP_EVENT);
-	registerInterest(df::KEYBOARD_EVENT);
+Map4::Map4(int difficulty, int endingNum) {
+	this->difficulty = difficulty;
 	endingNumber = endingNum;
+	setType("Map4");
+	setSprite("Map4BG");
+	countDown = getAnimation().getSprite()->getFrameCount() * getAnimation().getSprite()->getSlowdown();
+	setLocation(df::CENTER_CENTER);
+	setAltitude(0);
+	registerInterest(df::STEP_EVENT);
+	registerInterest(df::KEYBOARD_EVENT);
 	p_music = RM.getMusic("Map4BGM");
 	p_music->play();
 	buildBlocks(df::Vector(-100, 32), df::Vector(180, 32), '#'); // bottom
 }
 
 Map4::~Map4() {
-//	GM.setGameOver(true);
+	p_music->stop();
 }
 
 int Map4::eventHandler(const df::Event *p_e) {
