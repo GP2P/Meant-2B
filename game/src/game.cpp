@@ -17,16 +17,16 @@ int main() {
 	LM.setFlush(true);
 
 	// load resources
-	RM.loadMusic("../game/music/Map0BGM.wav", "Map0BGM");
 	RM.loadSprite("../game/sprites/Map0BG.txt", "Map0BG");
+	RM.loadMusic("../game/music/02_Stillness_of_Space.ogg", "Map0BGM");
 	RM.loadSprite("../game/sprites/Map1BG.txt", "Map1BG");
-	RM.loadMusic("../game/music/Map1BGM.wav", "Map1BGM");
+	RM.loadMusic("../game/music/02_Stillness_of_Space.ogg", "Map1BGM");
 	RM.loadSprite("../game/sprites/Map2BG.txt", "Map2BG");
-	RM.loadMusic("../game/music/Map2BGM.wav", "Map2BGM");
+	RM.loadMusic("../game/music/06_Battle_in_Space_Loop.ogg", "Map2BGM");
 	RM.loadSprite("../game/sprites/Map3BG.txt", "Map3BG");
-	RM.loadMusic("../game/music/Map3BGM.wav", "Map3BGM");
+	RM.loadMusic("../game/music/04_Emergency_No_Alarm.ogg", "Map3BGM");
 	RM.loadSprite("../game/sprites/Map4BG.txt", "Map4BG");
-	RM.loadMusic("../game/music/Map4BGM.wav", "Map4BGM");
+	RM.loadMusic("../game/music/03_Racing_Through_Asteroids_Loop.ogg", "Map4BGM");
 
 	RM.loadSprite("../game/sprites/Player1-walking.txt", "Player1Walking");
 	RM.loadSprite("../game/sprites/Player1-standing.txt", "Player1Standing");
