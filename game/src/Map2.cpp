@@ -10,7 +10,8 @@
 #include "DisplayManager.h"
 #include "WorldManager.h"
 
-Map2::Map2() {
+Map2::Map2(int difficulty) {
+	this->difficulty = difficulty;
 	setType("Map2");
 	setSprite("Map2BG");
 	setLocation(df::CENTER_CENTER);
@@ -21,7 +22,6 @@ Map2::Map2() {
 
 Map2::~Map2() {
 	p_music->stop();
-	new Map3();
 }
 
 void Map2::start() {
@@ -75,10 +75,14 @@ void Map2::stop() {
 			else
 				oli.currentObject()->setPosition(df::Vector(39, 28));
 			p_player->setMapNum(3);
+		} else if (oli.currentObject()->getType() == "Map2") {
+			// do nothing to prevent double delete
 		} else
 			WM.markForDelete(oli.currentObject());
 		oli.next();
 	}
+	new Map3(difficulty);
+	delete this;
 }
 
 int Map2::draw() {

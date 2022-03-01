@@ -11,12 +11,11 @@ private:
 	df::Music *p_music;
 	int countDown = 10;
 	int endingNumber = 0;
+	int difficulty = 0;
 
 public:
 
-	Map4();
-
-	Map4(int endingNumber);
+	Map4(int difficulty, int endingNumber);
 
 	~Map4() override;
 

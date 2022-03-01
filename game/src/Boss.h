@@ -9,17 +9,15 @@ private:
 
 	int moveCountdown;
 
-	int hp;
+	int hp = 5;
 
 	int fireCountdown;
 
-	int fireSlowdown;
+	int fireSlowdown = 60;
 
 public:
 
 	Boss();
-
-	~Boss();
 
 	int getHp() const;
 

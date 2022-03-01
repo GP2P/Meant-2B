@@ -10,10 +10,11 @@ class Map2 : public df::ViewObject {
 private:
 
 	df::Music *p_music;
+	int difficulty = 0;
 
 public:
 
-	Map2();
+	explicit Map2(int difficulty);
 
 	~Map2() override;
 

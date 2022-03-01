@@ -24,7 +24,7 @@ Boss::Boss() {
 	hp = 5;
 	fireSlowdown = 60;
 	fireCountdown = fireSlowdown;
-	hp = 1;
+	hp = 5;
 	new Boss2(this);
 	new BossEye(this);
 
@@ -84,8 +84,14 @@ int Boss::eventHandler(const df::Event *p_e) {
 
 	if (p_e->getType() == df::STEP_EVENT) {
 		if (hp <= 0) {
-			WM.markForDelete(this);
-		}
+            auto ol = WM.objectsOfType("Map3");
+            if (!ol.isEmpty()) {
+                auto oli = df::ObjectListIterator(&ol);
+                auto *p_map3 = dynamic_cast<Map3 *>(oli.currentObject());
+                p_map3->stop();
+            }
+            WM.markForDelete(this);
+        }
 
 		bool withinX = (getPosition().getX() < DM.getHorizontal() - 3) && (getPosition().getX() > 3);
 		bool withinY = (getPosition().getY() < DM.getVertical() - 7) && (getPosition().getY() > 2);

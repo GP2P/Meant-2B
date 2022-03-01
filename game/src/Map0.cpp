@@ -3,26 +3,21 @@
 #include "ViewObject.h"
 #include "ResourceManager.h"
 #include "EventKeyboard.h"
-#include "WorldManager.h"
 #include "Map1.h"
 #include "GameManager.h"
 
 Map0::Map0() {
+	difficulty = 0;
 	setType("Map0");
-	setSprite("Click2Start");
+	setSprite("Map0BG");
 	setLocation(df::CENTER_CENTER);
 	p_music = RM.getMusic("Map0BGM");
 	p_music->play();
 	registerInterest(df::KEYBOARD_EVENT);
-	start();
 }
 
 Map0::~Map0() {
 	p_music->stop();
-	new Map1();
-}
-
-void Map0::start() {
 }
 
 int Map0::draw() {
@@ -33,11 +28,11 @@ int Map0::eventHandler(const df::Event *p_e) {
 	if (p_e->getType() == df::KEYBOARD_EVENT) {
 		const auto *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
 		if (p_keyboard_event->getKey() == df::Keyboard::SPACE) {
-			p_music->pause();
-			WM.markForDelete(this);
+			new Map1(difficulty);
+			delete this;
 		}
-		if (p_keyboard_event->getKey() == df::Keyboard::Q)
-			GM.setGameOver();
+		if (p_keyboard_event->getKey() == df::Keyboard::X)
+			GM.setGameOver(true);
 		return 1;
 	}
 	return 0;

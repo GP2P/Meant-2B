@@ -45,21 +45,22 @@ Player::Player(int ID) {
 }
 
 Player::~Player() {
-	delete p_reticle;
+	WM.markForDelete(p_reticle);
 	p_reticle = nullptr;
 
-	if (mapNum == 2 && isHaveWand())
-		new Wand(df::Vector(getPosition().getX(), 29));
-	else if (isHaveBow())
-		new Bow(df::Vector(getPosition().getX(), 29));
-
-// if both players are dead, end the game
+	// if both players are dead, restart the game
 	auto ol = df::ObjectList(WM.objectsOfType("Player"));
 	auto oli = df::ObjectListIterator(&ol);
 	oli.next();
-	if (oli.isDone())
-		GM.setGameOver();
-
+	if (oli.isDone()) {
+		WM.markForDelete(WM.getAllObjects());
+		new Map0();
+	} else {
+		if (mapNum == 2 && isHaveWand())
+			new Wand(df::Vector(getPosition().getX(), 29));
+		else if (isHaveBow())
+			new Bow(df::Vector(getPosition().getX(), 29));
+	}
 }
 
 bool Player::onGround() {
@@ -173,7 +174,7 @@ int Player::eventHandler(const df::Event *p_e) {
 						} else {
 							new Stone(getPosition() - df::Vector(1, -1));
 						}
-						haveStone = false;
+						setHaveStone(false);
 					}
 					if (haveBow) {
 						if (direction == "right") {
@@ -181,7 +182,7 @@ int Player::eventHandler(const df::Event *p_e) {
 						} else {
 							new Bow(getPosition() - df::Vector(0.5, -1));
 						}
-						haveBow = false;
+						setHaveBow(false);
 					}
 					if (haveWand) {
 						if (direction == "right") {
@@ -189,7 +190,7 @@ int Player::eventHandler(const df::Event *p_e) {
 						} else {
 							new Wand(getPosition() - df::Vector(0.5, -1));
 						}
-						haveWand = false;
+						setHaveWand(false);
 					}
 				}
 				break;
@@ -249,6 +250,11 @@ int Player::eventHandler(const df::Event *p_e) {
 				if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN) {
 					WM.markForDelete(WM.getAllObjects());
 					new Map0();
+				}
+				break;
+			case df::Keyboard::X:    // kill game
+				if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN) {
+					GM.setGameOver(true);
 				}
 				break;
 			default:    // Key not included
