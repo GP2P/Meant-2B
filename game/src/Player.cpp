@@ -170,7 +170,7 @@ int Player::eventHandler(const df::Event *p_e) {
 						} else {
 							new Stone(getPosition() - df::Vector(1, -1));
 						}
-						haveStone = false;
+						setHaveStone(false);
 					}
 					if (haveBow) {
 						if (direction == "right") {
@@ -178,7 +178,7 @@ int Player::eventHandler(const df::Event *p_e) {
 						} else {
 							new Bow(getPosition() - df::Vector(0.5, -1));
 						}
-						haveBow = false;
+						setHaveBow(false);
 					}
 					if (haveWand) {
 						if (direction == "right") {
@@ -186,7 +186,7 @@ int Player::eventHandler(const df::Event *p_e) {
 						} else {
 							new Wand(getPosition() - df::Vector(0.5, -1));
 						}
-						haveWand = false;
+						setHaveWand(false);
 					}
 				}
 				break;
