@@ -41,7 +41,7 @@ Player::Player(int ID) {
 }
 
 Player::~Player() {
-	delete p_reticle;
+	WM.markForDelete(p_reticle);
 	p_reticle = nullptr;
 
 	if (mapNum == 2 && isHaveWand())
