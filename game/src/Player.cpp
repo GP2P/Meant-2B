@@ -224,25 +224,25 @@ int Player::eventHandler(const df::Event *p_e) {
 				}
 				break;
 			case df::Keyboard::E:    // shoot arrow to right
-				if (playerID == 1)
+				if (playerID == 1 && mapNum == 2)
 					if (haveBow) {
 						shoot(getPosition() + df::Vector(1, -0.08));
 					}
 				break;
 			case df::Keyboard::PERIOD:    // shoot arrow to right
-				if (playerID == 2)
+				if (playerID == 2 && mapNum == 2)
 					if (haveBow) {
 						shoot(getPosition() + df::Vector(1, -0.08));
 					}
 				break;
 			case df::Keyboard::Q:    // shoot arrow to left
-				if (playerID == 1)
+				if (playerID == 1 && mapNum == 2)
 					if (haveBow) {
 						shoot(getPosition() - df::Vector(1, 0.08));
 					}
 				break;
 			case df::Keyboard::COMMA:    // shoot arrow to left
-				if (playerID == 2)
+				if (playerID == 2 && mapNum == 2)
 					if (haveBow) {
 						shoot(getPosition() - df::Vector(1, 0.08));
 					}
