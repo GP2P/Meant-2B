@@ -114,7 +114,6 @@ void Map3::start() {
 	buildBlocks(df::Vector(0, 31), df::Vector(79, 31), '#'); // bottom
 	buildBlocks(df::Vector(0, 1), df::Vector(0, 30), '|'); // left
 	buildBlocks(df::Vector(79, 1), df::Vector(79, 6), '|'); // right1
-	buildBlocks(df::Vector(79, 7), df::Vector(79, 10), '2'); // door
 	buildBlocks(df::Vector(79, 11), df::Vector(79, 30), '|'); // right2
 
 	if (playerCount == 2) {
@@ -149,7 +148,7 @@ void Map3::start() {
 	DM.shake(20, 20, 10);
 }
 
-void Map3::stop() {
+void Map3::stop(int type) {
 	auto ol = df::ObjectList(WM.getAllObjects());
 	auto oli = df::ObjectListIterator(&ol);
 	while (!oli.isDone()) {
@@ -206,9 +205,9 @@ int Map3::draw() {
 
 void Map3::escape() {
 	for (auto &i: p_escapeDoor) {
-		i->setSolidness(df::SOFT);
-		i->setColor(df::BLACK);
+		WM.markForDelete(i);
 	}
+	WM.markForDelete(WM.objectsOfType("Lever"));
 }
 
 int Map3::getDifficulty() const {

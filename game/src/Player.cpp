@@ -14,6 +14,7 @@
 #include "FragileBlock.h"
 #include "Map0.h"
 #include "ResourceManager.h"
+#include "Map3.h"
 
 Player::Player(int ID) {
 	setPlayerID(ID);
@@ -265,19 +266,40 @@ int Player::eventHandler(const df::Event *p_e) {
 		return 1;
 	}
 	if (p_e->getType() == df::OUT_EVENT) {
-		inMap2 = false;
-		auto ol = df::ObjectList(WM.objectsOfType("Player"));
-		auto oli = df::ObjectListIterator(&ol);
-		while (!oli.isDone()) {
-			auto *p_player = dynamic_cast<Player *>(oli.currentObject());
-			if (p_player->isInMap2())
-				return 1;
-			oli.next();
+		if (mapNum == 1) {
+			inMap1 = false;
+			auto ol = df::ObjectList(WM.objectsOfType("Player"));
+			auto oli = df::ObjectListIterator(&ol);
+			while (!oli.isDone()) {
+				auto *p_player = dynamic_cast<Player *>(oli.currentObject());
+				if (p_player->isInMap1())
+					return 1;
+				oli.next();
+			}
+			auto ml = df::ObjectList(WM.objectsOfType("Map1"));
+			auto mli = df::ObjectListIterator(&ml);
+			auto *p_Map1 = dynamic_cast<Map1 *>(mli.currentObject());
+			p_Map1->stop();
+		} else if (mapNum == 3) {
+			inMap3 = false;
+			auto ml = df::ObjectList(WM.objectsOfType("Map3"));
+			auto mli = df::ObjectListIterator(&ml);
+			auto *p_Map3 = dynamic_cast<Map3 *>(mli.currentObject());
+
+			int situation = 1; // other player died, left
+			auto ol = df::ObjectList(WM.objectsOfType("Player"));
+			auto oli = df::ObjectListIterator(&ol);
+			while (!oli.isDone()) {
+				auto *p_player = dynamic_cast<Player *>(oli.currentObject());
+				if (p_player->isInMap3()) {
+					WM.markForDelete(p_player);
+					situation = 2; // abandoned other player
+				}
+				oli.next();
+			}
+
+			p_Map3->stop(situation);
 		}
-		auto ml = df::ObjectList(WM.objectsOfType("Map1"));
-		auto mli = df::ObjectListIterator(&ml);
-		auto *p_Map1 = dynamic_cast<Map1 *>(mli.currentObject());
-		p_Map1->stop();
 	}
 	return 0;
 }
@@ -287,7 +309,6 @@ int Player::jump() {
 		setVelocity(df::Vector(0, -jumpSpeed));
 		return 1;
 	}
-
 	return 0;
 }
 

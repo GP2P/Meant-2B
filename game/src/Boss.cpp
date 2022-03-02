@@ -66,7 +66,7 @@ void Boss::defeat() {
 		auto oli = df::ObjectListIterator(&ol);
 		auto *p_map3 = dynamic_cast<Map3 *>(oli.currentObject());
 		difficulty = p_map3->getDifficulty();
-		p_map3->stop();
+		p_map3->stop(0); // boss died
 	}
 
 	FILE *pFile;
@@ -156,32 +156,33 @@ int Boss::eventHandler(const df::Event *p_e) {
 
 		if (fireCountdown <= 0) {
 			fire();
-            fireCountdown = fireSlowdown;
+			fireCountdown = fireSlowdown;
 		} else {
 			fireCountdown--;
 		}
-        if(stage == 2){
-            if (fireCountdown2 <= 0) {
-                fire2();
-                fireCountdown2 = fireSlowdown2;
-            } else {
-                fireCountdown2--;
-            }
-            if(invincibleCD>0){
-                DM.drawString(df::Vector(73,23),"Boss Becomes Invincible",df::RIGHT_JUSTIFIED,df::WHITE);
-                DM.drawString(df::Vector(73,24),"Shoot Down Boss Crystals with Bow",df::RIGHT_JUSTIFIED,df::WHITE);
-                sf::CircleShape shape(80);
-                shape.setFillColor(sf::Color(237, 247, 84,100));
-                shape.setPosition(df::spacesToPixels(getPosition()).getX()-75,df::spacesToPixels(getPosition()).getY()-50);
-                DM.getWindow()->draw(shape);
-                invincible = true;
-                invincibleCD--;
-            } else{
-                invincible = false;
-            }
-        }
-        return 1;
-    }
+		if (stage == 2) {
+			if (fireCountdown2 <= 0) {
+				fire2();
+				fireCountdown2 = fireSlowdown2;
+			} else {
+				fireCountdown2--;
+			}
+			if (invincibleCD > 0) {
+				DM.drawString(df::Vector(73, 23), "Boss Becomes Invincible", df::RIGHT_JUSTIFIED, df::WHITE);
+				DM.drawString(df::Vector(73, 24), "Shoot Down Boss Crystals with Bow", df::RIGHT_JUSTIFIED, df::WHITE);
+				sf::CircleShape shape(80);
+				shape.setFillColor(sf::Color(237, 247, 84, 100));
+				shape.setPosition(df::spacesToPixels(getPosition()).getX() - 75,
+				                  df::spacesToPixels(getPosition()).getY() - 50);
+				DM.getWindow()->draw(shape);
+				invincible = true;
+				invincibleCD--;
+			} else {
+				invincible = false;
+			}
+		}
+		return 1;
+	}
 
 	return 0;
 }
@@ -206,6 +207,7 @@ void Boss::setHp(int Hp) {
             p_bp->setStage(2);
             oli.next();
         }
+        df::addParticles(df::RAIN, df::LEFT, 4.0, df::MAGENTA);
     }
 }
 
@@ -221,20 +223,19 @@ void Boss::fire() {
 }
 
 void Boss::fire2() {
-    auto b = new BossUpgradedWeapon(getPosition(),difficulty);
-    int x = rand() % (DM.getHorizontal() - 20) + 10;
-    df::Vector position(x, 40);
-    df::Vector direction = position-getPosition();
-    direction.normalize();
-    b->setDirection(direction);
-    b->setVelocity(df::Vector(b->getVelocity().getX(), b->getVelocity().getY() / 2));
+	auto b = new BossUpgradedWeapon(getPosition(), difficulty);
+	int x = rand() % (DM.getHorizontal() - 20) + 10;
+	df::Vector position(x, 40);
+	df::Vector direction = position - getPosition();
+	direction.normalize();
+	b->setDirection(direction);
+	b->setVelocity(df::Vector(b->getVelocity().getX(), b->getVelocity().getY() / 2));
 }
 
-
 void Boss::setStage(int stage) {
-    Boss::stage = stage;
+	Boss::stage = stage;
 }
 
 bool Boss::getInvincible() const {
-    return invincible;
+	return invincible;
 }

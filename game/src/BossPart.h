@@ -12,12 +12,12 @@ private:
     Boss *boss;
     int stage;
 public:
-    void setStage(int stage);
 
-public:
-    BossPart(Boss *Boss);
+	BossPart(Boss *Boss);
 
     int eventHandler(const df::Event *p_e) override;
+
+    void setStage(int stage);
 };
 
 

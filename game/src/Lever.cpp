@@ -32,11 +32,18 @@ int Lever::draw() {
 
 	if (nearPlayer) {
 		if (player->getPlayerID() == 1) {
-			DM.drawString(getPosition() - df::Vector(0, 4), "Press E to pull lever", df::CENTER_JUSTIFIED, df::WHITE);
+			if (player->getMapNum() == 2)
+				DM.drawString(getPosition() + df::Vector(0, -3), "Press E to pull", df::RIGHT_JUSTIFIED, df::YELLOW);
+			else if (player->getMapNum() == 3)
+				DM.drawString(getPosition() + df::Vector(0, -2), "Press E to pull", df::RIGHT_JUSTIFIED, df::YELLOW);
 		}
 		if (player->getPlayerID() == 2) {
-			DM.drawString(getPosition() - df::Vector(0, 4), "Press slash to pull lever", df::CENTER_JUSTIFIED,
-			              df::WHITE);
+			if (player->getMapNum() == 2)
+				DM.drawString(getPosition() + df::Vector(0, -3), "Press slash to pull", df::RIGHT_JUSTIFIED,
+				              df::YELLOW);
+			else if (player->getMapNum() == 3)
+				DM.drawString(getPosition() + df::Vector(0, -2), "Press slash to pull", df::RIGHT_JUSTIFIED,
+				              df::YELLOW);
 		}
 	}
 	return 1;
@@ -72,7 +79,8 @@ int Lever::eventHandler(const df::Event *p_e) {
 		const auto *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
 		switch (p_keyboard_event->getKey()) {
 			case df::Keyboard::E:
-				if (nearPlayer && player->getPlayerID() == 1) {
+				if (nearPlayer && player->getPlayerID() == 1 &&
+				    p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
 					character = '\\';
 					auto m2l = df::ObjectList(WM.objectsOfType("Map2"));
 					if (!m2l.isEmpty()) {
@@ -88,7 +96,8 @@ int Lever::eventHandler(const df::Event *p_e) {
 				}
 				break;
 			case df::Keyboard::SLASH:
-				if (nearPlayer && player->getPlayerID() == 2) {
+				if (nearPlayer && player->getPlayerID() == 2 &&
+				    p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
 					character = '\\';
 					auto m2l = df::ObjectList(WM.objectsOfType("Map2"));
 					if (!m2l.isEmpty()) {

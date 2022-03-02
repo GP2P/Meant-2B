@@ -25,7 +25,7 @@ public:
 
 	void start();
 
-	void stop();
+	void stop(int type);
 
 	int draw() override;
 
