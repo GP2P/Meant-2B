@@ -31,20 +31,20 @@ Boss::Boss(int difficulty) {
             maxHP = 4;
             fireSlowdown = 100;
             fireSlowdown2 = 150;
-            invincibleCD = 1000;
+            invincibleCD = 240;
             break;
         case 1:
             maxHP = 6;
             fireSlowdown = 80;
             fireSlowdown2 = 120;
-            invincibleCD = 150;
+            invincibleCD = 320;
 
             break;
         case 2:
             maxHP = 8;
             fireSlowdown = 60;
             fireSlowdown2 = 90;
-            invincibleCD = 200;
+            invincibleCD = 400;
             break;
         default:
             maxHP = 4;
@@ -56,6 +56,7 @@ Boss::Boss(int difficulty) {
     fireCountdown = fireSlowdown;
     fireCountdown2 = fireSlowdown2;
     hp = maxHP;
+    new BossPart(this);
     setStage(1);
 }
 
@@ -197,6 +198,14 @@ void Boss::setHp(int Hp) {
     if (hp == maxHP/2){
         setStage(2);
         new BossEye(this);
+        auto ol = df::ObjectList(WM.objectsOfType("BossPart"));
+        auto oli = df::ObjectListIterator(&ol);
+        while (!oli.isDone()) {
+            auto *p_bp = dynamic_cast<BossPart *>(oli.currentObject());
+            p_bp->setSprite("BossPart2");
+            p_bp->setStage(2);
+            oli.next();
+        }
     }
 }
 

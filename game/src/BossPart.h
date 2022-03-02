@@ -10,6 +10,10 @@
 class BossPart : public df::Object {
 private:
     Boss *boss;
+    int stage;
+public:
+    void setStage(int stage);
+
 public:
     BossPart(Boss *Boss);
 
