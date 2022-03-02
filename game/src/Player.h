@@ -21,7 +21,7 @@ private:
 	bool haveStone = false;
 	bool haveBow = false;
 	bool haveWand = false;
-	bool inMap2 = true;
+	bool inMap1 = true;
 	bool inMap3 = true;
 	std::string direction = "right";
 	int mapNum = 0;
@@ -92,12 +92,12 @@ public:
 		}
 	}
 
-	bool isInMap2() const {
-		return inMap2;
+	bool isInMap1() const {
+		return inMap1;
 	}
 
-	void setInMap2(bool inMap) {
-		Player::inMap2 = inMap;
+	void setInMap1(bool inMap) {
+		Player::inMap1 = inMap;
 	}
 
 	bool isInMap3() const {
