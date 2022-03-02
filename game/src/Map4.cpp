@@ -10,6 +10,9 @@
 #include "Block.h"
 #include "Map5.h"
 
+#include <sstream>
+#include <iomanip>
+
 Map4::Map4(int difficulty, int endingNumber) {
 	this->difficulty = difficulty;
 	this->endingNumber = endingNumber;
@@ -233,8 +236,13 @@ int Map4::draw() {
 	DM.drawString(df::Vector(40, 29), "hit SPACE to show scoreboard", df::CENTER_JUSTIFIED,
 	              df::Color::WHITE);
 
-	if (playTime != -1 && goodEnding)
-		DM.drawString(df::Vector(5, 1), "Play Time:" + std::to_string(playTime) + 's', df::LEFT_JUSTIFIED, df::WHITE);
+	if (playTime != -1 && goodEnding){
+        float time = static_cast<float>(playTime);
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(1) << time;
+        std::string s = stream.str();
+        DM.drawString(df::Vector(5, 1), "Play Time:" + s + 's', df::LEFT_JUSTIFIED, df::WHITE);
+    }
 
 	// show current difficulty
 	if (difficulty == 0)
