@@ -23,18 +23,18 @@ Map0::~Map0() {
 
 int Map0::draw() {
 	// difficulty selection
-	DM.drawString(df::Vector(39, 24), "'E' for easy", df::CENTER_JUSTIFIED, difficulty == 0 ? df::YELLOW : df::WHITE);
-	DM.drawString(df::Vector(39, 26), "'N' for normal", df::CENTER_JUSTIFIED, difficulty == 1 ? df::YELLOW : df::WHITE);
-	DM.drawString(df::Vector(39, 28), "'D' for difficult", df::CENTER_JUSTIFIED,
+	DM.drawString(df::Vector(40, 24), "'E' for easy", df::CENTER_JUSTIFIED, difficulty == 0 ? df::YELLOW : df::WHITE);
+	DM.drawString(df::Vector(40, 26), "'N' for normal", df::CENTER_JUSTIFIED, difficulty == 1 ? df::YELLOW : df::WHITE);
+	DM.drawString(df::Vector(40, 28), "'D' for difficult", df::CENTER_JUSTIFIED,
 	              difficulty == 2 ? df::YELLOW : df::WHITE);
 
 	// show current difficulty
 	if (difficulty == 0)
-		DM.drawString(df::Vector(78, 1), "easy", df::RIGHT_JUSTIFIED, df::WHITE);
+		DM.drawString(df::Vector(40, 1), "easy", df::CENTER_JUSTIFIED, df::WHITE);
 	else if (difficulty == 1)
-		DM.drawString(df::Vector(78, 1), "Normal", df::RIGHT_JUSTIFIED, df::YELLOW);
+		DM.drawString(df::Vector(40, 1), "Normal", df::CENTER_JUSTIFIED, df::YELLOW);
 	else if (difficulty == 2)
-		DM.drawString(df::Vector(78, 1), "DIFFICULT", df::RIGHT_JUSTIFIED, df::RED);
+		DM.drawString(df::Vector(40, 1), "DIFFICULT", df::CENTER_JUSTIFIED, df::RED);
 
 	return df::Object::draw();
 }

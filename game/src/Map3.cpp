@@ -68,7 +68,7 @@ void Map3::start() {
 			if (haveWand) {
 				if (p_player->isHaveWand()) {
 					p_player->setMap3OnGround(true);
-					oli.currentObject()->setPosition(df::Vector(39, 28)); // ground
+					oli.currentObject()->setPosition(df::Vector(40, 28)); // ground
 				} else {
 					p_player->setHaveBow(true); // to show reticle
 					oli.currentObject()->setPosition(df::Vector(71, 8)); // cage
@@ -81,13 +81,13 @@ void Map3::start() {
 					// already know haveWand == false
 					p_player->setHaveWand(true);
 					p_player->setMap3OnGround(true);
-					oli.currentObject()->setPosition(df::Vector(39, 28)); // ground
+					oli.currentObject()->setPosition(df::Vector(40, 28)); // ground
 				}
 			} else {
 				if (p_player->getPlayerID() == 1) {
 					p_player->setHaveWand(true);
 					p_player->setMap3OnGround(true);
-					oli.currentObject()->setPosition(df::Vector(39, 28)); // ground
+					oli.currentObject()->setPosition(df::Vector(40, 28)); // ground
 				} else {
 					p_player->setHaveBow(true);
 					oli.currentObject()->setPosition(df::Vector(71, 8)); // cage
@@ -98,7 +98,7 @@ void Map3::start() {
 				p_player->setHaveBow(true);
 
 			p_player->setMap3OnGround(true);
-			oli.currentObject()->setPosition(df::Vector(39, 28)); // ground
+			oli.currentObject()->setPosition(df::Vector(40, 28)); // ground
 		}
 
 		// remove wand
@@ -120,7 +120,6 @@ void Map3::start() {
 		// cage
 		buildBlocks(df::Vector(64, 6), df::Vector(78, 6), ':', df::GREEN, 'c'); // top
 		buildBlocks(df::Vector(71, 1), df::Vector(71, 6), '8', df::BLUE, 'c'); // chain
-		buildBlocks(df::Vector(64, 11), df::Vector(78, 11), ':', df::GREEN, 'c'); // bottom
 		buildBlocks(df::Vector(63, 7), df::Vector(64, 10), ':', df::GREEN, 'c'); // left
 
 		// cage floor
@@ -240,27 +239,27 @@ int Map3::draw() {
 	if (playerCount == 2) {
 		DM.drawString(df::Vector(78, 13), "Defeat the illuminati", df::RIGHT_JUSTIFIED, df::WHITE);
 		DM.drawString(df::Vector(78, 14), "with your bow!", df::RIGHT_JUSTIFIED, df::WHITE);
-		DM.drawString(df::Vector(39, 26), "The wand was taken from you... Stay alive!", df::CENTER_JUSTIFIED,
+		DM.drawString(df::Vector(40, 26), "The wand was taken from you... Stay alive!", df::CENTER_JUSTIFIED,
 		              df::MAGENTA);
 	}
 	if (playerCount == 1 && haveBow) {
-		DM.drawString(df::Vector(39, 27), "Defeat the illuminati... with your completely normal bow!",
+		DM.drawString(df::Vector(40, 27), "Defeat the illuminati... with your completely normal bow!",
 		              df::CENTER_JUSTIFIED, df::WHITE);
 	}
 	if (playerCount == 1 && !haveBow) {
-		DM.drawString(df::Vector(39, 26), "The wand was taken from you...", df::CENTER_JUSTIFIED,
+		DM.drawString(df::Vector(40, 26), "The wand was taken from you...", df::CENTER_JUSTIFIED,
 		              df::MAGENTA);
-		DM.drawString(df::Vector(39, 27), "Defeat the illuminati with this completely normal bow!",
+		DM.drawString(df::Vector(40, 27), "Defeat the illuminati with this completely normal bow!",
 		              df::CENTER_JUSTIFIED, df::WHITE);
 	}
 
 	// show current difficulty
 	if (difficulty == 0)
-		DM.drawString(df::Vector(78, 1), "easy", df::RIGHT_JUSTIFIED, df::WHITE);
+		DM.drawString(df::Vector(40, 1), "easy", df::CENTER_JUSTIFIED, df::WHITE);
 	else if (difficulty == 1)
-		DM.drawString(df::Vector(78, 1), "Normal", df::RIGHT_JUSTIFIED, df::YELLOW);
+		DM.drawString(df::Vector(40, 1), "Normal", df::CENTER_JUSTIFIED, df::YELLOW);
 	else if (difficulty == 2)
-		DM.drawString(df::Vector(78, 1), "DIFFICULT", df::RIGHT_JUSTIFIED, df::RED);
+		DM.drawString(df::Vector(40, 1), "DIFFICULT", df::CENTER_JUSTIFIED, df::RED);
 
 	return Object::draw();
 }
