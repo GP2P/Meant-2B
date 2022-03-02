@@ -46,7 +46,7 @@ int main() {
 	WM.setView(df::Box(df::Vector(), 80, DM.getVertical()));
 
 	// start with map 0
-	new Map0();
+	new Map0(0);
 
 	// Run game (this blocks until game loop is over).
 	GM.run();

@@ -9,7 +9,7 @@ transparency #
 <BODY>
 #o#
 /|\
-/`\
+/ \
 end
 </BODY>
 <FOOTER>

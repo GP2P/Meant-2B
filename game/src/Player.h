@@ -24,14 +24,10 @@ private:
 	bool inMap;
 	std::string direction;
 	int mapNum;
-	Reticle *p_reticle;
+	Reticle *p_reticle = nullptr;
 	int hintCD;
-    df::Clock *clock;
-    long int totalTime;
-public:
-    long getTotalTime() const;
-
-    void setTotalTime(long totalTime);
+	df::Clock *clock;
+	long int totalTime;
 
 public:
 
@@ -75,16 +71,25 @@ public:
 		if (haveBow && mapNum == 3) {
 			p_reticle = new Reticle(df::RED);
 			p_reticle->draw();
+		} else if (!haveBow) {
+			if (p_reticle != nullptr)
+				WM.markForDelete(p_reticle);
+			p_reticle = nullptr;
 		}
 	}
 
 	void setHaveWand(bool haveWand) {
 		Player::haveWand = haveWand;
-		if (haveWand && mapNum == 2) {
-			p_reticle = new Reticle(df::MAGENTA);
-			p_reticle->draw();
-		} else if (!haveWand)
-			WM.markForDelete(p_reticle);
+		if (haveWand) {
+			if (mapNum == 2 || mapNum == 4 || mapNum == 5) {
+				p_reticle = new Reticle(df::MAGENTA);
+				p_reticle->draw();
+			}
+		} else {
+			if (p_reticle != nullptr)
+				WM.markForDelete(p_reticle);
+			p_reticle = nullptr;
+		}
 	}
 
 	bool isInMap() const {
@@ -105,11 +110,15 @@ public:
 		Player::mapNum = mapNum;
 	}
 
+	long getTotalTime() const;
+
+	void setTotalTime(long totalTime);
+
 	int draw() override;
 
-    df::Clock *getClock() const;
+	df::Clock *getClock() const;
 
-    void setClock(df::Clock *clock);
+	void setClock(df::Clock *clock);
 };
 
 #endif //DF_PLAYER_H

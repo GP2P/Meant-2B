@@ -13,8 +13,7 @@
 #include "Wand.h"
 #include "FragileBlock.h"
 #include "Map0.h"
-#include "LogManager.h"
-#include <string>
+#include "ResourceManager.h"
 
 Player::Player() = default;
 
@@ -40,26 +39,28 @@ Player::Player(int ID) {
 	mapNum = 0;
 	direction = "right";
 	hintCD = 60;
-    clock = new df::Clock;
-    clock->delta();
+	clock = new df::Clock;
+	clock->delta();
 }
 
 Player::~Player() {
-	WM.markForDelete(p_reticle);
+	auto Denied = RM.getSound("Denied");
+	Denied->play();
+
 	p_reticle = nullptr;
 
 	// if both players are dead, restart the game
 	auto ol = df::ObjectList(WM.objectsOfType("Player"));
 	auto oli = df::ObjectListIterator(&ol);
 	oli.next();
-	if (oli.isDone()) {
-		WM.markForDelete(WM.getAllObjects());
-		new Map0();
-	} else {
+	if (!oli.isDone()) { // another player alive
 		if (mapNum == 2 && isHaveWand())
 			new Wand(df::Vector(getPosition().getX(), 29));
 		else if (isHaveBow())
 			new Bow(df::Vector(getPosition().getX(), 29));
+	} else { // both players died
+		WM.markForDelete(WM.getAllObjects());
+		new Map0(0);
 	}
 }
 
@@ -246,10 +247,10 @@ int Player::eventHandler(const df::Event *p_e) {
 						shoot(getPosition() - df::Vector(1, 0.08));
 					}
 				break;
-			case df::Keyboard::BACKSPACE:    // replay game
+			case df::Keyboard::Z:    // replay game
 				if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN) {
 					WM.markForDelete(WM.getAllObjects());
-					new Map0();
+					new Map0(0);
 				}
 				break;
 			case df::Keyboard::X:    // kill game
@@ -268,7 +269,7 @@ int Player::eventHandler(const df::Event *p_e) {
 			if (mapNum == 3 && haveBow)
 				shoot(p_mouse_event->getMousePosition());
 		if (p_mouse_event->getMouseAction() == df::PRESSED && p_mouse_event->getMouseButton() == df::Mouse::LEFT)
-			if (mapNum == 2 && haveWand) {
+			if ((mapNum == 2 || mapNum == 4) && haveWand) {
 				new FragileBlock(df::Vector((int) p_mouse_event->getMousePosition().getX(),
 				                            (int) p_mouse_event->getMousePosition().getY()), '@', df::YELLOW, 150);
 				return 1;
@@ -365,25 +366,27 @@ int Player::draw() {
 			DM.drawCh(getPosition() - df::Vector(1.8, +0.5), '*', df::MAGENTA);
 		}
 	}
-    int time = static_cast<int>(clock->split()/1000000);
-    std::string s = std::to_string(time);
-    DM.drawString(df::Vector(5,1), "Total Time:" + s,df::LEFT_JUSTIFIED,df::WHITE);
+
+	// draw time
+	int time = static_cast<int>(clock->split() / 1000000);
+	std::string s = std::to_string(time);
+	DM.drawString(df::Vector(5, 1), "Total Time:" + s, df::LEFT_JUSTIFIED, df::WHITE);
 
 	return result;
 }
 
 df::Clock *Player::getClock() const {
-    return clock;
+	return clock;
 }
 
 void Player::setClock(df::Clock *clock) {
-    Player::clock = clock;
+	Player::clock = clock;
 }
 
 long Player::getTotalTime() const {
-    return totalTime;
+	return totalTime;
 }
 
 void Player::setTotalTime(long totalTime) {
-    Player::totalTime = totalTime;
+	Player::totalTime = totalTime;
 }

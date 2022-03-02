@@ -7,6 +7,7 @@
 class Arrow : public df::Object {
 
 public:
+
 	Arrow(df::Vector player_pos);
 
 	int eventHandler(const df::Event *p_e);

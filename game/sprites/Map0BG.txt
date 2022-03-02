@@ -12,7 +12,7 @@ slowdown 30
 |_|\/|_|  |_____|  \_/ \_/  |__|\__|   |__|       |_____|  |_____/
                                                                   
                                                                   
-                      Click 'Space' to Start                      
+                      Press 'Space' to Start                      
                                                                   
 end
  __  __    _____    _____    __  __   ______       _____    _____ 

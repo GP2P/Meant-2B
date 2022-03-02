@@ -10,13 +10,12 @@ class Map3 : public df::ViewObject {
 
 private:
 
-	bool bowAlive;
-	bool wandAlive;
 	Block *p_escapeDoor[4];
 	df::Music *p_music;
 	int difficulty = 0;
-public:
-    int getDifficulty() const;
+	int playerCount = 0;
+	bool haveBow = false;
+	bool haveWand = false;
 
 public:
 
@@ -31,6 +30,8 @@ public:
 	int draw() override;
 
 	void escape();
+
+	int getDifficulty() const;
 };
 
 #endif //MEANT_2B_DF_MAP3_H
