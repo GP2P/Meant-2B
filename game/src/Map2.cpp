@@ -53,42 +53,32 @@ void Map2::start() {
 	new Wand(df::Vector(55, 29));
 
 	// bats
-	new Bat();
-	new Bat();
-	new Bat();
-	new Bat();
-	new Bat();
-	new Bat();
+	for (int i = 0; i < difficulty * 3 + 2; ++i) {
+		new Bat();
+	}
 
 	// lever
 	new Lever(df::Vector(71, 3));
 }
 
 void Map2::stop() {
+	// delete all objects
 	auto ol = df::ObjectList(WM.getAllObjects());
 	auto oli = df::ObjectListIterator(&ol);
 	while (!oli.isDone()) {
-		if (oli.currentObject()->getType() == "Player") {
-			auto *p_player = dynamic_cast<Player *>(oli.currentObject());
-			if (p_player->isHaveBow())
-				oli.currentObject()->setPosition(df::Vector(71, 8));
-			else
-				oli.currentObject()->setPosition(df::Vector(39, 28));
-			p_player->setMapNum(3);
-		} else if (oli.currentObject()->getType() == "Map2") {
-			// do nothing to prevent double delete
-		} else
+		if (oli.currentObject()->getType() != "Player" && oli.currentObject()->getType() != "Map2")
 			WM.markForDelete(oli.currentObject());
 		oli.next();
 	}
+
 	new Map3(difficulty);
 	delete this;
 }
 
 int Map2::draw() {
+	// draw weapon hints
 	bool bowOut = false;
 	bool wandOut = false;
-
 	auto ol = WM.objectsOfType("Player");
 	auto oli = df::ObjectListIterator(&ol);
 	while (!oli.isDone()) {
@@ -105,6 +95,7 @@ int Map2::draw() {
 		oli.next();
 	}
 
+	// draw weapon descriptions
 	if (!bowOut) {
 		auto bl = WM.objectsOfType("Bow");
 		if (!bl.isEmpty()) {
@@ -126,7 +117,16 @@ int Map2::draw() {
 		}
 	}
 
+	// draw exit hints
 	DM.drawString(df::Vector(71, 5), "Pull to leave", df::CENTER_JUSTIFIED, df::YELLOW);
+
+	// show current difficulty
+	if (difficulty == 0)
+		DM.drawString(df::Vector(78, 1), "easy", df::RIGHT_JUSTIFIED, df::WHITE);
+	else if (difficulty == 1)
+		DM.drawString(df::Vector(78, 1), "Normal", df::RIGHT_JUSTIFIED, df::YELLOW);
+	else if (difficulty == 2)
+		DM.drawString(df::Vector(78, 1), "DIFFICULT", df::RIGHT_JUSTIFIED, df::RED);
 
 	return Object::draw();
 }

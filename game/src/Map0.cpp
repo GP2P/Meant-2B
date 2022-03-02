@@ -5,9 +5,10 @@
 #include "EventKeyboard.h"
 #include "Map1.h"
 #include "GameManager.h"
+#include "DisplayManager.h"
 
-Map0::Map0() {
-	difficulty = 0;
+Map0::Map0(int difficulty) {
+	this->difficulty = difficulty;
 	setType("Map0");
 	setSprite("Map0BG");
 	setLocation(df::CENTER_CENTER);
@@ -21,6 +22,20 @@ Map0::~Map0() {
 }
 
 int Map0::draw() {
+	// difficulty selection
+	DM.drawString(df::Vector(39, 24), "'E' for easy", df::CENTER_JUSTIFIED, difficulty == 0 ? df::YELLOW : df::WHITE);
+	DM.drawString(df::Vector(39, 26), "'N' for normal", df::CENTER_JUSTIFIED, difficulty == 1 ? df::YELLOW : df::WHITE);
+	DM.drawString(df::Vector(39, 28), "'D' for difficult", df::CENTER_JUSTIFIED,
+	              difficulty == 2 ? df::YELLOW : df::WHITE);
+
+	// show current difficulty
+	if (difficulty == 0)
+		DM.drawString(df::Vector(78, 1), "easy", df::RIGHT_JUSTIFIED, df::WHITE);
+	else if (difficulty == 1)
+		DM.drawString(df::Vector(78, 1), "Normal", df::RIGHT_JUSTIFIED, df::YELLOW);
+	else if (difficulty == 2)
+		DM.drawString(df::Vector(78, 1), "DIFFICULT", df::RIGHT_JUSTIFIED, df::RED);
+
 	return df::Object::draw();
 }
 
@@ -33,6 +48,12 @@ int Map0::eventHandler(const df::Event *p_e) {
 		}
 		if (p_keyboard_event->getKey() == df::Keyboard::X)
 			GM.setGameOver(true);
+		if (p_keyboard_event->getKey() == df::Keyboard::E) // easy mode
+			difficulty = 0;
+		if (p_keyboard_event->getKey() == df::Keyboard::N) // normal mode
+			difficulty = 1;
+		if (p_keyboard_event->getKey() == df::Keyboard::D) // difficult mode
+			difficulty = 2;
 		return 1;
 	}
 	return 0;

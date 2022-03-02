@@ -95,5 +95,13 @@ int Map1::draw() {
 		oli.next();
 	}
 
+	// show current difficulty
+	if (difficulty == 0)
+		DM.drawString(df::Vector(78, 1), "easy", df::RIGHT_JUSTIFIED, df::WHITE);
+	else if (difficulty == 1)
+		DM.drawString(df::Vector(78, 1), "Normal", df::RIGHT_JUSTIFIED, df::YELLOW);
+	else if (difficulty == 2)
+		DM.drawString(df::Vector(78, 1), "DIFFICULT", df::RIGHT_JUSTIFIED, df::RED);
+
 	return Object::draw();
 }

@@ -13,7 +13,7 @@ private:
 
 public:
 
-	Map0();
+	Map0(int difficulty);
 
 	~Map0() override;
 
