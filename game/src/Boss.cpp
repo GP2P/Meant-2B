@@ -4,7 +4,6 @@
 #include "EventCollision.h"
 #include "WorldManager.h"
 #include "BossProjectile.h"
-#include "Boss2.h"
 #include "BossEye.h"
 #include "Map3.h"
 #include "Player.h"
@@ -25,9 +24,20 @@ Boss::Boss(int difficulty) {
 	setSolidness(df::SOFT);
 	fireCountdown = fireSlowdown;
 	maxHP = 2 * difficulty + 4;
+    switch(difficulty){
+        case 0:
+            maxHP = 4;
+            break;
+        case 1:
+            maxHP = 8;
+            break;
+        case 2:
+            maxHP = 12;
+            break;
+    }
 	hp = maxHP;
-	new Boss2(this);
-	new BossEye(this);
+    setStage(1);
+	new BossPart(this);
 }
 
 void Boss::defeat() {
@@ -106,14 +116,14 @@ int Boss::eventHandler(const df::Event *p_e) {
 
 	if (p_e->getType() == df::STEP_EVENT) {
 		bool withinX = (getPosition().getX() < DM.getHorizontal() - 3) && (getPosition().getX() > 3);
-		bool withinY = (getPosition().getY() < DM.getVertical() - 7) && (getPosition().getY() > 2);
+		bool withinY = (getPosition().getY() < DM.getVertical() - 10) && (getPosition().getY() > 2);
 		bool outOfCage = (getPosition().getX() < 64) || (getPosition().getY() > 11);
 		if (moveCountdown > 0 && withinX
 		    && withinY && outOfCage) {
 			moveCountdown--;
 		} else {
 			int x = rand() % (DM.getHorizontal() - 10) + 5;
-			int y = rand() % (DM.getVertical() - 10) + 5;
+			int y = rand() % (DM.getVertical() - 15) + 5;
 			df::Vector direction(x, y);
 			direction = (direction - getPosition());
 			direction.normalize();
@@ -131,6 +141,7 @@ int Boss::eventHandler(const df::Event *p_e) {
 		}
 		return 1;
 	}
+
 	return 0;
 }
 
@@ -142,6 +153,11 @@ void Boss::setHp(int Hp) {
 	hp = Hp;
 	if (hp <= 0)
 		defeat();
+
+    if (hp <= maxHP/2){
+        setStage(1);
+        new BossEye(this);
+    }
 }
 
 void Boss::fire() {
@@ -153,4 +169,12 @@ void Boss::fire() {
 		b->setDirection(a);
 		b->setVelocity(df::Vector(b->getVelocity().getX(), b->getVelocity().getY() / 2));
 	}
+}
+
+int Boss::getStage() const {
+    return stage;
+}
+
+void Boss::setStage(int stage) {
+    Boss::stage = stage;
 }

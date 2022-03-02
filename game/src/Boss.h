@@ -19,6 +19,13 @@ private:
 
 	int fireSlowdown = 60;
 
+    int stage;
+
+public:
+    int getStage() const;
+
+    void setStage(int stage);
+
 public:
 
 	Boss(int difficulty);
