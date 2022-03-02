@@ -7,14 +7,14 @@
 
 class BossUpgradedWeapon : public df::Object {
 private:
-    int stage;
+	int stage;
 
-    int movecd;
+	int movecd;
 public:
 
-    BossUpgradedWeapon(df::Vector boss_pos, int difficulty);
+	BossUpgradedWeapon(df::Vector boss_pos, int difficulty);
 
-    int eventHandler(const df::Event *p_e);
+	int eventHandler(const df::Event *p_e);
 };
 
 #endif //MEANT_2B_DF_BOSSUPGRADEDWEAPON_H

@@ -32,20 +32,20 @@ int Arrow::eventHandler(const df::Event *p_e) {
 	if (p_e->getType() == df::COLLISION_EVENT) {
 		const df::EventCollision *p_ce = dynamic_cast <const df::EventCollision *> (p_e);
 		if (p_ce->getObject1()->getType() == "Boss") {
-            Boss* p_b = dynamic_cast<Boss*>(p_ce->getObject1());
-            if(!p_b->getInvincible()){
-                WM.markForDelete(this);
-                p_b->setHp(p_b->getHp() - 1);
-                return 1;
-            }
+			Boss *p_b = dynamic_cast<Boss *>(p_ce->getObject1());
+			if (!p_b->getInvincible()) {
+				WM.markForDelete(this);
+				p_b->setHp(p_b->getHp() - 1);
+				return 1;
+			}
 		}
 		if (p_ce->getObject2()->getType() == "Boss") {
-            Boss *p_b = dynamic_cast <Boss *> (p_ce->getObject2());
-            if(!p_b->getInvincible()){
-                WM.markForDelete(this);
-                p_b->setHp(p_b->getHp() - 1);
-                return 1;
-            }
+			Boss *p_b = dynamic_cast <Boss *> (p_ce->getObject2());
+			if (!p_b->getInvincible()) {
+				WM.markForDelete(this);
+				p_b->setHp(p_b->getHp() - 1);
+				return 1;
+			}
 		}
 		if ((p_ce->getObject1()->getType() == "Bat") ||
 		    (p_ce->getObject2()->getType() == "Bat")) {

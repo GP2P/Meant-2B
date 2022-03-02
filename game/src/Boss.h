@@ -3,7 +3,6 @@
 
 #include "Object.h"
 
-
 class Boss : public df::Object {
 
 private:
@@ -20,15 +19,15 @@ private:
 
 	int fireSlowdown = 60;
 
-    int fireCountdown2;
+	int fireCountdown2;
 
-    int fireSlowdown2 = 120;
+	int fireSlowdown2 = 120;
 
-    int stage;
+	int stage;
 
-    int invincibleCD;
+	int invincibleCD;
 
-    bool invincible;
+	bool invincible;
 
 public:
 
@@ -44,11 +43,11 @@ public:
 
 	void fire();
 
-    void fire2();
+	void fire2();
 
-    void setStage(int stage);
+	void setStage(int stage);
 
-    bool getInvincible() const;
+	bool getInvincible() const;
 
 };
 

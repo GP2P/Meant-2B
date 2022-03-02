@@ -9,11 +9,11 @@
 
 class BossPart : public df::Object {
 private:
-    Boss *boss;
+	Boss *boss;
 public:
-    BossPart(Boss *Boss);
+	BossPart(Boss *Boss);
 
-    int eventHandler(const df::Event *p_e) override;
+	int eventHandler(const df::Event *p_e) override;
 };
 
 
