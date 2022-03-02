@@ -39,7 +39,8 @@ int main() {
 	RM.loadSprite("../game/sprites/ArrowRight.txt", "ArrowRight");
 	RM.loadSprite("../game/sprites/Bat.txt", "Bat");
 	RM.loadSprite("../game/sprites/Boss.txt", "Boss");
-	RM.loadSprite("../game/sprites/Boss2.txt", "Boss2");
+	RM.loadSprite("../game/sprites/BossPart.txt", "BossPart");
+	RM.loadSprite("../game/sprites/BossPart2.txt", "BossPart2");
 	RM.loadSprite("../game/sprites/BossEye.txt", "BossEye");
 	RM.loadSprite("../game/sprites/BossProjectile.txt", "BossProjectile");
 
