@@ -15,8 +15,6 @@
 #include "Map0.h"
 #include "ResourceManager.h"
 
-Player::Player() = default;
-
 Player::Player(int ID) {
 	setPlayerID(ID);
 	setType("Player");
@@ -29,17 +27,7 @@ Player::Player(int ID) {
 	registerInterest(df::STEP_EVENT);
 	registerInterest(df::KEYBOARD_EVENT);
 	registerInterest(df::MSE_EVENT);
-	acceleration = df::Vector(0, 0.1);
-	jumpSpeed = 0.95;
-	shootSlowdown = 30;
 	shootCountdown = shootSlowdown;
-	walkingCountdown = 0;
-	haveStone = false;
-	inMap = true;
-	mapNum = 0;
-	direction = "right";
-	hintCD = 60;
-	clock = new df::Clock;
 	clock->delta();
 }
 
@@ -277,12 +265,12 @@ int Player::eventHandler(const df::Event *p_e) {
 		return 1;
 	}
 	if (p_e->getType() == df::OUT_EVENT) {
-		inMap = false;
+		inMap2 = false;
 		auto ol = df::ObjectList(WM.objectsOfType("Player"));
 		auto oli = df::ObjectListIterator(&ol);
 		while (!oli.isDone()) {
 			auto *p_player = dynamic_cast<Player *>(oli.currentObject());
-			if (p_player->isInMap())
+			if (p_player->isInMap2())
 				return 1;
 			oli.next();
 		}
@@ -389,4 +377,12 @@ long Player::getTotalTime() const {
 
 void Player::setTotalTime(long totalTime) {
 	Player::totalTime = totalTime;
+}
+
+bool Player::isMap3OnGround() const {
+	return map3OnGround;
+}
+
+void Player::setMap3OnGround(bool map3OnGround) {
+	Player::map3OnGround = map3OnGround;
 }

@@ -13,25 +13,25 @@ class Player : public df::Object {
 private:
 
 	int playerID;
-	df::Vector acceleration;
-	float jumpSpeed;
+	df::Vector acceleration = df::Vector(0, 0.1);
+	float jumpSpeed = 0.95;
 	int shootCountdown;
-	int shootSlowdown;
-	int walkingCountdown;
-	bool haveStone;
-	bool haveBow;
-	bool haveWand;
-	bool inMap;
-	std::string direction;
-	int mapNum;
+	int shootSlowdown = 30;
+	int walkingCountdown = 0;
+	bool haveStone = false;
+	bool haveBow = false;
+	bool haveWand = false;
+	bool inMap2 = true;
+	bool inMap3 = true;
+	std::string direction = "right";
+	int mapNum = 0;
 	Reticle *p_reticle = nullptr;
-	int hintCD;
-	df::Clock *clock;
+	int hintCD = 60;
+	df::Clock *clock = new df::Clock;
 	long int totalTime;
+	bool map3OnGround = false;
 
 public:
-
-	Player();
 
 	Player(int ID);
 
@@ -92,12 +92,20 @@ public:
 		}
 	}
 
-	bool isInMap() const {
-		return inMap;
+	bool isInMap2() const {
+		return inMap2;
 	}
 
-	void setInMap(bool inMap) {
-		Player::inMap = inMap;
+	void setInMap2(bool inMap) {
+		Player::inMap2 = inMap;
+	}
+
+	bool isInMap3() const {
+		return inMap3;
+	}
+
+	void setInMap3(bool inMap) {
+		Player::inMap3 = inMap;
 	}
 
 	bool haveItem();
@@ -119,6 +127,10 @@ public:
 	df::Clock *getClock() const;
 
 	void setClock(df::Clock *clock);
+
+	bool isMap3OnGround() const;
+
+	void setMap3OnGround(bool map3OnGround);
 };
 
 #endif //DF_PLAYER_H

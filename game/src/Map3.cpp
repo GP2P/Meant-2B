@@ -66,9 +66,10 @@ void Map3::start() {
 
 		if (playerCount == 2) {
 			if (haveWand) {
-				if (p_player->isHaveWand())
+				if (p_player->isHaveWand()) {
+					p_player->setMap3OnGround(true);
 					oli.currentObject()->setPosition(df::Vector(39, 28)); // ground
-				else {
+				} else {
 					p_player->setHaveBow(true); // to show reticle
 					oli.currentObject()->setPosition(df::Vector(71, 8)); // cage
 				}
@@ -79,11 +80,13 @@ void Map3::start() {
 				} else {
 					// already know haveWand == false
 					p_player->setHaveWand(true);
+					p_player->setMap3OnGround(true);
 					oli.currentObject()->setPosition(df::Vector(39, 28)); // ground
 				}
 			} else {
 				if (p_player->getPlayerID() == 1) {
 					p_player->setHaveWand(true);
+					p_player->setMap3OnGround(true);
 					oli.currentObject()->setPosition(df::Vector(39, 28)); // ground
 				} else {
 					p_player->setHaveBow(true);
@@ -94,6 +97,7 @@ void Map3::start() {
 			if (haveBow)
 				p_player->setHaveBow(true);
 
+			p_player->setMap3OnGround(true);
 			oli.currentObject()->setPosition(df::Vector(39, 28)); // ground
 		}
 
