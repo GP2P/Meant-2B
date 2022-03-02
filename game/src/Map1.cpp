@@ -11,6 +11,7 @@
 
 Map1::Map1(int difficulty) {
 	this->difficulty = difficulty;
+    setAltitude(0);
 	setType("Map1");
 	setSprite("Map1BG");
 	setLocation(df::CENTER_CENTER);
@@ -83,6 +84,12 @@ void Map1::stop() {
 }
 
 int Map1::draw() {
+    sf::Texture t;
+    t.loadFromFile("../game/images/Map1.png");
+    sf::Sprite s(t);
+    s.scale(7.5,9);
+    DM.getWindow()->draw(s);
+
 	// hint
 	auto ol = df::ObjectList(WM.objectsOfType("Player"));
 	auto oli = df::ObjectListIterator(&ol);

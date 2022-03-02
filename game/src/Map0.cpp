@@ -7,6 +7,7 @@
 #include "GameManager.h"
 #include "DisplayManager.h"
 
+
 Map0::Map0(int difficulty) {
 	this->difficulty = difficulty;
 	setType("Map0");
@@ -22,6 +23,12 @@ Map0::~Map0() {
 }
 
 int Map0::draw() {
+    sf::Texture t;
+    t.loadFromFile("../game/images/Map0.png");
+    sf::Sprite s(t);
+    s.scale(7.5,9);
+    DM.getWindow()->draw(s);
+
 	// difficulty selection
 	DM.drawString(df::Vector(40, 24), "'E' for easy", df::CENTER_JUSTIFIED, difficulty == 0 ? df::YELLOW : df::WHITE);
 	DM.drawString(df::Vector(40, 26), "'N' for normal", df::CENTER_JUSTIFIED, difficulty == 1 ? df::YELLOW : df::WHITE);
