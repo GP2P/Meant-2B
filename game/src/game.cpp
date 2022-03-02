@@ -28,6 +28,8 @@ int main() {
 	RM.loadSprite("../game/sprites/Map4BG.txt", "Map4BG");
 	RM.loadMusic("../game/music/03_Racing_Through_Asteroids_Loop.ogg", "Map4BGM");
 
+	RM.loadSound("../game/SFX/033_Denied_03.wav", "Denied");
+	RM.loadSound("../game/SFX/08_Charge.wav", "Charge");
 	RM.loadSprite("../game/sprites/Player1-walking.txt", "Player1Walking");
 	RM.loadSprite("../game/sprites/Player1-standing.txt", "Player1Standing");
 	RM.loadSprite("../game/sprites/Player2-walking.txt", "Player2Walking");
