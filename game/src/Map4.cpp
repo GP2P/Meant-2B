@@ -1,5 +1,6 @@
 #include "Map4.h"
 #include "ResourceManager.h"
+#include "EventStep.h"
 #include "WorldManager.h"
 #include "DisplayManager.h"
 #include "Vector.h"
@@ -7,6 +8,7 @@
 #include "EventKeyboard.h"
 #include "Map0.h"
 #include "Block.h"
+#include "Map5.h"
 
 Map4::Map4(int difficulty, int endingNumber) {
 	this->difficulty = difficulty;
@@ -58,8 +60,9 @@ int Map4::eventHandler(const df::Event *p_e) {
 			new Map0(difficulty);
 		} else if (p_keyboard_event->getKey() == df::Keyboard::SPACE &&
 		           p_keyboard_event->getKeyboardAction() == df::KEY_DOWN) {
+            auto m5 = new Map5(difficulty, p_music);
+            m5->start();
 			delete this;
-			new Map5(difficulty, p_music);
 		}
 	}
 	return 0;

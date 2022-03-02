@@ -38,26 +38,25 @@ Boss::Boss(int difficulty) {
 			fireSlowdown = 80;
 			fireSlowdown2 = 120;
 			invincibleCD = 320;
-
-			break;
-		case 2:
-			maxHP = 8;
-			fireSlowdown = 60;
-			fireSlowdown2 = 90;
-			invincibleCD = 400;
-			break;
-		default:
-			maxHP = 4;
-			fireSlowdown = 100;
-			fireSlowdown2 = 150;
-			invincibleCD = 100;
-			break;
-	}
-	fireCountdown = fireSlowdown;
-	fireCountdown2 = fireSlowdown2;
-	hp = maxHP;
-	new BossPart(this);
-	setStage(1);
+            break;
+        case 2:
+            maxHP = 8;
+            fireSlowdown = 60;
+            fireSlowdown2 = 90;
+            invincibleCD = 400;
+            break;
+        default:
+            maxHP = 4;
+            fireSlowdown = 100;
+            fireSlowdown2 = 150;
+            invincibleCD = 240;
+            break;
+    }
+    fireCountdown = fireSlowdown;
+    fireCountdown2 = fireSlowdown2;
+    hp = maxHP;
+    new BossPart(this);
+    setStage(1);
 }
 
 void Boss::defeat() {
@@ -104,7 +103,7 @@ void Boss::defeat() {
 		}
 		myFile.close();
 	} else {
-		LM.writeLog("Error: Easy scoreboard not found r");
+		LM.writeLog("Error: Scoreboard not found");
 	}
 
 	switch (difficulty) {
@@ -126,7 +125,7 @@ void Boss::defeat() {
 		}
 		myFile.close();
 	} else {
-		LM.writeLog("Error: scoreboard not found");
+		LM.writeLog("Error: Scoreboard not found");
 	}
 	WM.markForDelete(this);
 }

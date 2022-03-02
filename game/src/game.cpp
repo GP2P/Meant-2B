@@ -5,6 +5,11 @@
 #include "DisplayManager.h"
 #include "Box.h"
 #include "Map0.h"
+#include "Clock.h"
+#include "Map3.h"
+#include "Player.h"
+#include "Map5.h"
+
 
 int main() {
 	// start up game manager
@@ -40,16 +45,18 @@ int main() {
 	RM.loadSprite("../game/sprites/Bat.txt", "Bat");
 	RM.loadSprite("../game/sprites/Boss.txt", "Boss");
 	RM.loadSprite("../game/sprites/BossPart.txt", "BossPart");
-	RM.loadSprite("../game/sprites/BossPart2.txt", "BossPart2");
-	RM.loadSprite("../game/sprites/BossEye.txt", "BossEye");
+    RM.loadSprite("../game/sprites/BossPart2.txt", "BossPart2");
+    RM.loadSprite("../game/sprites/BossEye.txt", "BossEye");
 	RM.loadSprite("../game/sprites/BossProjectile.txt", "BossProjectile");
+    RM.loadSprite("../game/sprites/BossUpgradedWeapon.txt", "BossUpgradedWeapon");
+
 
 	// adjust view
 	WM.setBoundary(df::Box(df::Vector(), 80, DM.getVertical()));
 	WM.setView(df::Box(df::Vector(), 80, DM.getVertical()));
 
 	// start with map 0
-	new Map0(0);
+	new Map5(0, nullptr);
 
 	// Run game (this blocks until game loop is over).
 	GM.run();

@@ -11,6 +11,10 @@ private:
 	df::Music *p_music;
 	int difficulty = 0;
 	int time;
+    float scoreListEasy[3];
+    float scoreListNormal[3];
+    float scoreListDifficult[3];
+
 
 public:
 
