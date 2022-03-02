@@ -13,6 +13,7 @@ class Player : public df::Object {
 private:
 
 	int playerID;
+	int difficulty;
 	df::Vector acceleration = df::Vector(0, 0.1);
 	float jumpSpeed = 0.95;
 	int shootCountdown;
@@ -33,9 +34,11 @@ private:
 
 public:
 
-	Player(int ID);
+	Player(int ID, int difficulty);
 
 	~Player() override;
+
+	void defeat();
 
 	int eventHandler(const df::Event *p_e) override;
 

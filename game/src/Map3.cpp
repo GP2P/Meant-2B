@@ -68,7 +68,7 @@ void Map3::start() {
 			if (haveWand) {
 				if (p_player->isHaveWand()) {
 					p_player->setMap3OnGround(true);
-					oli.currentObject()->setPosition(df::Vector(39, 28)); // ground
+					oli.currentObject()->setPosition(df::Vector(40, 28)); // ground
 				} else {
 					p_player->setHaveBow(true); // to show reticle
 					oli.currentObject()->setPosition(df::Vector(71, 8)); // cage
@@ -81,13 +81,13 @@ void Map3::start() {
 					// already know haveWand == false
 					p_player->setHaveWand(true);
 					p_player->setMap3OnGround(true);
-					oli.currentObject()->setPosition(df::Vector(39, 28)); // ground
+					oli.currentObject()->setPosition(df::Vector(40, 28)); // ground
 				}
 			} else {
 				if (p_player->getPlayerID() == 1) {
 					p_player->setHaveWand(true);
 					p_player->setMap3OnGround(true);
-					oli.currentObject()->setPosition(df::Vector(39, 28)); // ground
+					oli.currentObject()->setPosition(df::Vector(40, 28)); // ground
 				} else {
 					p_player->setHaveBow(true);
 					oli.currentObject()->setPosition(df::Vector(71, 8)); // cage
@@ -98,7 +98,7 @@ void Map3::start() {
 				p_player->setHaveBow(true);
 
 			p_player->setMap3OnGround(true);
-			oli.currentObject()->setPosition(df::Vector(39, 28)); // ground
+			oli.currentObject()->setPosition(df::Vector(40, 28)); // ground
 		}
 
 		// remove wand
@@ -120,8 +120,24 @@ void Map3::start() {
 		// cage
 		buildBlocks(df::Vector(64, 6), df::Vector(78, 6), ':', df::GREEN, 'c'); // top
 		buildBlocks(df::Vector(71, 1), df::Vector(71, 6), '8', df::BLUE, 'c'); // chain
-		buildBlocks(df::Vector(64, 11), df::Vector(78, 11), ':', df::GREEN, 'c'); // bottom
 		buildBlocks(df::Vector(63, 7), df::Vector(64, 10), ':', df::GREEN, 'c'); // left
+
+		// cage floor
+		p_cageFloor[0] = new Block(df::Vector(64, 11), ':', df::GREEN, 'c');
+		p_cageFloor[1] = new Block(df::Vector(65, 11), ':', df::GREEN, 'c');
+		p_cageFloor[2] = new Block(df::Vector(66, 11), ':', df::GREEN, 'c');
+		p_cageFloor[3] = new Block(df::Vector(67, 11), ':', df::GREEN, 'c');
+		p_cageFloor[4] = new Block(df::Vector(68, 11), ':', df::GREEN, 'c');
+		p_cageFloor[5] = new Block(df::Vector(69, 11), ':', df::GREEN, 'c');
+		p_cageFloor[6] = new Block(df::Vector(70, 11), ':', df::GREEN, 'c');
+		p_cageFloor[7] = new Block(df::Vector(71, 11), ':', df::GREEN, 'c');
+		p_cageFloor[8] = new Block(df::Vector(72, 11), ':', df::GREEN, 'c');
+		p_cageFloor[9] = new Block(df::Vector(73, 11), ':', df::GREEN, 'c');
+		p_cageFloor[10] = new Block(df::Vector(74, 11), ':', df::GREEN, 'c');
+		p_cageFloor[11] = new Block(df::Vector(75, 11), ':', df::GREEN, 'c');
+		p_cageFloor[12] = new Block(df::Vector(76, 11), ':', df::GREEN, 'c');
+		p_cageFloor[13] = new Block(df::Vector(77, 11), ':', df::GREEN, 'c');
+		p_cageFloor[14] = new Block(df::Vector(78, 11), ':', df::GREEN, 'c');
 
 		// lever
 		new Lever(df::Vector(78, 9));
@@ -169,7 +185,52 @@ void Map3::stop(int type, int playTime) {
 			WM.markForDelete(oli.currentObject());
 		oli.next();
 	}
-	new Map4(difficulty, 0);
+
+
+	auto pl = WM.objectsOfType("Players");
+	auto pli = df::ObjectListIterator(&ol);
+	switch (type) {
+		case 0: // boss died (archer player did not escape)
+			if (playerCount == 2) { // both player reached boss
+				pli.next();
+				if (pli.isDone()) { // but only one player left
+					pli.first();
+					if (dynamic_cast<Player *>(pli.currentObject())->getPlayerID() == 1)
+						new Map4(difficulty, 13, playTime); // boss killed player 2, player 1 killed boss
+					else
+						new Map4(difficulty, 14, playTime); // boss killed player 1, player 2 killed boss
+				} else { // both player survived
+					new Map4(difficulty, 10, playTime);
+				}
+			} else { // one player died in map 2
+				if (dynamic_cast<Player *>(pli.currentObject())->getPlayerID() == 1)
+					// player 2 died in map 2, player 1 defeated boss
+					new Map4(difficulty, 11, playTime);
+				else
+					// player 1 died in map 2, player 2 defeated boss
+					new Map4(difficulty, 12, playTime);
+			}
+			break;
+		case 1: // other player died, left
+			if (dynamic_cast<Player *>(pli.currentObject())->getPlayerID() == 1) {
+				new Map4(difficulty, 21, playTime); // both reach boss, one player2 died so player1 escaped
+			} else if (dynamic_cast<Player *>(oli.currentObject())->getPlayerID() == 1) {
+				new Map4(difficulty, 22, playTime); // both reach boss, one player1 died so player2 escaped
+			}
+			break;
+		case 2: // abandoned other player
+			if (dynamic_cast<Player *>(pli.currentObject())->getPlayerID() == 1) {
+				new Map4(difficulty, 23,
+				         playTime); // both reach boss, player1 abandoned player2 to be killed by the illuminati
+			} else if (dynamic_cast<Player *>(oli.currentObject())->getPlayerID() == 1) {
+				new Map4(difficulty, 24,
+				         playTime); // both reach boss, player2 abandoned player1 to be killed by the illuminati
+			}
+			break;
+		default:
+			new Map4(difficulty, 10, playTime);
+			break;
+	}
 	delete this;
 }
 
@@ -178,27 +239,27 @@ int Map3::draw() {
 	if (playerCount == 2) {
 		DM.drawString(df::Vector(78, 13), "Defeat the illuminati", df::RIGHT_JUSTIFIED, df::WHITE);
 		DM.drawString(df::Vector(78, 14), "with your bow!", df::RIGHT_JUSTIFIED, df::WHITE);
-		DM.drawString(df::Vector(39, 26), "The wand was taken from you... Stay alive!", df::CENTER_JUSTIFIED,
+		DM.drawString(df::Vector(40, 26), "The wand was taken from you... Stay alive!", df::CENTER_JUSTIFIED,
 		              df::MAGENTA);
 	}
 	if (playerCount == 1 && haveBow) {
-		DM.drawString(df::Vector(39, 27), "Defeat the illuminati... with your completely normal bow!",
+		DM.drawString(df::Vector(40, 27), "Defeat the illuminati... with your completely normal bow!",
 		              df::CENTER_JUSTIFIED, df::WHITE);
 	}
 	if (playerCount == 1 && !haveBow) {
-		DM.drawString(df::Vector(39, 26), "The wand was taken from you...", df::CENTER_JUSTIFIED,
+		DM.drawString(df::Vector(40, 26), "The wand was taken from you...", df::CENTER_JUSTIFIED,
 		              df::MAGENTA);
-		DM.drawString(df::Vector(39, 27), "Defeat the illuminati with this completely normal bow!",
+		DM.drawString(df::Vector(40, 27), "Defeat the illuminati with this completely normal bow!",
 		              df::CENTER_JUSTIFIED, df::WHITE);
 	}
 
 	// show current difficulty
 	if (difficulty == 0)
-		DM.drawString(df::Vector(78, 1), "easy", df::RIGHT_JUSTIFIED, df::WHITE);
+		DM.drawString(df::Vector(40, 1), "easy", df::CENTER_JUSTIFIED, df::WHITE);
 	else if (difficulty == 1)
-		DM.drawString(df::Vector(78, 1), "Normal", df::RIGHT_JUSTIFIED, df::YELLOW);
+		DM.drawString(df::Vector(40, 1), "Normal", df::CENTER_JUSTIFIED, df::YELLOW);
 	else if (difficulty == 2)
-		DM.drawString(df::Vector(78, 1), "DIFFICULT", df::RIGHT_JUSTIFIED, df::RED);
+		DM.drawString(df::Vector(40, 1), "DIFFICULT", df::CENTER_JUSTIFIED, df::RED);
 
 	return Object::draw();
 }
@@ -210,6 +271,36 @@ void Map3::escape() {
 	WM.markForDelete(WM.objectsOfType("Lever"));
 }
 
+void Map3::groundDefeat() {
+	// remove cage floor
+	for (auto &i: p_cageFloor) {
+		WM.markForDelete(i);
+	}
+
+	// delete existing projectiles
+	WM.markForDelete(WM.objectsOfType("BossProjectile"));
+	WM.markForDelete(WM.objectsOfType("BossCrystal"));
+
+	// mark player for on ground
+	auto pl = WM.objectsOfType("Players");
+	auto pli = df::ObjectListIterator(&pl);
+	while (!pli.isDone()) {
+		auto p_player = dynamic_cast<Player *>(pli.currentObject());
+		if (!p_player->isMap3OnGround()) {
+			p_player->setMap3OnGround(true);
+		} else
+			pli.next();
+	}
+}
+
 int Map3::getDifficulty() const {
 	return difficulty;
+}
+
+int Map3::getPlayerCount() const {
+	return playerCount;
+}
+
+void Map3::setPlayerCount(int playerCount) {
+	Map3::playerCount = playerCount;
 }

@@ -54,8 +54,8 @@ void Map1::start() {
 	new Gate(df::Vector(64, 18), UP, df::YELLOW);
 	new Stone(df::Vector(64, 23));
 
-	auto *player1 = new Player(1);
-	auto *player2 = new Player(2);
+	auto *player1 = new Player(1, difficulty);
+	auto *player2 = new Player(2, difficulty);
 	player1->setPosition(df::Vector(15, 2));
 	player2->setPosition(df::Vector(63, 2));
 	player1->setMapNum(1);
@@ -97,11 +97,11 @@ int Map1::draw() {
 
 	// show current difficulty
 	if (difficulty == 0)
-		DM.drawString(df::Vector(78, 1), "easy", df::RIGHT_JUSTIFIED, df::WHITE);
+		DM.drawString(df::Vector(40, 1), "easy", df::CENTER_JUSTIFIED, df::WHITE);
 	else if (difficulty == 1)
-		DM.drawString(df::Vector(78, 1), "Normal", df::RIGHT_JUSTIFIED, df::YELLOW);
+		DM.drawString(df::Vector(40, 1), "Normal", df::CENTER_JUSTIFIED, df::YELLOW);
 	else if (difficulty == 2)
-		DM.drawString(df::Vector(78, 1), "DIFFICULT", df::RIGHT_JUSTIFIED, df::RED);
+		DM.drawString(df::Vector(40, 1), "DIFFICULT", df::CENTER_JUSTIFIED, df::RED);
 
 	return Object::draw();
 }

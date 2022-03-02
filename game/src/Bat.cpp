@@ -3,6 +3,7 @@
 #include "DisplayManager.h"
 #include "EventCollision.h"
 #include "WorldManager.h"
+#include "Player.h"
 
 Bat::Bat() {
 	setType("Bat");
@@ -32,10 +33,12 @@ int Bat::eventHandler(const df::Event *p_e) {
 	}
 	if (p_e->getType() == df::COLLISION_EVENT) {
 		const df::EventCollision *p_ce = dynamic_cast <const df::EventCollision *> (p_e);
-		if ((p_ce->getObject1()->getType() == "Player") ||
-		    (p_ce->getObject2()->getType() == "Player")) {
-			WM.markForDelete(p_ce->getObject1());
-			WM.markForDelete(p_ce->getObject2());
+		if (p_ce->getObject1()->getType() == "Player") {
+			dynamic_cast<Player *> (p_ce->getObject1())->defeat();
+			WM.markForDelete(this);
+		} else if (p_ce->getObject2()->getType() == "Player") {
+			dynamic_cast<Player *> (p_ce->getObject2())->defeat();
+			WM.markForDelete(this);
 		}
 	}
 	return 0;
