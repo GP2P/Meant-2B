@@ -11,6 +11,7 @@ class Map3 : public df::ViewObject {
 private:
 
 	Block *p_escapeDoor[4];
+	Block *p_cageFloor[15];
 	df::Music *p_music;
 	int difficulty = 0;
 	int playerCount = 0;
@@ -31,7 +32,13 @@ public:
 
 	void escape();
 
+	void groundDefeat();
+
 	int getDifficulty() const;
+
+	int getPlayerCount() const;
+
+	void setPlayerCount(int playerCount);
 };
 
 #endif //MEANT_2B_DF_MAP3_H

@@ -10,7 +10,7 @@
 #include "ResourceManager.h"
 #include "LogManager.h"
 #include "BossPart.h"
-#include "BossUpgradedWeapon.h"
+#include "BossCrystal.h"
 
 
 #include <math.h>
@@ -221,7 +221,7 @@ void Boss::fire() {
 }
 
 void Boss::fire2() {
-	auto b = new BossUpgradedWeapon(getPosition(), difficulty);
+	auto b = new BossCrystal(getPosition(), difficulty);
 	int x = rand() % (DM.getHorizontal() - 20) + 10;
 	df::Vector position(x, 40);
 	df::Vector direction = position - getPosition();

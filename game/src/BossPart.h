@@ -9,15 +9,15 @@
 
 class BossPart : public df::Object {
 private:
-    Boss *boss;
-    int stage;
+	Boss *boss;
+	int stage;
 public:
 
 	BossPart(Boss *Boss);
 
-    int eventHandler(const df::Event *p_e) override;
+	int eventHandler(const df::Event *p_e) override;
 
-    void setStage(int stage);
+	void setStage(int stage);
 };
 
 

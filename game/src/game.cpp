@@ -43,6 +43,7 @@ int main() {
 	RM.loadSprite("../game/sprites/BossPart2.txt", "BossPart2");
 	RM.loadSprite("../game/sprites/BossEye.txt", "BossEye");
 	RM.loadSprite("../game/sprites/BossProjectile.txt", "BossProjectile");
+	RM.loadSprite("../game/sprites/BossCrystal.txt", "BossCrystal");
 
 	// adjust view
 	WM.setBoundary(df::Box(df::Vector(), 80, DM.getVertical()));

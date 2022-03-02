@@ -54,8 +54,8 @@ void Map1::start() {
 	new Gate(df::Vector(64, 18), UP, df::YELLOW);
 	new Stone(df::Vector(64, 23));
 
-	auto *player1 = new Player(1);
-	auto *player2 = new Player(2);
+	auto *player1 = new Player(1, difficulty);
+	auto *player2 = new Player(2, difficulty);
 	player1->setPosition(df::Vector(15, 2));
 	player2->setPosition(df::Vector(63, 2));
 	player1->setMapNum(1);

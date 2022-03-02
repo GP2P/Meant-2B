@@ -123,6 +123,23 @@ void Map3::start() {
 		buildBlocks(df::Vector(64, 11), df::Vector(78, 11), ':', df::GREEN, 'c'); // bottom
 		buildBlocks(df::Vector(63, 7), df::Vector(64, 10), ':', df::GREEN, 'c'); // left
 
+		// cage floor
+		p_cageFloor[0] = new Block(df::Vector(64, 11), ':', df::GREEN, 'c');
+		p_cageFloor[1] = new Block(df::Vector(65, 11), ':', df::GREEN, 'c');
+		p_cageFloor[2] = new Block(df::Vector(66, 11), ':', df::GREEN, 'c');
+		p_cageFloor[3] = new Block(df::Vector(67, 11), ':', df::GREEN, 'c');
+		p_cageFloor[4] = new Block(df::Vector(68, 11), ':', df::GREEN, 'c');
+		p_cageFloor[5] = new Block(df::Vector(69, 11), ':', df::GREEN, 'c');
+		p_cageFloor[6] = new Block(df::Vector(70, 11), ':', df::GREEN, 'c');
+		p_cageFloor[7] = new Block(df::Vector(71, 11), ':', df::GREEN, 'c');
+		p_cageFloor[8] = new Block(df::Vector(72, 11), ':', df::GREEN, 'c');
+		p_cageFloor[9] = new Block(df::Vector(73, 11), ':', df::GREEN, 'c');
+		p_cageFloor[10] = new Block(df::Vector(74, 11), ':', df::GREEN, 'c');
+		p_cageFloor[11] = new Block(df::Vector(75, 11), ':', df::GREEN, 'c');
+		p_cageFloor[12] = new Block(df::Vector(76, 11), ':', df::GREEN, 'c');
+		p_cageFloor[13] = new Block(df::Vector(77, 11), ':', df::GREEN, 'c');
+		p_cageFloor[14] = new Block(df::Vector(78, 11), ':', df::GREEN, 'c');
+
 		// lever
 		new Lever(df::Vector(78, 9));
 	} else if (playerCount == 1 && !haveBow) {
@@ -189,9 +206,9 @@ void Map3::stop(int type, int playTime) {
 			} else { // one player died in map 2
 				if (dynamic_cast<Player *>(pli.currentObject())->getPlayerID() == 1)
 					// player 2 died in map 2, player 1 defeated boss
-					new Map1 4(difficulty, 11, playTime);
-					//				else
-					//					// player died in map 2, player 2 defeated boss
+					new Map4(difficulty, 11, playTime);
+				else
+					// player 1 died in map 2, player 2 defeated boss
 					new Map4(difficulty, 12, playTime);
 			}
 			break;
@@ -255,6 +272,36 @@ void Map3::escape() {
 	WM.markForDelete(WM.objectsOfType("Lever"));
 }
 
+void Map3::groundDefeat() {
+	// remove cage floor
+	for (auto &i: p_cageFloor) {
+		WM.markForDelete(i);
+	}
+
+	// delete existing projectiles
+	WM.markForDelete(WM.objectsOfType("BossProjectile"));
+	WM.markForDelete(WM.objectsOfType("BossCrystal"));
+
+	// mark player for on ground
+	auto pl = WM.objectsOfType("Players");
+	auto pli = df::ObjectListIterator(&pl);
+	while (!pli.isDone()) {
+		auto p_player = dynamic_cast<Player *>(pli.currentObject());
+		if (!p_player->isMap3OnGround()) {
+			p_player->setMap3OnGround(true);
+		} else
+			pli.next();
+	}
+}
+
 int Map3::getDifficulty() const {
 	return difficulty;
+}
+
+int Map3::getPlayerCount() const {
+	return playerCount;
+}
+
+void Map3::setPlayerCount(int playerCount) {
+	Map3::playerCount = playerCount;
 }
