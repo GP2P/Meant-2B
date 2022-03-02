@@ -231,7 +231,7 @@ int Map4::draw() {
 	DM.drawString(df::Vector(40, 29), "hit SPACE to show scoreboard", df::CENTER_JUSTIFIED,
 	              df::Color::WHITE);
 
-	if (playTime != -1)
+	if (playTime != -1 && goodEnding)
 		DM.drawString(df::Vector(5, 1), "Play Time:" + std::to_string(playTime) + 's', df::LEFT_JUSTIFIED, df::WHITE);
 
 	// show current difficulty
