@@ -15,9 +15,11 @@
 #include "Map0.h"
 #include "ResourceManager.h"
 #include "Map3.h"
+#include "Map4.h"
 
-Player::Player(int ID) {
-	setPlayerID(ID);
+Player::Player(int ID, int difficulty) {
+	playerID = ID;
+	this->difficulty = difficulty;
 	setType("Player");
 	setSolidness(df::HARD);
 	if (ID == 1)
@@ -33,10 +35,12 @@ Player::Player(int ID) {
 }
 
 Player::~Player() {
+	p_reticle = nullptr;
+}
+
+void Player::defeat() {
 	auto Denied = RM.getSound("Denied");
 	Denied->play();
-
-	p_reticle = nullptr;
 
 	// if both players are dead, restart the game
 	auto ol = df::ObjectList(WM.objectsOfType("Player"));
@@ -47,9 +51,30 @@ Player::~Player() {
 			new Wand(df::Vector(getPosition().getX(), 29));
 		else if (isHaveBow())
 			new Bow(df::Vector(getPosition().getX(), 29));
+		else if (mapNum == 3) {
+			auto wl = WM.objectsOfType("Map3");
+			auto wli = df::ObjectListIterator(&wl);
+			dynamic_cast <Map3 *> (wli.currentObject())->groundDefeat();
+		}
+		WM.markForDelete(this);
 	} else { // both players died
 		WM.markForDelete(WM.getAllObjects());
-		new Map0(0);
+		if (mapNum == 2) // both died in map 2
+			new Map4(difficulty, 30);
+		else if (mapNum == 3) {
+			auto wl = WM.objectsOfType("Map3");
+			auto wli = df::ObjectListIterator(&wl);
+
+			if (dynamic_cast <Map3 *> (wli.currentObject())->getPlayerCount() == 2) // both died in map 3
+				if (playerID == 2) // player 1 died first
+					new Map4(difficulty, 31);
+				else // player 2 died first
+					new Map4(difficulty, 32);
+			else if (playerID == 1) // player 1 died in map 3, player 2 died in map 2
+				new Map4(difficulty, 35);
+			else if (playerID == 2) // player 2 died in map 3, player 1 died in map 2
+				new Map4(difficulty, 36);
+		}
 	}
 }
 
@@ -298,7 +323,7 @@ int Player::eventHandler(const df::Event *p_e) {
 				oli.next();
 			}
 
-			p_Map3->stop(situation);
+			p_Map3->stop(situation, -1);
 		}
 	}
 	return 0;
@@ -377,9 +402,11 @@ int Player::draw() {
 	}
 
 	// draw time
-	int time = static_cast<int>(clock->split() / 1000000);
-	std::string s = std::to_string(time);
-	DM.drawString(df::Vector(5, 1), "Total Time:" + s, df::LEFT_JUSTIFIED, df::WHITE);
+	if (mapNum != 4 && mapNum != 5) {
+		int time = static_cast<int>(clock->split() / 1000000);
+		std::string s = std::to_string(time);
+		DM.drawString(df::Vector(5, 1), "Total Time:" + s, df::LEFT_JUSTIFIED, df::WHITE);
+	}
 
 	return result;
 }

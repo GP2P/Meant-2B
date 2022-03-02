@@ -169,7 +169,52 @@ void Map3::stop(int type, int playTime) {
 			WM.markForDelete(oli.currentObject());
 		oli.next();
 	}
-	new Map4(difficulty, 0);
+
+
+	auto pl = WM.objectsOfType("Players");
+	auto pli = df::ObjectListIterator(&ol);
+	switch (type) {
+		case 0: // boss died (archer player did not escape)
+			if (playerCount == 2) { // both player reached boss
+				pli.next();
+				if (pli.isDone()) { // but only one player left
+					pli.first();
+					if (dynamic_cast<Player *>(pli.currentObject())->getPlayerID() == 1)
+						new Map4(difficulty, 13, playTime); // boss killed player 2, player 1 killed boss
+					else
+						new Map4(difficulty, 14, playTime); // boss killed player 1, player 2 killed boss
+				} else { // both player survived
+					new Map4(difficulty, 10, playTime);
+				}
+			} else { // one player died in map 2
+				if (dynamic_cast<Player *>(pli.currentObject())->getPlayerID() == 1)
+					// player 2 died in map 2, player 1 defeated boss
+					new Map1 4(difficulty, 11, playTime);
+					//				else
+					//					// player died in map 2, player 2 defeated boss
+					new Map4(difficulty, 12, playTime);
+			}
+			break;
+		case 1: // other player died, left
+			if (dynamic_cast<Player *>(pli.currentObject())->getPlayerID() == 1) {
+				new Map4(difficulty, 21, playTime); // both reach boss, one player2 died so player1 escaped
+			} else if (dynamic_cast<Player *>(oli.currentObject())->getPlayerID() == 1) {
+				new Map4(difficulty, 22, playTime); // both reach boss, one player1 died so player2 escaped
+			}
+			break;
+		case 2: // abandoned other player
+			if (dynamic_cast<Player *>(pli.currentObject())->getPlayerID() == 1) {
+				new Map4(difficulty, 23,
+				         playTime); // both reach boss, player1 abandoned player2 to be killed by the illuminati
+			} else if (dynamic_cast<Player *>(oli.currentObject())->getPlayerID() == 1) {
+				new Map4(difficulty, 24,
+				         playTime); // both reach boss, player2 abandoned player1 to be killed by the illuminati
+			}
+			break;
+		default:
+			new Map4(difficulty, 10, playTime);
+			break;
+	}
 	delete this;
 }
 
