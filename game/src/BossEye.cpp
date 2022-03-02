@@ -5,6 +5,7 @@ BossEye::BossEye(Boss *Boss) {
 	boss = Boss;
 	setSolidness(df::SPECTRAL);
 	setAltitude(4);
+    setType("BossEye");
 	setSprite("BossEye");
 	setPosition(boss->getPosition());
 	registerInterest(df::STEP_EVENT);

@@ -3,6 +3,7 @@
 
 #include "Object.h"
 
+
 class Boss : public df::Object {
 
 private:
@@ -19,12 +20,15 @@ private:
 
 	int fireSlowdown = 60;
 
+    int fireCountdown2;
+
+    int fireSlowdown2 = 120;
+
     int stage;
 
-public:
-    int getStage() const;
+    int invincibleCD;
 
-    void setStage(int stage);
+    bool invincible;
 
 public:
 
@@ -39,6 +43,13 @@ public:
 	int eventHandler(const df::Event *p_e) override;
 
 	void fire();
+
+    void fire2();
+
+    void setStage(int stage);
+
+    bool getInvincible() const;
+
 };
 
 #endif //MEANT_2B_DF_BOSS_H

@@ -5,7 +5,7 @@ BossPart::BossPart(Boss *Boss) {
 	boss = Boss;
 	setSolidness(df::SPECTRAL);
 	setAltitude(4);
-	setSprite("BossPart");
+	setSprite("Boss2");
 	setPosition(boss->getPosition());
 	registerInterest(df::STEP_EVENT);
 }

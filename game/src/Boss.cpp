@@ -9,6 +9,9 @@
 #include "Player.h"
 #include "ResourceManager.h"
 #include "LogManager.h"
+#include "BossPart.h"
+#include "BossUpgradedWeapon.h"
+
 
 #include <math.h>
 #include <fstream>
@@ -23,21 +26,37 @@ Boss::Boss(int difficulty) {
 	registerInterest(df::STEP_EVENT);
 	setSolidness(df::SOFT);
 	fireCountdown = fireSlowdown;
-	maxHP = 2 * difficulty + 4;
     switch(difficulty){
         case 0:
             maxHP = 4;
+            fireSlowdown = 100;
+            fireSlowdown2 = 150;
+            invincibleCD = 1000;
             break;
         case 1:
-            maxHP = 8;
+            maxHP = 6;
+            fireSlowdown = 80;
+            fireSlowdown2 = 120;
+            invincibleCD = 150;
+
             break;
         case 2:
-            maxHP = 12;
+            maxHP = 8;
+            fireSlowdown = 60;
+            fireSlowdown2 = 90;
+            invincibleCD = 200;
+            break;
+        default:
+            maxHP = 4;
+            fireSlowdown = 100;
+            fireSlowdown2 = 150;
+            invincibleCD = 100;
             break;
     }
-	hp = maxHP;
+    fireCountdown = fireSlowdown;
+    fireCountdown2 = fireSlowdown2;
+    hp = maxHP;
     setStage(1);
-	new BossPart(this);
 }
 
 void Boss::defeat() {
@@ -100,6 +119,7 @@ void Boss::defeat() {
 			myFile.open("../game/difficultScoreBoard.txt", std::ios::out);
 			break;
 	}
+
 	if (myFile.is_open()) {
 		for (int i = 0; i <= 2; i++) {
 			int a = scoreList[i];
@@ -135,12 +155,32 @@ int Boss::eventHandler(const df::Event *p_e) {
 
 		if (fireCountdown <= 0) {
 			fire();
-			fireCountdown = fireSlowdown;
+            fireCountdown = fireSlowdown;
 		} else {
 			fireCountdown--;
 		}
-		return 1;
-	}
+        if(stage == 2){
+            if (fireCountdown2 <= 0) {
+                fire2();
+                fireCountdown2 = fireSlowdown2;
+            } else {
+                fireCountdown2--;
+            }
+            if(invincibleCD>0){
+                DM.drawString(df::Vector(73,23),"Boss Becomes Invincible",df::RIGHT_JUSTIFIED,df::WHITE);
+                DM.drawString(df::Vector(73,24),"Shoot Down Boss Crystals with Bow",df::RIGHT_JUSTIFIED,df::WHITE);
+                sf::CircleShape shape(80);
+                shape.setFillColor(sf::Color(237, 247, 84,100));
+                shape.setPosition(df::spacesToPixels(getPosition()).getX()-75,df::spacesToPixels(getPosition()).getY()-50);
+                DM.getWindow()->draw(shape);
+                invincible = true;
+                invincibleCD--;
+            } else{
+                invincible = false;
+            }
+        }
+        return 1;
+    }
 
 	return 0;
 }
@@ -154,8 +194,8 @@ void Boss::setHp(int Hp) {
 	if (hp <= 0)
 		defeat();
 
-    if (hp <= maxHP/2){
-        setStage(1);
+    if (hp == maxHP/2){
+        setStage(2);
         new BossEye(this);
     }
 }
@@ -171,10 +211,21 @@ void Boss::fire() {
 	}
 }
 
-int Boss::getStage() const {
-    return stage;
+void Boss::fire2() {
+    auto b = new BossUpgradedWeapon(getPosition(),difficulty);
+    int x = rand() % (DM.getHorizontal() - 20) + 10;
+    df::Vector position(x, 40);
+    df::Vector direction = position-getPosition();
+    direction.normalize();
+    b->setDirection(direction);
+    b->setVelocity(df::Vector(b->getVelocity().getX(), b->getVelocity().getY() / 2));
 }
+
 
 void Boss::setStage(int stage) {
     Boss::stage = stage;
+}
+
+bool Boss::getInvincible() const {
+    return invincible;
 }
