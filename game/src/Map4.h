@@ -9,13 +9,16 @@ class Map4 : public df::ViewObject {
 private:
 
 	df::Music *p_music;
-	int countDown = 10;
 	int endingNumber = 0;
 	int difficulty = 0;
+	int playTime = 0;
+	bool goodEnding;
 
 public:
 
 	Map4(int difficulty, int endingNumber);
+
+	Map4(int difficulty, int endingNumber, int playTime);
 
 	~Map4() override;
 

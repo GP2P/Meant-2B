@@ -26,57 +26,55 @@ Boss::Boss(int difficulty) {
 	registerInterest(df::STEP_EVENT);
 	setSolidness(df::SOFT);
 	fireCountdown = fireSlowdown;
-    switch(difficulty){
-        case 0:
-            maxHP = 4;
-            fireSlowdown = 100;
-            fireSlowdown2 = 150;
-            invincibleCD = 240;
-            break;
-        case 1:
-            maxHP = 6;
-            fireSlowdown = 80;
-            fireSlowdown2 = 120;
-            invincibleCD = 320;
+	switch (difficulty) {
+		case 0:
+			maxHP = 4;
+			fireSlowdown = 100;
+			fireSlowdown2 = 150;
+			invincibleCD = 240;
+			break;
+		case 1:
+			maxHP = 6;
+			fireSlowdown = 80;
+			fireSlowdown2 = 120;
+			invincibleCD = 320;
 
-            break;
-        case 2:
-            maxHP = 8;
-            fireSlowdown = 60;
-            fireSlowdown2 = 90;
-            invincibleCD = 400;
-            break;
-        default:
-            maxHP = 4;
-            fireSlowdown = 100;
-            fireSlowdown2 = 150;
-            invincibleCD = 100;
-            break;
-    }
-    fireCountdown = fireSlowdown;
-    fireCountdown2 = fireSlowdown2;
-    hp = maxHP;
-    new BossPart(this);
-    setStage(1);
+			break;
+		case 2:
+			maxHP = 8;
+			fireSlowdown = 60;
+			fireSlowdown2 = 90;
+			invincibleCD = 400;
+			break;
+		default:
+			maxHP = 4;
+			fireSlowdown = 100;
+			fireSlowdown2 = 150;
+			invincibleCD = 100;
+			break;
+	}
+	fireCountdown = fireSlowdown;
+	fireCountdown2 = fireSlowdown2;
+	hp = maxHP;
+	new BossPart(this);
+	setStage(1);
 }
 
 void Boss::defeat() {
-	auto ol = WM.objectsOfType("Map3");
-	if (!ol.isEmpty()) {
-		auto oli = df::ObjectListIterator(&ol);
-		auto *p_map3 = dynamic_cast<Map3 *>(oli.currentObject());
-		difficulty = p_map3->getDifficulty();
-		p_map3->stop(0); // boss died
-	}
-
 	FILE *pFile;
 	auto ol2 = df::ObjectList(WM.objectsOfType("Player"));
 	auto oli2 = df::ObjectListIterator(&ol2);
 	auto *p_player = dynamic_cast<Player *>(oli2.currentObject());
 	int longestTime = p_player->getClock()->delta() / 100000;
 
-	int scoreList[4];
+	int scoreList[3];
 
+	auto ol = WM.objectsOfType("Map3");
+	if (!ol.isEmpty()) {
+		auto oli = df::ObjectListIterator(&ol);
+		auto *p_map3 = dynamic_cast<Map3 *>(oli.currentObject());
+		p_map3->stop(0, longestTime); // boss died
+	}
 
 	std::fstream myFile;
 	switch (difficulty) {
@@ -196,19 +194,19 @@ void Boss::setHp(int Hp) {
 	if (hp <= 0)
 		defeat();
 
-    if (hp == maxHP/2){
-        setStage(2);
-        new BossEye(this);
-        auto ol = df::ObjectList(WM.objectsOfType("BossPart"));
-        auto oli = df::ObjectListIterator(&ol);
-        while (!oli.isDone()) {
-            auto *p_bp = dynamic_cast<BossPart *>(oli.currentObject());
-            p_bp->setSprite("BossPart2");
-            p_bp->setStage(2);
-            oli.next();
-        }
-        df::addParticles(df::RAIN, df::LEFT, 4.0, df::MAGENTA);
-    }
+	if (hp == maxHP / 2) {
+		setStage(2);
+		new BossEye(this);
+		auto ol = df::ObjectList(WM.objectsOfType("BossPart"));
+		auto oli = df::ObjectListIterator(&ol);
+		while (!oli.isDone()) {
+			auto *p_bp = dynamic_cast<BossPart *>(oli.currentObject());
+			p_bp->setSprite("BossPart2");
+			p_bp->setStage(2);
+			oli.next();
+		}
+		df::addParticles(df::RAIN, df::LEFT, 4.0, df::MAGENTA);
+	}
 }
 
 void Boss::fire() {

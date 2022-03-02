@@ -1,6 +1,5 @@
 #include "Map4.h"
 #include "ResourceManager.h"
-#include "EventStep.h"
 #include "WorldManager.h"
 #include "DisplayManager.h"
 #include "Vector.h"
@@ -9,16 +8,37 @@
 #include "Map0.h"
 #include "Block.h"
 
-Map4::Map4(int difficulty, int endingNum) {
+Map4::Map4(int difficulty, int endingNumber) {
 	this->difficulty = difficulty;
-	endingNumber = endingNum;
+	this->endingNumber = endingNumber;
+	goodEnding = 10 <= endingNumber && endingNumber < 20;
 	setType("Map4");
-	setSprite("Map4BG");
-	countDown = getAnimation().getSprite()->getFrameCount() * getAnimation().getSprite()->getSlowdown();
+	setSprite("Map4BGBad");
 	setLocation(df::CENTER_CENTER);
 	setAltitude(0);
 	registerInterest(df::KEYBOARD_EVENT);
-	p_music = RM.getMusic("Map4BGM");
+	if (goodEnding)
+		p_music = RM.getMusic("Map4BGMGood");
+	else
+		p_music = RM.getMusic("Map4BGMBad");
+	p_music->play();
+	buildBlocks(df::Vector(-100, 32), df::Vector(180, 32), '#'); // bottom
+}
+
+Map4::Map4(int difficulty, int endingNumber, int playTime) {
+	this->playTime = playTime;
+	this->difficulty = difficulty;
+	this->endingNumber = endingNumber;
+	goodEnding = 10 <= endingNumber && endingNumber < 20;
+	setType("Map4");
+	setSprite("Map4BGBad");
+	setLocation(df::CENTER_CENTER);
+	setAltitude(0);
+	registerInterest(df::KEYBOARD_EVENT);
+	if (goodEnding)
+		p_music = RM.getMusic("Map4BGMGood");
+	else
+		p_music = RM.getMusic("Map4BGMBad");
 	p_music->play();
 	buildBlocks(df::Vector(-100, 32), df::Vector(180, 32), '#'); // bottom
 }
@@ -39,6 +59,7 @@ int Map4::eventHandler(const df::Event *p_e) {
 		} else if (p_keyboard_event->getKey() == df::Keyboard::SPACE &&
 		           p_keyboard_event->getKeyboardAction() == df::KEY_DOWN) {
 			delete this;
+			new Map5(difficulty, p_music);
 		}
 	}
 	return 0;
@@ -59,14 +80,17 @@ int Map4::draw() {
 		case 5: // bow alive, but escaped
 			break;
 		default:
-			DM.drawString(df::Vector(39, 20), "Congratulations! You made it!", df::CENTER_JUSTIFIED, df::WHITE);
+			DM.drawString(df::Vector(40, 20), "Congratulations! You made it!", df::CENTER_JUSTIFIED, df::WHITE);
 			break;
 	}
 
-	DM.drawString(df::Vector(39, 25), "hit R to replay, hit q to quit", df::CENTER_JUSTIFIED,
+	DM.drawString(df::Vector(40, 28), "hit R to replay, hit q to quit", df::CENTER_JUSTIFIED,
 	              df::Color::WHITE);
-	DM.drawString(df::Vector(39, 24), "hit SPACE to show scoreboard", df::CENTER_JUSTIFIED,
+	DM.drawString(df::Vector(40, 29), "hit SPACE to show scoreboard", df::CENTER_JUSTIFIED,
 	              df::Color::WHITE);
+
+	if (playTime != -1)
+		DM.drawString(df::Vector(5, 1), "Play Time:" + std::to_string(playTime) + 's', df::LEFT_JUSTIFIED, df::WHITE);
 
 	// show current difficulty
 	if (difficulty == 0)

@@ -148,7 +148,7 @@ void Map3::start() {
 	DM.shake(20, 20, 10);
 }
 
-void Map3::stop(int type) {
+void Map3::stop(int type, int playTime) {
 	auto ol = df::ObjectList(WM.getAllObjects());
 	auto oli = df::ObjectListIterator(&ol);
 	while (!oli.isDone()) {
@@ -156,7 +156,7 @@ void Map3::stop(int type) {
 			auto *p_player = dynamic_cast<Player *>(oli.currentObject());
 			p_player->setMapNum(4);
 			if (p_player->getPlayerID() == 1)
-				oli.currentObject()->setPosition(df::Vector(39, 28));
+				oli.currentObject()->setPosition(df::Vector(40, 28));
 			else
 				oli.currentObject()->setPosition(df::Vector(69, 28));
 			if (p_player->isHaveBow())
