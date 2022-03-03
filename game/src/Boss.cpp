@@ -30,19 +30,19 @@ Boss::Boss(int difficulty) {
 		case 0:
 			maxHP = 4;
 			fireSlowdown = 100;
-			fireSlowdown2 = 150;
+			fireSlowdown2 = 120;
 			invincibleCD = 240;
 			break;
 		case 1:
 			maxHP = 6;
 			fireSlowdown = 80;
-			fireSlowdown2 = 120;
+			fireSlowdown2 = 100;
 			invincibleCD = 320;
             break;
         case 2:
             maxHP = 8;
             fireSlowdown = 60;
-            fireSlowdown2 = 90;
+            fireSlowdown2 = 80;
             invincibleCD = 400;
             break;
         default:
@@ -53,7 +53,7 @@ Boss::Boss(int difficulty) {
             break;
     }
     fireCountdown = fireSlowdown;
-    fireCountdown2 = fireSlowdown2;
+    fireCountdown2 = 1;
     hp = maxHP;
     new BossPart(this);
     setStage(1);
@@ -189,6 +189,8 @@ int Boss::getHp() const {
 }
 
 void Boss::setHp(int Hp) {
+    auto shoot = RM.getSound("BossShot");
+    shoot->play();
 	hp = Hp;
 	if (hp <= 0)
 		defeat();

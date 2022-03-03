@@ -344,6 +344,10 @@ void Player::shoot(df::Vector target) {
 		return;
 	shootCountdown = shootSlowdown;
 
+    //play shoot sound
+    auto shoot = RM.getSound("Bow");
+    shoot->play();
+
 	// Shoot Arrow towards target.
 	df::Vector v = target - getPosition();
 	v.normalize();

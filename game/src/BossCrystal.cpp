@@ -5,6 +5,7 @@
 #include "Boss.h"
 #include "Player.h"
 #include "LogManager.h"
+#include "ResourceManager.h"
 
 BossCrystal::BossCrystal(df::Vector boss_pos, int difficulty) {
 	// Make the Bullets soft so can pass through Hero.
@@ -65,6 +66,8 @@ int BossCrystal::eventHandler(const df::Event *p_e) {
 		}
 		if ((p_ce->getObject1()->getType() == "Arrow") ||
 		    (p_ce->getObject2()->getType() == "Arrow")) {
+            auto crystal = RM.getSound("Crystal");
+            crystal->play();
 			WM.markForDelete(p_ce->getObject1());
 			WM.markForDelete(p_ce->getObject2());
 			return 1;

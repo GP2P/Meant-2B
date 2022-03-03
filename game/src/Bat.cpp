@@ -4,15 +4,21 @@
 #include "EventCollision.h"
 #include "WorldManager.h"
 #include "Player.h"
+#include "ResourceManager.h"
 
 Bat::Bat() {
 	setType("Bat");
 	setSprite("Bat");
-	setPosition(df::Vector(rand() % (DM.getHorizontal() - 10) + 5, rand() % (DM.getVertical() - 10) + 5));
+	setPosition(df::Vector(rand() % (DM.getHorizontal() - 10) + 5, rand() % (DM.getVertical() - 20) + 5));
 	moveCountdown = 30;
 	registerInterest(df::STEP_EVENT);
 	registerInterest(df::COLLISION_EVENT);
 	setSolidness(df::SOFT);
+}
+
+Bat::~Bat() {
+    auto bat = RM.getSound("Bat");
+    bat->play();
 }
 
 int Bat::eventHandler(const df::Event *p_e) {

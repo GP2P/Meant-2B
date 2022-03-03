@@ -9,6 +9,7 @@
 #include "Map3.h"
 #include "Player.h"
 #include "Map5.h"
+#include "Map2.h"
 
 
 int main() {
@@ -35,7 +36,12 @@ int main() {
 
 	RM.loadSound("../game/SFX/033_Denied_03.wav", "Denied");
 	RM.loadSound("../game/SFX/08_Charge.wav", "Charge");
-	RM.loadSprite("../game/sprites/Player1-walking.txt", "Player1Walking");
+    RM.loadSound("../game/SFX/Laser-weapon 8.wav", "Bow");
+    RM.loadSound("../game/SFX/Fox_Death.WAV", "Bat");
+    RM.loadSound("../game/SFX/Teleport 8.wav", "BossShot");
+    RM.loadSound("../game/SFX/Glass Hit.wav", "Crystal");
+
+    RM.loadSprite("../game/sprites/Player1-walking.txt", "Player1Walking");
 	RM.loadSprite("../game/sprites/Player1-standing.txt", "Player1Standing");
 	RM.loadSprite("../game/sprites/Player2-walking.txt", "Player2Walking");
 	RM.loadSprite("../game/sprites/Player2-standing.txt", "Player2Standing");
