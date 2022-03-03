@@ -237,7 +237,7 @@ int Map4::draw() {
 	              df::Color::WHITE);
 
 	if (playTime != -1 && goodEnding){
-        float time = static_cast<float>(playTime);
+        float time = static_cast<float>(playTime)/10;
         std::stringstream stream;
         stream << std::fixed << std::setprecision(1) << time;
         std::string s = stream.str();
