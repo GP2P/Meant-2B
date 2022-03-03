@@ -4,6 +4,7 @@
 #include "DisplayManager.h"
 #include "WorldManager.h"
 #include "LogManager.h"
+#include "ResourceManager.h"
 
 Wand::Wand(df::Vector location) {
 	setSolidness(df::SOFT);
@@ -51,13 +52,16 @@ int Wand::eventHandler(const df::Event *p_e) {
 			case df::Keyboard::E:
 				if (nearPlayer && player->getPlayerID() == 1 && !player->haveItem()) {
 					player->setHaveWand(true);
+                    RM.getSound("Hover")->play();
 					WM.markForDelete(this);
+
 				}
 				break;
 			case df::Keyboard::SLASH:
 				if (nearPlayer && player->getPlayerID() == 2 && !player->haveItem()) {
 					player->setHaveWand(true);
-					WM.markForDelete(this);
+                    RM.getSound("Hover")->play();
+                    WM.markForDelete(this);
 				}
 				break;
 			default:    // Key not included

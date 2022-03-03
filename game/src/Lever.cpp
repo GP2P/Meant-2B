@@ -9,6 +9,7 @@
 #include "EventKeyboard.h"
 #include "Map2.h"
 #include "Map3.h"
+#include "ResourceManager.h"
 
 Lever::Lever() {}
 
@@ -82,7 +83,8 @@ int Lever::eventHandler(const df::Event *p_e) {
 				if (nearPlayer && player->getPlayerID() == 1 &&
 				    p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
 					character = '\\';
-					auto m2l = df::ObjectList(WM.objectsOfType("Map2"));
+                    RM.getSound("Hover")->play();
+                    auto m2l = df::ObjectList(WM.objectsOfType("Map2"));
 					if (!m2l.isEmpty()) {
 						auto mli = df::ObjectListIterator(&m2l);
 						auto *p_Map2 = dynamic_cast<Map2 *>(mli.currentObject());
@@ -99,7 +101,8 @@ int Lever::eventHandler(const df::Event *p_e) {
 				if (nearPlayer && player->getPlayerID() == 2 &&
 				    p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
 					character = '\\';
-					auto m2l = df::ObjectList(WM.objectsOfType("Map2"));
+                    RM.getSound("Hover")->play();
+                    auto m2l = df::ObjectList(WM.objectsOfType("Map2"));
 					if (!m2l.isEmpty()) {
 						auto mli = df::ObjectListIterator(&m2l);
 						auto *p_Map2 = dynamic_cast<Map2 *>(mli.currentObject());

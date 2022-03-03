@@ -42,6 +42,8 @@ void Player::defeat() {
 	auto Denied = RM.getSound("Denied");
 	Denied->play();
 
+	p_reticle = nullptr;
+
 	// if both players are dead, restart the game
 	auto ol = df::ObjectList(WM.objectsOfType("Player"));
 	auto oli = df::ObjectListIterator(&ol);
@@ -189,7 +191,8 @@ int Player::eventHandler(const df::Event *p_e) {
 						} else {
 							new Stone(getPosition() - df::Vector(1, -1));
 						}
-						setHaveStone(false);
+                        RM.getSound("Hover")->play();
+                        setHaveStone(false);
 					}
 					if (haveBow) {
 						if (direction == "right") {
@@ -197,7 +200,8 @@ int Player::eventHandler(const df::Event *p_e) {
 						} else {
 							new Bow(getPosition() - df::Vector(0.5, -1));
 						}
-						setHaveBow(false);
+                        RM.getSound("Hover")->play();
+                        setHaveBow(false);
 					}
 					if (haveWand) {
 						if (direction == "right") {
@@ -205,7 +209,8 @@ int Player::eventHandler(const df::Event *p_e) {
 						} else {
 							new Wand(getPosition() - df::Vector(0.5, -1));
 						}
-						setHaveWand(false);
+                        RM.getSound("Hover")->play();ed
+                        setHaveWand(false);
 					}
 				}
 				break;

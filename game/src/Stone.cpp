@@ -4,6 +4,7 @@
 #include "DisplayManager.h"
 #include "WorldManager.h"
 #include "LogManager.h"
+#include "ResourceManager.h"
 
 Stone::Stone(df::Vector location) {
 	setSolidness(df::SOFT);
@@ -53,13 +54,15 @@ int Stone::eventHandler(const df::Event *p_e) {
 			case df::Keyboard::E:
 				if (nearPlayer && player->getPlayerID() == 1 && !player->haveItem()) {
 					player->setHaveStone(true);
-					WM.markForDelete(this);
+                    RM.getSound("Hover")->play();
+                    WM.markForDelete(this);
 				}
 				break;
 			case df::Keyboard::SLASH:
 				if (nearPlayer && player->getPlayerID() == 2 && !player->haveItem()) {
 					player->setHaveStone(true);
-					WM.markForDelete(this);
+                    RM.getSound("Hover")->play();
+                    WM.markForDelete(this);
 				}
 				break;
 			default:    // Key not included
