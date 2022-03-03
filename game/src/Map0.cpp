@@ -18,17 +18,9 @@ Map0::Map0(int difficulty) {
 	registerInterest(df::KEYBOARD_EVENT);
 }
 
-Map0::~Map0() {
-	p_music->stop();
-}
+Map0::~Map0() {}
 
 int Map0::draw() {
-    sf::Texture t;
-    t.loadFromFile("../game/images/Map0.png");
-    sf::Sprite s(t);
-    s.scale(7.5,9);
-    DM.getWindow()->draw(s);
-
 	// difficulty selection
 	DM.drawString(df::Vector(40, 24), "'E' for easy", df::CENTER_JUSTIFIED, difficulty == 0 ? df::YELLOW : df::WHITE);
 	DM.drawString(df::Vector(40, 26), "'N' for normal", df::CENTER_JUSTIFIED, difficulty == 1 ? df::YELLOW : df::WHITE);
@@ -49,19 +41,22 @@ int Map0::draw() {
 int Map0::eventHandler(const df::Event *p_e) {
 	if (p_e->getType() == df::KEYBOARD_EVENT) {
 		const auto *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
-		if (p_keyboard_event->getKey() == df::Keyboard::SPACE) {
-			new Map1(difficulty);
-			delete this;
+		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
+			RM.getSound("Hover")->play();
+			if (p_keyboard_event->getKey() == df::Keyboard::SPACE) {
+				new Map1(difficulty, p_music);
+				delete this;
+			}
+			if (p_keyboard_event->getKey() == df::Keyboard::X)
+				GM.setGameOver(true);
+			if (p_keyboard_event->getKey() == df::Keyboard::E) // easy mode
+				difficulty = 0;
+			if (p_keyboard_event->getKey() == df::Keyboard::N) // normal mode
+				difficulty = 1;
+			if (p_keyboard_event->getKey() == df::Keyboard::D) // difficult mode
+				difficulty = 2;
+			return 1;
 		}
-		if (p_keyboard_event->getKey() == df::Keyboard::X)
-			GM.setGameOver(true);
-		if (p_keyboard_event->getKey() == df::Keyboard::E) // easy mode
-			difficulty = 0;
-		if (p_keyboard_event->getKey() == df::Keyboard::N) // normal mode
-			difficulty = 1;
-		if (p_keyboard_event->getKey() == df::Keyboard::D) // difficult mode
-			difficulty = 2;
-		return 1;
 	}
 	return 0;
 }

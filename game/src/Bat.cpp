@@ -17,8 +17,7 @@ Bat::Bat() {
 }
 
 Bat::~Bat() {
-    auto bat = RM.getSound("Bat");
-    bat->play();
+	RM.getSound("Bat")->play();
 }
 
 int Bat::eventHandler(const df::Event *p_e) {

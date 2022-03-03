@@ -11,20 +11,21 @@ private:
 	df::Music *p_music;
 	int difficulty = 0;
 	int time;
-    float scoreListEasy[3];
-    float scoreListNormal[3];
-    float scoreListDifficult[3];
-
+	float scoreListEasy[3];
+	float scoreListNormal[3];
+	float scoreListDifficult[3];
+	int endingNumber = 0;
+	int playTime = 0;
 
 public:
 
-	explicit Map5(int difficulty, df::Music *p_music);
+	explicit Map5(int difficulty, df::Music *p_music, int endingNumber, int playTime);
 
 	~Map5() override;
 
 	void start();
 
-	void stop();
+	int eventHandler(const df::Event *p_e) override;
 
 	int draw() override;
 };

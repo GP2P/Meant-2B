@@ -12,7 +12,6 @@
 Map3::Map3(int difficulty) {
 	this->difficulty = difficulty;
 	setType("Map3");
-	setSprite("Map3BG");
 	setLocation(df::CENTER_CENTER);
 	setAltitude(0);
 	p_music = RM.getMusic("Map3BGM");
@@ -187,8 +186,8 @@ void Map3::stop(int type, int playTime) {
 	}
 
 
-	auto pl = WM.objectsOfType("Players");
-	auto pli = df::ObjectListIterator(&ol);
+	auto pl = WM.objectsOfType("Player");
+	auto pli = df::ObjectListIterator(&pl);
 	switch (type) {
 		case 0: // boss died (archer player did not escape)
 			if (playerCount == 2) { // both player reached boss
@@ -282,14 +281,11 @@ void Map3::groundDefeat() {
 	WM.markForDelete(WM.objectsOfType("BossCrystal"));
 
 	// mark player for on ground
-	auto pl = WM.objectsOfType("Players");
+	auto pl = WM.objectsOfType("Player");
 	auto pli = df::ObjectListIterator(&pl);
 	while (!pli.isDone()) {
-		auto p_player = dynamic_cast<Player *>(pli.currentObject());
-		if (!p_player->isMap3OnGround()) {
-			p_player->setMap3OnGround(true);
-		} else
-			pli.next();
+		dynamic_cast<Player *>(pli.currentObject())->setMap3OnGround(true);
+		pli.next();
 	}
 }
 

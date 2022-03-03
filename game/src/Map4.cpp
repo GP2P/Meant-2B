@@ -1,6 +1,5 @@
 #include "Map4.h"
 #include "ResourceManager.h"
-#include "EventStep.h"
 #include "WorldManager.h"
 #include "DisplayManager.h"
 #include "Vector.h"
@@ -18,8 +17,11 @@ Map4::Map4(int difficulty, int endingNumber) {
 	this->endingNumber = endingNumber;
 	goodEnding = 10 <= endingNumber && endingNumber < 20;
 	setType("Map4");
-	setSprite("Map4BGBad");
-	setLocation(df::CENTER_CENTER);
+	if (goodEnding)
+		setSprite("Map4BGGood");
+	else
+		setSprite("Map4BGBad");
+	df::ViewObject::setPosition(df::Vector(40, 12));
 	setAltitude(0);
 	registerInterest(df::KEYBOARD_EVENT);
 	if (goodEnding)
@@ -36,7 +38,10 @@ Map4::Map4(int difficulty, int endingNumber, int playTime) {
 	this->endingNumber = endingNumber;
 	goodEnding = 10 <= endingNumber && endingNumber < 20;
 	setType("Map4");
-	setSprite("Map4BGBad");
+	if (goodEnding)
+		setSprite("Map4BGGood");
+	else
+		setSprite("Map4BGBad");
 	setLocation(df::CENTER_CENTER);
 	setAltitude(0);
 	registerInterest(df::KEYBOARD_EVENT);
@@ -48,24 +53,41 @@ Map4::Map4(int difficulty, int endingNumber, int playTime) {
 	buildBlocks(df::Vector(-100, 32), df::Vector(180, 32), '#'); // bottom
 }
 
-Map4::~Map4() {
-	p_music->stop();
+Map4::Map4(int difficulty, df::Music *p_music, int endingNumber, int playTime) {
+	this->playTime = playTime;
+	this->difficulty = difficulty;
+	this->endingNumber = endingNumber;
+	goodEnding = 10 <= endingNumber && endingNumber < 20;
+	setType("Map4");
+	if (goodEnding)
+		setSprite("Map4BGGood");
+	else
+		setSprite("Map4BGBad");
+	setLocation(df::CENTER_CENTER);
+	setAltitude(0);
+	registerInterest(df::KEYBOARD_EVENT);
+	this->p_music = p_music;
+	buildBlocks(df::Vector(-100, 32), df::Vector(180, 32), '#'); // bottom
 }
+
+Map4::~Map4() {}
 
 int Map4::eventHandler(const df::Event *p_e) {
 	if (p_e->getType() == df::KEYBOARD_EVENT) {
 		const auto *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
-		if (p_keyboard_event->getKey() == df::Keyboard::Q)
-			GM.setGameOver(true);
-		else if (p_keyboard_event->getKey() == df::Keyboard::R &&
-		         p_keyboard_event->getKeyboardAction() == df::KEY_DOWN) {
-			WM.markForDelete(WM.getAllObjects());
-			new Map0(difficulty);
-		} else if (p_keyboard_event->getKey() == df::Keyboard::SPACE &&
-		           p_keyboard_event->getKeyboardAction() == df::KEY_DOWN) {
-            auto m5 = new Map5(difficulty, p_music);
-            m5->start();
-			delete this;
+		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
+			RM.getSound("Hover")->play();
+			if (p_keyboard_event->getKey() == df::Keyboard::Q) {
+				p_music->stop();
+				GM.setGameOver(true);
+			} else if (p_keyboard_event->getKey() == df::Keyboard::R) {
+				p_music->stop();
+				WM.markForDelete(WM.getAllObjects());
+				new Map0(difficulty);
+			} else if (p_keyboard_event->getKey() == df::Keyboard::SPACE) {
+				new Map5(difficulty, p_music, endingNumber, playTime);
+				delete this;
+			}
 		}
 	}
 	return 0;
@@ -231,18 +253,19 @@ int Map4::draw() {
 			break;
 	}
 
+	// keyboard hints
 	DM.drawString(df::Vector(40, 28), "hit R to replay, hit q to quit", df::CENTER_JUSTIFIED,
 	              df::Color::WHITE);
 	DM.drawString(df::Vector(40, 29), "hit SPACE to show scoreboard", df::CENTER_JUSTIFIED,
 	              df::Color::WHITE);
 
-	if (playTime != -1 && goodEnding){
-        float time = static_cast<float>(playTime)/10;
-        std::stringstream stream;
-        stream << std::fixed << std::setprecision(1) << time;
-        std::string s = stream.str();
-        DM.drawString(df::Vector(5, 1), "Play Time:" + s + 's', df::LEFT_JUSTIFIED, df::WHITE);
-    }
+	if (playTime != -1 && goodEnding) {
+		float time = static_cast<float>(playTime) / 10;
+		std::stringstream stream;
+		stream << std::fixed << std::setprecision(1) << time;
+		std::string s = stream.str();
+		DM.drawString(df::Vector(5, 1), "Play Time:" + s + 's', df::LEFT_JUSTIFIED, df::WHITE);
+	}
 
 	// show current difficulty
 	if (difficulty == 0)

@@ -19,7 +19,6 @@ int main() {
 
 	// load resources
 	RM.loadMusic("../game/music/02_Stillness_of_Space.ogg", "Map0BGM");
-	RM.loadMusic("../game/music/02_Stillness_of_Space.ogg", "Map1BGM");
 	RM.loadMusic("../game/music/06_Battle_in_Space_Loop.ogg", "Map2BGM");
 	RM.loadMusic("../game/music/04_Emergency_No_Alarm.ogg", "Map3BGM");
 	RM.loadMusic("../game/music/03_Racing_Through_Asteroids_Loop.ogg", "Map4BGMGood");

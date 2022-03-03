@@ -13,7 +13,7 @@ public:
 
 	Bat();
 
-    ~Bat();
+	~Bat();
 
 	int eventHandler(const df::Event *p_e) override;
 };

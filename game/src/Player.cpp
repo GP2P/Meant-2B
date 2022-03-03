@@ -51,9 +51,9 @@ void Player::defeat() {
 	if (!oli.isDone()) { // another player alive
 		if (mapNum == 2 && isHaveWand())
 			new Wand(df::Vector(getPosition().getX(), 29));
-		else if (isHaveBow())
+		else if (mapNum == 2 && isHaveBow())
 			new Bow(df::Vector(getPosition().getX(), 29));
-		else if (mapNum == 3) {
+		if (mapNum == 3) {
 			auto wl = WM.objectsOfType("Map3");
 			auto wli = df::ObjectListIterator(&wl);
 			dynamic_cast <Map3 *> (wli.currentObject())->groundDefeat();
@@ -184,15 +184,15 @@ int Player::eventHandler(const df::Event *p_e) {
 					jump();
 				break;
 			case df::Keyboard::R:    // place item
-				if (playerID == 1) {
+				if (playerID == 1 && p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
 					if (haveStone) {
 						if (direction == "right") {
 							new Stone(getPosition() + df::Vector(1, 1));
 						} else {
 							new Stone(getPosition() - df::Vector(1, -1));
 						}
-                        RM.getSound("Hover")->play();
-                        setHaveStone(false);
+						RM.getSound("Hover")->play();
+						setHaveStone(false);
 					}
 					if (haveBow) {
 						if (direction == "right") {
@@ -200,8 +200,8 @@ int Player::eventHandler(const df::Event *p_e) {
 						} else {
 							new Bow(getPosition() - df::Vector(0.5, -1));
 						}
-                        RM.getSound("Hover")->play();
-                        setHaveBow(false);
+						RM.getSound("Hover")->play();
+						setHaveBow(false);
 					}
 					if (haveWand) {
 						if (direction == "right") {
@@ -209,13 +209,13 @@ int Player::eventHandler(const df::Event *p_e) {
 						} else {
 							new Wand(getPosition() - df::Vector(0.5, -1));
 						}
-                        RM.getSound("Hover")->play();ed
-                        setHaveWand(false);
+						RM.getSound("Hover")->play();
+						setHaveWand(false);
 					}
 				}
 				break;
 			case df::Keyboard::RIGHTSHIFT:    // place item
-				if (playerID == 2) {
+				if (playerID == 2 && p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
 					if (haveStone) {
 						if (direction == "right") {
 							new Stone(getPosition() + df::Vector(1, 1));
@@ -349,9 +349,9 @@ void Player::shoot(df::Vector target) {
 		return;
 	shootCountdown = shootSlowdown;
 
-    //play shoot sound
-    auto shoot = RM.getSound("Bow");
-    shoot->play();
+	//play shoot sound
+	auto shoot = RM.getSound("Bow");
+	shoot->play();
 
 	// Shoot Arrow towards target.
 	df::Vector v = target - getPosition();

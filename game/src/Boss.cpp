@@ -38,28 +38,30 @@ Boss::Boss(int difficulty) {
 			fireSlowdown = 80;
 			fireSlowdown2 = 100;
 			invincibleCD = 320;
-            break;
-        case 2:
-            maxHP = 8;
-            fireSlowdown = 60;
-            fireSlowdown2 = 80;
-            invincibleCD = 400;
-            break;
-        default:
-            maxHP = 4;
-            fireSlowdown = 100;
-            fireSlowdown2 = 150;
-            invincibleCD = 240;
-            break;
-    }
-    fireCountdown = fireSlowdown;
-    fireCountdown2 = 1;
-    hp = maxHP;
-    new BossPart(this);
-    setStage(1);
+			break;
+		case 2:
+			maxHP = 8;
+			fireSlowdown = 60;
+			fireSlowdown2 = 80;
+			invincibleCD = 400;
+			break;
+		default:
+			maxHP = 4;
+			fireSlowdown = 100;
+			fireSlowdown2 = 150;
+			invincibleCD = 240;
+			break;
+	}
+	fireCountdown = fireSlowdown;
+	fireCountdown2 = 1;
+	hp = maxHP;
+	new BossPart(this);
+	setStage(1);
 }
 
 void Boss::defeat() {
+	RM.getSound("Thunder")->play();
+
 	FILE *pFile;
 	auto ol2 = df::ObjectList(WM.objectsOfType("Player"));
 	auto oli2 = df::ObjectListIterator(&ol2);
@@ -189,8 +191,8 @@ int Boss::getHp() const {
 }
 
 void Boss::setHp(int Hp) {
-    auto shoot = RM.getSound("BossShot");
-    shoot->play();
+	RM.getSound("BossShot")->play();
+
 	hp = Hp;
 	if (hp <= 0)
 		defeat();

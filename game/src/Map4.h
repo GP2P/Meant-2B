@@ -20,6 +20,8 @@ public:
 
 	Map4(int difficulty, int endingNumber, int playTime);
 
+	Map4(int difficulty, df::Music *p_music, int endingNumber, int playTime);
+
 	~Map4() override;
 
 	int eventHandler(const df::Event *p_e) override;

@@ -13,7 +13,6 @@
 Map2::Map2(int difficulty) {
 	this->difficulty = difficulty;
 	setType("Map2");
-	setSprite("Map2BG");
 	setLocation(df::CENTER_CENTER);
 	setAltitude(0);
 	p_music = RM.getMusic("Map2BGM");

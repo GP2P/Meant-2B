@@ -13,7 +13,7 @@ private:
 
 public:
 
-	explicit Map1(int difficulty);
+	explicit Map1(int difficulty, df::Music *p_music);
 
 	~Map1() override;
 

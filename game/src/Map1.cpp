@@ -9,14 +9,13 @@
 #include "Stone.h"
 #include "Map2.h"
 
-Map1::Map1(int difficulty) {
+Map1::Map1(int difficulty, df::Music *p_music) {
 	this->difficulty = difficulty;
-    setAltitude(0);
+	setAltitude(0);
 	setType("Map1");
-	setSprite("Map1BG");
 	setLocation(df::CENTER_CENTER);
 	setAltitude(0);
-	p_music = RM.getMusic("Map1BGM");
+	this->p_music = p_music;
 	start();
 }
 
@@ -25,8 +24,6 @@ Map1::~Map1() {
 }
 
 void Map1::start() {
-	p_music->play();
-
 	// map borders
 	buildBlocks(df::Vector(0, 31), df::Vector(159, 31), '#');
 	buildBlocks(df::Vector(0, 0), df::Vector(0, 31), '|');
@@ -84,12 +81,6 @@ void Map1::stop() {
 }
 
 int Map1::draw() {
-    sf::Texture t;
-    t.loadFromFile("../game/images/Map1.png");
-    sf::Sprite s(t);
-    s.scale(7.5,9);
-    DM.getWindow()->draw(s);
-
 	// hint
 	auto ol = df::ObjectList(WM.objectsOfType("Player"));
 	auto oli = df::ObjectListIterator(&ol);

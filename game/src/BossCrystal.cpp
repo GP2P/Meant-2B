@@ -66,8 +66,8 @@ int BossCrystal::eventHandler(const df::Event *p_e) {
 		}
 		if ((p_ce->getObject1()->getType() == "Arrow") ||
 		    (p_ce->getObject2()->getType() == "Arrow")) {
-            auto crystal = RM.getSound("Crystal");
-            crystal->play();
+			auto crystal = RM.getSound("Crystal");
+			crystal->play();
 			WM.markForDelete(p_ce->getObject1());
 			WM.markForDelete(p_ce->getObject2());
 			return 1;
