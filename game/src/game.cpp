@@ -5,11 +5,6 @@
 #include "DisplayManager.h"
 #include "Box.h"
 #include "Map0.h"
-#include "Clock.h"
-#include "Map3.h"
-#include "Player.h"
-#include "Map5.h"
-#include "Map2.h"
 
 
 int main() {
@@ -23,25 +18,27 @@ int main() {
 	LM.setFlush(true);
 
 	// load resources
-	RM.loadSprite("../game/sprites/Map0BG.txt", "Map0BG");
 	RM.loadMusic("../game/music/02_Stillness_of_Space.ogg", "Map0BGM");
-	RM.loadSprite("../game/sprites/Map1BG.txt", "Map1BG");
 	RM.loadMusic("../game/music/02_Stillness_of_Space.ogg", "Map1BGM");
-	RM.loadSprite("../game/sprites/Map2BG.txt", "Map2BG");
 	RM.loadMusic("../game/music/06_Battle_in_Space_Loop.ogg", "Map2BGM");
-	RM.loadSprite("../game/sprites/Map3BG.txt", "Map3BG");
 	RM.loadMusic("../game/music/04_Emergency_No_Alarm.ogg", "Map3BGM");
-	RM.loadSprite("../game/sprites/Map4BG.txt", "Map4BG");
-	RM.loadMusic("../game/music/03_Racing_Through_Asteroids_Loop.ogg", "Map4BGM");
+	RM.loadMusic("../game/music/03_Racing_Through_Asteroids_Loop.ogg", "Map4BGMGood");
+	RM.loadMusic("../game/music/05_Building_a_Colony_Loop.ogg", "Map4BGMBad");
 
+	RM.loadSound("../game/SFX/001_Hover_01.wav", "Hover");
 	RM.loadSound("../game/SFX/033_Denied_03.wav", "Denied");
+	RM.loadSound("../game/SFX/09_Thunder_I.wav", "Thunder");
 	RM.loadSound("../game/SFX/08_Charge.wav", "Charge");
-    RM.loadSound("../game/SFX/Laser-weapon 8.wav", "Bow");
-    RM.loadSound("../game/SFX/Fox_Death.WAV", "Bat");
-    RM.loadSound("../game/SFX/Teleport 8.wav", "BossShot");
-    RM.loadSound("../game/SFX/Glass Hit.wav", "Crystal");
+	RM.loadSound("../game/SFX/Laser-weapon 8.wav", "Bow");
+	RM.loadSound("../game/SFX/Fox_Death.WAV", "Bat");
+	RM.loadSound("../game/SFX/Teleport 8.wav", "BossShot");
+	RM.loadSound("../game/SFX/Glass Hit.wav", "Crystal");
 
-    RM.loadSprite("../game/sprites/Player1-walking.txt", "Player1Walking");
+	RM.loadSprite("../game/sprites/Map0BG.txt", "Map0BG");
+	RM.loadSprite("../game/sprites/Map4BGGood.txt", "Map4BGGood");
+	RM.loadSprite("../game/sprites/Map4BGBad.txt", "Map4BGBad");
+
+	RM.loadSprite("../game/sprites/Player1-walking.txt", "Player1Walking");
 	RM.loadSprite("../game/sprites/Player1-standing.txt", "Player1Standing");
 	RM.loadSprite("../game/sprites/Player2-walking.txt", "Player2Walking");
 	RM.loadSprite("../game/sprites/Player2-standing.txt", "Player2Standing");
@@ -61,7 +58,7 @@ int main() {
 	WM.setView(df::Box(df::Vector(), 80, DM.getVertical()));
 
 	// start with map 0
-	new Map5(0, nullptr);
+	new Map0(0);
 
 	// Run game (this blocks until game loop is over).
 	GM.run();
