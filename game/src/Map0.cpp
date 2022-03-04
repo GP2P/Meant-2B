@@ -42,19 +42,27 @@ int Map0::eventHandler(const df::Event *p_e) {
 	if (p_e->getType() == df::KEYBOARD_EVENT) {
 		const auto *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
 		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
-			RM.getSound("Hover")->play();
 			if (p_keyboard_event->getKey() == df::Keyboard::SPACE) {
+				RM.getSound("Hover")->play();
 				new Map1(difficulty, p_music);
 				delete this;
 			}
-			if (p_keyboard_event->getKey() == df::Keyboard::X)
+			if (p_keyboard_event->getKey() == df::Keyboard::X) {
+				RM.getSound("Hover")->play();
 				GM.setGameOver(true);
-			if (p_keyboard_event->getKey() == df::Keyboard::E) // easy mode
+			}
+			if (p_keyboard_event->getKey() == df::Keyboard::E) { // easy mode
+				RM.getSound("Hover")->play();
 				difficulty = 0;
-			if (p_keyboard_event->getKey() == df::Keyboard::N) // normal mode
+			}
+			if (p_keyboard_event->getKey() == df::Keyboard::N) { // normal mode
+				RM.getSound("Hover")->play();
 				difficulty = 1;
-			if (p_keyboard_event->getKey() == df::Keyboard::D) // difficult mode
+			}
+			if (p_keyboard_event->getKey() == df::Keyboard::D) { // difficult mode
+				RM.getSound("Hover")->play();
 				difficulty = 2;
+			}
 			return 1;
 		}
 	}

@@ -52,6 +52,7 @@ Boss::Boss(int difficulty) {
 			invincibleCD = 240;
 			break;
 	}
+	invincible = false;
 	fireCountdown = fireSlowdown;
 	fireCountdown2 = 1;
 	hp = maxHP;

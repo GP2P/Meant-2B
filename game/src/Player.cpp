@@ -73,9 +73,9 @@ void Player::defeat() {
 				else // player 2 died first
 					new Map4(difficulty, 32);
 			else if (playerID == 1) // player 1 died in map 3, player 2 died in map 2
-				new Map4(difficulty, 35);
+				new Map4(difficulty, 33);
 			else if (playerID == 2) // player 2 died in map 3, player 1 died in map 2
-				new Map4(difficulty, 36);
+				new Map4(difficulty, 34);
 		}
 	}
 }

@@ -72,15 +72,17 @@ int Map5::eventHandler(const df::Event *p_e) {
 	if (p_e->getType() == df::KEYBOARD_EVENT) {
 		const auto *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
 		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
-			RM.getSound("Hover")->play();
 			if (p_keyboard_event->getKey() == df::Keyboard::Q) {
+				RM.getSound("Hover")->play();
 				p_music->stop();
 				GM.setGameOver(true);
 			} else if (p_keyboard_event->getKey() == df::Keyboard::R) {
+				RM.getSound("Hover")->play();
 				p_music->stop();
 				WM.markForDelete(WM.getAllObjects());
 				new Map0(difficulty);
 			} else if (p_keyboard_event->getKey() == df::Keyboard::SPACE) {
+				RM.getSound("Hover")->play();
 				new Map4(difficulty, p_music, endingNumber, playTime);
 				delete this;
 			}
