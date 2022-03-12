@@ -1,7 +1,7 @@
 # Meant-2B-df
 Meant 2B - a Multiplayer 2D Adventure Game
 
-[![Title Screen](https://user-images.githubusercontent.com/73323107/158037519-4b5f4edb-8fa6-49a8-abf8-e6201321728d.png)](https://drive.google.com/file/d/19YGUzP9MinX15Vptg1lC3KTTaaW6Vy4x/view?usp=sharing)
+[![Title Screen](https://user-images.githubusercontent.com/73323107/158038612-e3a5649e-4bd6-4463-98c3-090badb0bd41.png)](https://drive.google.com/file/d/19YGUzP9MinX15Vptg1lC3KTTaaW6Vy4x/view?usp=sharing)
 
 #### [Watch Game Trailer](https://drive.google.com/file/d/19YGUzP9MinX15Vptg1lC3KTTaaW6Vy4x/view?usp=sharing)
 
