@@ -1,17 +1,19 @@
 # Meant-2B-df
 Meant 2B - a Multiplayer 2D Adventure Game
 
-#### [Game Trailer](https://drive.google.com/file/d/19YGUzP9MinX15Vptg1lC3KTTaaW6Vy4x/view?usp=sharing)
+[![Title Screen](https://user-images.githubusercontent.com/73323107/158037519-4b5f4edb-8fa6-49a8-abf8-e6201321728d.png)](https://drive.google.com/file/d/19YGUzP9MinX15Vptg1lC3KTTaaW6Vy4x/view?usp=sharing)
 
-![Title Screen](https://user-images.githubusercontent.com/73323107/158037519-4b5f4edb-8fa6-49a8-abf8-e6201321728d.png)
+#### [Watch Game Trailer](https://drive.google.com/file/d/19YGUzP9MinX15Vptg1lC3KTTaaW6Vy4x/view?usp=sharing)
 
-### Platform
+### Platforms
 
-macOS (supports both intel and arm architectures)
+- macOS (supports both intel and arm architectures)
+- Windows
+- Linux
 
 ### Dependencies:
-- Dragonfly (included)
-- SFML (install seperatly and change directory in `./CMakeLists.txt`)
+- [Dragonfly](https://dragonfly.wpi.edu) (included)
+- [SFML](https://github.com/SFML/SFML)
 
 ### Files
 
@@ -28,5 +30,7 @@ Files are in the following format:
 
 ### Compile and run
 
-CMake: Select the correct file for your architecture and rename it to CMakeLists.txt
-Move `df-config.txt` and `df-font.ttf` to the same folder as the executable
+- SFML: install SFML seperatly and edit the library directory in `./CMakeLists.txt` to your SFML install directory's include folder
+- CMake: edit `./CMakeLists.txt`'s `target_link_libraries` section, uncomment only the line corresponding with your platform and architecture`
+- Compile
+- Move `df-config.txt` and `df-font.ttf` to the same folder as the compiled executable (in folder `./cmake-build-debug`)
